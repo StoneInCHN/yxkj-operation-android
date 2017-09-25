@@ -23,10 +23,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:drawableRight="@mipmap/ic_launcher_round"
             android:gravity="center"
-            android:text="待补清单:全部" />
+            android:text="待补清单:" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_wait_sup"
+            android:dropDownVerticalOffset="25dp"
+            android:gravity="bottom"
+            android:spinnerMode="dropdown" />
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/black"
+        android:layout_below="@id/top" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tablayout"

@@ -2,6 +2,8 @@ package com.yxkj.deliveryman.activity;
 
 import android.support.design.widget.TabLayout;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.yxkj.deliveryman.R;
@@ -25,6 +27,8 @@ public class WaitSupplementActivity extends BaseActivity implements TabLayout.On
     /*待补清单列表*/
     private LRecyclerView recyclerView;
     private WaitSupListAdapter adapter;
+    private Spinner spinner;
+    private String[] entries = new String[]{"全部", "香年广场T3", "美年广场T1", "软件园C2", "软件园E1"};
 
     @Override
     public int getContentViewId() {
@@ -40,11 +44,15 @@ public class WaitSupplementActivity extends BaseActivity implements TabLayout.On
     public void initView() {
         tablayout = findViewByIdNoCast(R.id.tablayout);
         recyclerView = findViewByIdNoCast(R.id.recyclerView);
+        spinner = findViewByIdNoCast(R.id.spinner);
     }
 
     @Override
     public void initData() {
         initTabLayout();
+        ArrayAdapter<String> spinnerAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, entries);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
         adapter = new WaitSupListAdapter(this);
         adapter.settList(getData());
         RecyclerViewSetUtil.setRecyclerView(this, recyclerView, adapter, true);
