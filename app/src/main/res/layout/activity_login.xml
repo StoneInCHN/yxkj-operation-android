@@ -14,16 +14,35 @@
         android:scaleType="fitXY"
         android:src="@mipmap/bg_login" />
 
-    <EditText
-        android:id="@+id/et_phone"
-        style="@style/et_normal"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="43dp"
         android:layout_marginRight="43dp"
         android:layout_marginTop="20dp"
-        android:background="@null"
-        android:drawableLeft="@mipmap/ic_launcher"
-        android:hint="请输入手机号"
-        android:inputType="phone" />
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_phone"
+            style="@style/et_normal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:drawableLeft="@mipmap/phone"
+            android:drawablePadding="@dimen/drawablepadding_18dp"
+            android:hint="请输入手机号"
+            android:inputType="phone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@mipmap/warning"
+            android:text="非管家账号，请重新输入"
+            android:textSize="@dimen/sp_12"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
@@ -38,7 +57,8 @@
         android:layout_marginLeft="43dp"
         android:layout_marginRight="43dp"
         android:background="@null"
-        android:drawableLeft="@mipmap/ic_launcher"
+        android:drawableLeft="@mipmap/password"
+        android:drawablePadding="@dimen/drawablepadding_18dp"
         android:hint="请输入密码"
         android:inputType="textPassword" />
 

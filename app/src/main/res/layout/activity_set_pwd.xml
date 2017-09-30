@@ -36,7 +36,8 @@
                 android:layout_height="@dimen/et_height_60dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:drawableLeft="@mipmap/ic_launcher"
+                android:drawableLeft="@mipmap/phone"
+                android:drawablePadding="@dimen/drawablepadding_18dp"
                 android:hint="请输入手机号"
                 android:inputType="phone"
                 android:textColor="@color/black"
@@ -59,7 +60,8 @@
         <EditText
             style="@style/et_normal"
             android:background="@null"
-            android:drawableLeft="@mipmap/ic_launcher"
+            android:drawableLeft="@mipmap/sms"
+            android:drawablePadding="@dimen/drawablepadding_18dp"
             android:hint="请输入验证码"
             android:inputType="number"
             android:maxLength="6" />
@@ -70,7 +72,8 @@
             android:id="@+id/et_sure_pwd"
             style="@style/et_normal"
             android:background="@null"
-            android:drawableLeft="@mipmap/ic_launcher"
+            android:drawableLeft="@mipmap/password"
+            android:drawablePadding="@dimen/drawablepadding_18dp"
             android:hint="请输入新密码"
             android:inputType="textPassword" />
 
@@ -80,7 +83,8 @@
             android:id="@+id/et_new_pwd"
             style="@style/et_normal"
             android:background="@null"
-            android:drawableLeft="@mipmap/ic_launcher"
+            android:drawableLeft="@mipmap/password"
+            android:drawablePadding="@dimen/drawablepadding_18dp"
             android:hint="请确认新密码"
             android:inputType="textPassword" />
 
