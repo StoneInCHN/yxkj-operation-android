@@ -10,4 +10,20 @@
         <item name="windowActionBar">false</item>
     </style>
 
+    <style name="line_horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/divider_1dp</item>
+        <item name="android:background">@color/gray_divider</item>
+    </style>
+
+    <style name="et_normal" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/et_height_60dp</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="background">@null</item>
+        <item name="android:textColor">@color/black_text</item>
+        <item name="android:textColorHint">@color/gray_edittext_hint</item>
+
+
+    </style>
 </resources>

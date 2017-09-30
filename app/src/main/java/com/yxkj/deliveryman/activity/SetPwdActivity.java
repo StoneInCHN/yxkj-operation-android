@@ -12,7 +12,6 @@ import com.yxkj.deliveryman.util.ToastUtil;
  */
 public class SetPwdActivity extends BaseActivity {
     /*设置密码完成*/
-    private TextView tv_complete;
 
     @Override
     public int getContentViewId() {
@@ -26,12 +25,11 @@ public class SetPwdActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        tv_complete = findViewByIdNoCast(R.id.tv_complete);
     }
 
     @Override
     public void initData() {
-        setOnClick(tv_complete);
+
     }
 
     @Override

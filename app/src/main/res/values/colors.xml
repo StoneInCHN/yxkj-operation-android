@@ -4,8 +4,19 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="gray_text">#FF858585</color>
+    <color name="gray1_text">#999999</color>
+    <!--一级黑体-->
+    <color name="black_text">#333333</color>
+    <color name="gray_edittext_hint">#999999</color>
+    <!--提示文字-->
+    <color name="gray_text_tip">#999999</color>
     <color name="app_bg">#FFF0F0F0</color>
     <color name="black">#000</color>
     <color name="white">#fff</color>
     <color name="gray_bg">#506e6e6e</color>
+    <color name="orange_bg">#FBC205</color>
+    <color name="orange_text">#FBC205</color>
+    <color name="gray_stroke">#CCCCCC</color>
+    <color name="gray_divider">#CCCCCC</color>
+
 </resources>

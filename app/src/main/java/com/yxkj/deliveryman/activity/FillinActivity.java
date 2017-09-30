@@ -15,7 +15,7 @@ public class FillinActivity extends BaseActivity implements CommenDialogSureList
     /*收不到验证码*/
     private TextView tv_not_recieve_code;
     /*提交*/
-    private Button tv_apply;
+    private Button bt_login;
 
     @Override
     public int getContentViewId() {
@@ -30,7 +30,7 @@ public class FillinActivity extends BaseActivity implements CommenDialogSureList
     @Override
     public void initView() {
         tv_not_recieve_code = findViewByIdNoCast(R.id.tv_not_recieve_code);
-        tv_apply = findViewByIdNoCast(R.id.tv_apply);
+        bt_login = findViewByIdNoCast(R.id.bt_login);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class FillinActivity extends BaseActivity implements CommenDialogSureList
 
     @Override
     public void setEvent() {
-        setOnClick(tv_not_recieve_code, tv_apply);
+        setOnClick(tv_not_recieve_code, bt_login);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class FillinActivity extends BaseActivity implements CommenDialogSureList
                 getCodePopWindow.setCommenDialogSureListener(this);
                 getCodePopWindow.showAsDropDown(tv_not_recieve_code);
                 break;
-            case R.id.tv_apply:
+            case R.id.bt_login:
                 IntentUtil.openActivity(this, SetPwdActivity.class);
                 break;
         }
