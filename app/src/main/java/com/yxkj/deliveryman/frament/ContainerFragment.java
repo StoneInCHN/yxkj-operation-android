@@ -47,8 +47,7 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
 
     @Override
     protected void initData() {
-        replenishAdapter = new ReplenishAdapter(getActivity());
-        replenishAdapter.settList(getData());
+        replenishAdapter = new ReplenishAdapter(getData(),getActivity());
         RecyclerViewSetUtil.setRecyclerView(getActivity(), recyclerView, replenishAdapter);
     }
 
