@@ -47,7 +47,8 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
 
     @Override
     protected void initData() {
-        replenishAdapter = new ReplenishAdapter(getData(), getActivity());
+        replenishAdapter = new ReplenishAdapter(getActivity());
+        replenishAdapter.settList(getData());
         RecyclerViewSetUtil.setRecyclerView(getActivity(), recyclerView, replenishAdapter);
     }
 
@@ -69,7 +70,7 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
 
     private List<String> getData() {
         List<String> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 4; i++) {
             list.add(i + "");
         }
         return list;

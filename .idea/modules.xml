@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Deliveryman.iml" filepath="$PROJECT_DIR$/Deliveryman.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yxkj-operation-android.iml" filepath="$PROJECT_DIR$/yxkj-operation-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/yxkj-operation-android.iml" filepath="$PROJECT_DIR$/yxkj-operation-android.iml" />
     </modules>
   </component>
