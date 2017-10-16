@@ -11,7 +11,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="186dp"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:src="@mipmap/bg_login" />
 
     <LinearLayout
@@ -38,6 +38,8 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@mipmap/warning"
             android:text="非管家账号，请重新输入"
+            android:drawablePadding="2dp"
+            android:textColor="@color/red_text"
             android:textSize="@dimen/sp_12"
             android:visibility="gone"
             tools:visibility="visible" />

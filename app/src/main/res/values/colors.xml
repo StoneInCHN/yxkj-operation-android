@@ -7,6 +7,7 @@
     <color name="gray1_text">#999999</color>
     <!--一级黑体-->
     <color name="black_text">#333333</color>
+    <color name="red_text">#BB2C2B</color>
     <color name="gray_edittext_hint">#999999</color>
     <!--提示文字-->
     <color name="gray_text_tip">#999999</color>
