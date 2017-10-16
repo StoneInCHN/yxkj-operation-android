@@ -1,37 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--每个item的左右上下边距已在recyclerview中定义好-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/dp_10"
-        android:paddingRight="@dimen/dp_10"
-        android:paddingTop="@dimen/dp_10">
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_round_white"
+        android:padding="@dimen/dp_10">
 
         <TextView
+            android:id="@+id/tv_name_item_replenish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="编号：001" />
+            android:text="花样年T3优享空间"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/sp_14"/>
 
         <TextView
+            android:id="@+id/tv_num_item_replenish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="花样年T3优享空间" />
+            android:layout_below="@id/tv_name_item_replenish"
+            android:text="编号0000000001"
+            android:layout_marginTop="3dp"
+            android:textSize="@dimen/sp_12"/>
 
         <TextView
+            android:id="@+id/tv_status_item_replenish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_14"
             android:layout_alignParentRight="true"
-            android:text="待补清单" />
+            android:layout_centerVertical="true"
+            android:text="待补清单"
+            android:textColor="@color/green_text"/>
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" />
+        android:orientation="vertical"/>
 </LinearLayout>

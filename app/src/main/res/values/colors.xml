@@ -9,13 +9,15 @@
     <color name="black_text">#333333</color>
     <color name="red_text">#BB2C2B</color>
     <color name="gray_edittext_hint">#999999</color>
+    <color name="green_text">#30C7AC</color>
+    <color name="green_bg">#30C7AC</color>
     <!--提示文字-->
     <color name="gray_text_tip">#999999</color>
     <color name="app_bg">#FFF0F0F0</color>
     <color name="black">#000</color>
     <color name="white">#fff</color>
-    <color name="gray_bg">#506e6e6e</color>
     <color name="orange_bg">#FBC205</color>
+    <color name="gray_bg">#506e6e6e</color>
     <color name="orange_text">#FBC205</color>
     <color name="gray_stroke">#CCCCCC</color>
     <color name="gray_divider">#CCCCCC</color>

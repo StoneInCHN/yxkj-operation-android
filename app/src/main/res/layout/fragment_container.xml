@@ -1,39 +1,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    tools:context="com.yxkj.deliveryman.frament.ContainerFragment">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/app_bg"
+              android:fitsSystemWindows="true"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:orientation="vertical"
+              tools:context="com.yxkj.deliveryman.frament.ContainerFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:paddingRight="12dp">
 
         <TextView
+            android:id="@+id/tv_title_fragment_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="货柜(189)"
             android:textColor="@color/black"
-            android:textStyle="bold" />
+            android:textSize="18sp"/>
 
-        <TextView
-            android:id="@+id/tv_more"
+        <ImageView
+            android:id="@+id/iv_add_fragment_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp_22"
-            android:text="+"
+            android:src="@mipmap/phone"
             android:textColor="@color/black"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
     </RelativeLayout>
 
     <com.github.jdsjlzx.recyclerview.LRecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/lrv_fragment_container"
+        android:layout_margin="12dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
+
 </LinearLayout>

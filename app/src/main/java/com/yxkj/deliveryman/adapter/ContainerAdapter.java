@@ -18,7 +18,6 @@ public class ContainerAdapter extends BaseRecyclerViewAdapter<String> {
     }
 
 
-
     @Override
     public int getLayoutId() {
         return R.layout.item_container;

@@ -11,6 +11,7 @@ import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.util.NetConnectUtil;
 
+import butterknife.ButterKnife;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -28,6 +29,7 @@ public abstract class BaseFragment extends RxFragment implements View.OnClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = inflater.inflate(getResource(), null);
+            ButterKnife.bind(this, rootView);
             beforeInitView();
             initView(rootView);
             initData();

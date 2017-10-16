@@ -34,8 +34,8 @@ class TeamAdapter extends BaseRecyclerViewAdapter<String> {
 
     @Override
     public void onCorvert(BaseViewHolder holder, int position, String bean) {
-        RecyclerView recyclerView = holder.getView(R.id.recyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(context, 4));
+        RecyclerView recyclerView = holder.getView(R.id.rv_team_member);
+        recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
         ContainerAdapter containerAdapter = new ContainerAdapter(context);
         containerAdapter.settList(list);
         recyclerView.setAdapter(containerAdapter);

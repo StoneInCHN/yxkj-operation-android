@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/dp_10"
-    android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:paddingTop="@dimen/dp_10"
+             android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/tv_container_name"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
+        android:layout_width="87dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/edit_login_bg_nomal"
+        android:background="@drawable/bg_round_green"
         android:gravity="center"
-        android:text="A货柜" />
+        android:text="A货柜"/>
 
     <TextView
         android:layout_width="35dp"
         android:layout_height="20dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginLeft="40dp"
-        android:background="@drawable/replenish_num_bg"
+        android:background="@drawable/bg_round_red"
         android:gravity="center"
         android:text="78"
-        android:textColor="@android:color/white"
-        android:textSize="10sp" />
-</RelativeLayout>
+        android:textColor="@color/white"
+        android:textSize="10sp"/>
+</FrameLayout>

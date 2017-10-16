@@ -2,7 +2,7 @@ package com.yxkj.deliveryman.frament;
 
 
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.yxkj.deliveryman.R;
@@ -18,14 +18,22 @@ import com.yxkj.deliveryman.view.popupwindow.MainPagePopupWindow;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * 首页货柜页
  */
 public class ContainerFragment extends BaseFragment implements MainPageClickListener {
-    /*更多*/
-    private TextView tv_more;
-    /*补货列表*/
-    private LRecyclerView recyclerView;
+    /**
+     * 添加
+     */
+    @BindView(R.id.iv_add_fragment_container)
+     ImageView mIvAdd;
+    /**
+     * 补货列表
+     */
+    @BindView(R.id.lrv_fragment_container)
+     LRecyclerView mLrv;
     /*补货列表适配器*/
     private ReplenishAdapter replenishAdapter;
 
@@ -41,27 +49,26 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
 
     @Override
     protected void initView(View rootView) {
-        tv_more = findViewByIdNoCast(R.id.tv_more);
-        recyclerView = findViewByIdNoCast(R.id.recyclerView);
+
     }
 
     @Override
     protected void initData() {
-        replenishAdapter = new ReplenishAdapter(getData(),getActivity());
-        RecyclerViewSetUtil.setRecyclerView(getActivity(), recyclerView, replenishAdapter);
+        replenishAdapter = new ReplenishAdapter(getData(), getActivity());
+        RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, replenishAdapter);
     }
 
     @Override
     protected void setEvent() {
-        setOnClick(tv_more);
+        setOnClick(mIvAdd);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tv_more:
+            case R.id.iv_add_fragment_container:
                 MainPagePopupWindow pagePopupWindow = new MainPagePopupWindow(getActivity());
-                pagePopupWindow.showAsDropDown(tv_more);
+                pagePopupWindow.showAsDropDown(mIvAdd);
                 pagePopupWindow.setClickListener(this);
                 break;
         }
