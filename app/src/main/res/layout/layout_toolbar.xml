@@ -9,7 +9,7 @@
     android:paddingTop="12dp">
 
     <ImageView
-        android:id="@+id/iv_back_left"
+        android:id="@+id/iv_back_toolbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/phone" />
