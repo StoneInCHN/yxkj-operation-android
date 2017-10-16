@@ -98,7 +98,7 @@
                 android:textSize="@dimen/sp_12"/>
 
             <Button
-                android:id="@+id/bt_login"
+                android:id="@+id/bt_sure_set_pwd"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="30dp"

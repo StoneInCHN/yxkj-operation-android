@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.util.ToastUtil;
+import com.yxkj.deliveryman.view.dialog.SimpleTextShortTimeDialog;
 
 /**
  * 设置密码页面
@@ -40,8 +41,13 @@ public class SetPwdActivity extends BaseActivity {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tv_complete:
-                ToastUtil.showToastCenter("设置完成");
+            case R.id.bt_sure_set_pwd:
+                new SimpleTextShortTimeDialog(mContext, "密码设置成功", new SimpleTextShortTimeDialog.OnLoadEndListener() {
+                    @Override
+                    public void onLoadEnd() {
+                        ToastUtil.showShort("假装跳转");
+                    }
+                }).show();
                 break;
         }
     }

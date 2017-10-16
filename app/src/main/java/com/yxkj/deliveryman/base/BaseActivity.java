@@ -1,6 +1,7 @@
 package com.yxkj.deliveryman.base;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -32,6 +33,7 @@ public abstract class
 BaseActivity extends RxAppCompatActivity implements View.OnClickListener{
     protected String TAG = getClass().getSimpleName();
     protected boolean useDefaultTitleBarColor;//状态栏颜色是否使用默认颜色
+    protected Context mContext=this;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
