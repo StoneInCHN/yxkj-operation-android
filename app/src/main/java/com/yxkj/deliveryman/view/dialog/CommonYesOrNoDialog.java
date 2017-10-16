@@ -1,4 +1,4 @@
-package com.yxkj.deliveryman.view;
+package com.yxkj.deliveryman.view.dialog;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,10 +14,10 @@ import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.callback.CommenDialogSureListener;
 
 /**
- * 通用Dialog
+ * 通用Dialog，有yes和no两种选项
  */
 
-public class CommenDialog extends DialogFragment {
+public class CommonYesOrNoDialog extends DialogFragment {
     /*主题*/
     private TextView tv_title;
     /*内容*/

@@ -1,88 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.yxkj.deliveryman.activity.ForgetPwdActivity">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical"
+              tools:context="com.yxkj.deliveryman.activity.ForgetPwdActivity">
+
+    <com.yxkj.deliveryman.view.RichToolBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:left_img_src="@mipmap/warning"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="100dp"
-        android:paddingLeft="30dp"
-        android:paddingRight="50dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/set_pwd_padding_43dp"
+        android:paddingRight="@dimen/set_pwd_padding_43dp">
 
         <TextView
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="手机号:" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="60dp"
+            android:layout_marginTop="30dp"
+            android:text="填写验证码"
+            android:textColor="@color/black"
+            android:textSize="24sp"/>
 
-        <EditText
-            android:id="@+id/et_phone"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/edit_login_bg"
-            android:inputType="phone" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="30dp"
-        android:paddingRight="50dp">
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/et_height_60dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawableLeft="@mipmap/phone"
+                android:drawablePadding="@dimen/drawablepadding_18dp"
+                android:hint="请输入手机号"
+                android:inputType="phone"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14"/>
 
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="验证码:" />
+            <TextView
+                android:id="@+id/tv_get_code"
+                android:layout_width="90dp"
+                android:layout_height="30dp"
+                android:background="@drawable/bg_stroke_gray_round"
+                android:gravity="center"
+                android:text="获取验证码"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/sp_12"/>
+
+        </LinearLayout>
+
+        <View style="@style/line_horizontal"/>
 
         <EditText
             android:id="@+id/et_code"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:layout_weight="1"
-            android:background="@drawable/edit_login_bg"
+            style="@style/et_normal"
+            android:background="@null"
+            android:drawableLeft="@mipmap/sms"
+            android:drawablePadding="@dimen/drawablepadding_18dp"
             android:hint="请输入验证码"
-            android:inputType="phone"
-            android:textSize="@dimen/sp_12" />
+            android:inputType="number"
+            android:maxLength="6"/>
 
-        <TextView
-            android:id="@+id/tv_get_code"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:background="@drawable/btn_get_code_bg"
-            android:gravity="center"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_10"
-            android:text="获取验证码" />
+        <View style="@style/line_horizontal"/>
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/btn_login_bg"
+            android:text="确 定"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_20"/>
+
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_login_pwd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginRight="50dp"
-        android:layout_marginTop="20dp"
-        android:text="用密码登录"
-        android:textColor="@android:color/holo_blue_light"
-        android:visibility="invisible" />
-
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="100dp"
-        android:layout_height="35dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/btn_login_bg"
-        android:text="登录"
-        android:textColor="@color/gray_text" />
 </LinearLayout>

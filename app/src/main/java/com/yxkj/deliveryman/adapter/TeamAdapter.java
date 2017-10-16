@@ -8,7 +8,7 @@ import android.view.Gravity;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseRecyclerViewAdapter;
 import com.yxkj.deliveryman.base.BaseViewHolder;
-import com.yxkj.deliveryman.view.ContainerSupPopWindow;
+import com.yxkj.deliveryman.view.popupwindow.ContainerSupPopWindow;
 
 import java.util.ArrayList;
 import java.util.List;

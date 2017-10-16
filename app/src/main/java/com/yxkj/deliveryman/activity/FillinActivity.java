@@ -8,7 +8,11 @@ import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.callback.CommenDialogSureListener;
 import com.yxkj.deliveryman.util.IntentUtil;
-import com.yxkj.deliveryman.view.GetCodePopWindow;
+import com.yxkj.deliveryman.view.popupwindow.GetCodePopWindow;
+
+/**
+ * 个人资料里面的设置密码
+ */
 
 public class FillinActivity extends BaseActivity implements CommenDialogSureListener {
 

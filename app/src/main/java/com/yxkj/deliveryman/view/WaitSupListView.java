@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
+import com.yxkj.deliveryman.view.popupwindow.WaitSupGoodsInformationPopupWindow;
 
 /**
  * 待补清单Item

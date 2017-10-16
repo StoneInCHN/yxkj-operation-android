@@ -79,23 +79,12 @@
             <View style="@style/line_horizontal"/>
 
             <EditText
-                android:id="@+id/et_sure_pwd"
-                style="@style/et_normal"
-                android:background="@null"
-                android:drawableLeft="@mipmap/password"
-                android:drawablePadding="@dimen/drawablepadding_18dp"
-                android:hint="请输入新密码"
-                android:inputType="textPassword"/>
-
-            <View style="@style/line_horizontal"/>
-
-            <EditText
                 android:id="@+id/et_new_pwd"
                 style="@style/et_normal"
                 android:background="@null"
                 android:drawableLeft="@mipmap/password"
                 android:drawablePadding="@dimen/drawablepadding_18dp"
-                android:hint="请确认新密码"
+                android:hint="请输入新密码"
                 android:inputType="textPassword"/>
 
             <View style="@style/line_horizontal"/>

@@ -10,7 +10,7 @@ import com.yxkj.deliveryman.callback.CommenDialogSureListener;
 import com.yxkj.deliveryman.callback.CompleteListener;
 import com.yxkj.deliveryman.util.IntentUtil;
 import com.yxkj.deliveryman.util.TimeCountUtil;
-import com.yxkj.deliveryman.view.CommenDialog;
+import com.yxkj.deliveryman.view.dialog.CommonYesOrNoDialog;
 
 /**
  * 忘记密码和短信验证码登录页面
@@ -22,8 +22,6 @@ public class ForgetPwdActivity extends BaseActivity implements CommenDialogSureL
     private Button btn_login;
     /*倒计时*/
     private TimeCountUtil timeCountUtil;
-    /*用密码登录*/
-    private TextView tv_login_pwd;
     /*0->忘密码，1->短信验证码登录*/
     private int type;
 
@@ -41,19 +39,17 @@ public class ForgetPwdActivity extends BaseActivity implements CommenDialogSureL
     public void initView() {
         tv_get_code = findViewByIdNoCast(R.id.tv_get_code);
         btn_login = findViewByIdNoCast(R.id.btn_login);
-        tv_login_pwd = findViewByIdNoCast(R.id.tv_login_pwd);
     }
 
     @Override
     public void initData() {
         timeCountUtil = new TimeCountUtil();
-        showLoginPwd();
     }
 
 
     @Override
     public void setEvent() {
-        setOnClick(btn_login, tv_get_code, tv_login_pwd);
+        setOnClick(btn_login, tv_get_code);
         timeCountUtil.setCompleteListener(this);
     }
 
@@ -66,23 +62,11 @@ public class ForgetPwdActivity extends BaseActivity implements CommenDialogSureL
                     cancleTimeCount();
                 }
                 break;
-            case R.id.tv_login_pwd:
-                finish();
-                break;
             case R.id.tv_get_code:
-                CommenDialog commenDialog = new CommenDialog();
-                commenDialog.setDialogSureListener(this);
-                commenDialog.show(getSupportFragmentManager(), "commenDialog");
+                CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog();
+                commonYesOrNoDialog.setDialogSureListener(this);
+                commonYesOrNoDialog.show(getSupportFragmentManager(), "commonYesOrNoDialog");
                 break;
-        }
-    }
-
-    /**
-     * 短信验证码登录时显示该按钮
-     */
-    private void showLoginPwd() {
-        if (type == 1) {
-            tv_login_pwd.setVisibility(View.VISIBLE);
         }
     }
 

@@ -13,7 +13,7 @@ import com.yxkj.deliveryman.base.BaseFragment;
 import com.yxkj.deliveryman.callback.MainPageClickListener;
 import com.yxkj.deliveryman.util.IntentUtil;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
-import com.yxkj.deliveryman.view.MainPagePopupWindow;
+import com.yxkj.deliveryman.view.popupwindow.MainPagePopupWindow;
 
 import java.util.ArrayList;
 import java.util.List;

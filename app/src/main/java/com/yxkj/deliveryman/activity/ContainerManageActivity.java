@@ -18,9 +18,9 @@ import com.yxkj.deliveryman.callback.CommenDialogSureListener;
 import com.yxkj.deliveryman.permission.RxPermissions;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
 import com.yxkj.deliveryman.util.UploadImageUtil;
-import com.yxkj.deliveryman.view.BotomPopWindow;
-import com.yxkj.deliveryman.view.CommenDialog;
-import com.yxkj.deliveryman.view.CompleteSupPopWindow;
+import com.yxkj.deliveryman.view.popupwindow.BotomPopWindow;
+import com.yxkj.deliveryman.view.dialog.CommonYesOrNoDialog;
+import com.yxkj.deliveryman.view.popupwindow.CompleteSupPopWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,10 +109,10 @@ public class ContainerManageActivity extends BaseActivity implements CommenDialo
 
             } else {
                 //如果用户选择了不再提醒，那么就会一直走这一步
-                CommenDialog commenDialog = new CommenDialog();
-                commenDialog.setTv_content("请允许系统使用您的相机");
-                commenDialog.setBtn_sure("去授权");
-                commenDialog.setDialogSureListener(() -> {
+                CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog();
+                commonYesOrNoDialog.setTv_content("请允许系统使用您的相机");
+                commonYesOrNoDialog.setBtn_sure("去授权");
+                commonYesOrNoDialog.setDialogSureListener(() -> {
                     //引导用户至设置页手动授权
                     Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                     Uri uri = Uri.fromParts("package", getApplicationContext().getPackageName(), null);
