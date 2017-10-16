@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    tools:context="com.yxkj.deliveryman.activity.LoginActivity">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical"
+              tools:context="com.yxkj.deliveryman.activity.LoginActivity">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="186dp"
         android:scaleType="centerCrop"
-        android:src="@mipmap/bg_login" />
+        android:src="@mipmap/bg_login"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,18 +31,18 @@
             android:drawableLeft="@mipmap/phone"
             android:drawablePadding="@dimen/drawablepadding_18dp"
             android:hint="请输入手机号"
-            android:inputType="phone" />
+            android:inputType="phone"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@mipmap/warning"
-            android:text="非管家账号，请重新输入"
             android:drawablePadding="2dp"
+            android:text="非管家账号，请重新输入"
             android:textColor="@color/red_text"
             android:textSize="@dimen/sp_12"
             android:visibility="gone"
-            tools:visibility="visible" />
+            tools:visibility="visible"/>
 
     </LinearLayout>
 
@@ -51,7 +51,7 @@
         android:layout_height="1dp"
         android:layout_marginLeft="43dp"
         android:layout_marginRight="43dp"
-        android:background="@color/gray_bg" />
+        android:background="@color/gray_bg"/>
 
     <EditText
         android:id="@+id/et_pwd"
@@ -62,14 +62,14 @@
         android:drawableLeft="@mipmap/password"
         android:drawablePadding="@dimen/drawablepadding_18dp"
         android:hint="请输入密码"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="43dp"
         android:layout_marginRight="43dp"
-        android:background="@color/gray_bg" />
+        android:background="@color/gray_bg"/>
 
 
     <Button
@@ -82,7 +82,7 @@
         android:background="@drawable/btn_login_bg"
         android:text="登 录"
         android:textColor="@color/white"
-        android:textSize="@dimen/sp_20" />
+        android:textSize="@dimen/sp_20"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -96,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="用短信验证码登录"
-            android:textColor="@color/gray1_text" />
+            android:textColor="@color/gray1_text"/>
 
         <TextView
             android:id="@+id/tv_forget_pwd"
@@ -104,6 +104,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="忘记密码"
-            android:textColor="@color/orange_bg" />
+            android:textColor="@color/orange_bg"/>
     </LinearLayout>
 </LinearLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RichToolBar">
+        <attr name="title_text" format="string"/>
+        <attr name="right_text" format="string"/>
+        <attr name="left_img_src" format="reference"/>
+    </declare-styleable>
+
+</resources>
