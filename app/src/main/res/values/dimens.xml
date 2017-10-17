@@ -12,4 +12,6 @@
     <dimen name="dialog_width_270dp">270dp</dimen>
     <dimen name="radius_10dp">10dp</dimen>
     <dimen name="layout_title_18sp">18sp</dimen>
+    <dimen name="avatar_71dp">71dp</dimen>
+    <dimen name="normal_item_52dp">52dp</dimen>
 </resources>

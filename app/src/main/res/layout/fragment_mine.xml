@@ -1,33 +1,51 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.yxkj.deliveryman.frament.MineFragment">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/app_bg"
+              android:orientation="vertical"
+              tools:context="com.yxkj.deliveryman.frament.MineFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:text="我的"
-        android:textColor="@color/black"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/tv_user"
+    <com.yxkj.deliveryman.view.RichToolBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:text="账户：12345678910" />
+        app:title_text="我的"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <ImageView
+            android:layout_width="@dimen/avatar_71dp"
+            android:layout_height="@dimen/avatar_71dp"
+            android:src="@mipmap/ic_launcher_round"/>
+
+        <TextView
+            android:id="@+id/tv_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:text="账户：12345678910"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/sp_16"/>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_pwd"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_height="@dimen/normal_item_52dp"
         android:layout_marginTop="10dp"
-        android:drawableRight="@mipmap/ic_launcher_round"
+        android:background="@color/white"
+        android:drawableRight="@mipmap/password"
         android:gravity="center_vertical"
-        android:text="密码" />
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:text="密码"
+        android:textColor="@color/black_text"/>
 </LinearLayout>
