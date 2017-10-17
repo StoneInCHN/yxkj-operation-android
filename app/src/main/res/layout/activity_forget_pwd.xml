@@ -61,7 +61,7 @@
 
         </LinearLayout>
 
-        <View style="@style/line_horizontal"/>
+        <View style="@style/line_horizontal_1dp"/>
 
         <EditText
             android:id="@+id/et_code"
@@ -73,7 +73,7 @@
             android:inputType="number"
             android:maxLength="6"/>
 
-        <View style="@style/line_horizontal"/>
+        <View style="@style/line_horizontal_1dp"/>
 
         <Button
             android:id="@+id/btn_login"

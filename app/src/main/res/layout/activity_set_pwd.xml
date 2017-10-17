@@ -65,7 +65,7 @@
 
             </LinearLayout>
 
-            <View style="@style/line_horizontal"/>
+            <View style="@style/line_horizontal_1dp"/>
 
             <EditText
                 style="@style/et_normal"
@@ -76,7 +76,7 @@
                 android:inputType="number"
                 android:maxLength="6"/>
 
-            <View style="@style/line_horizontal"/>
+            <View style="@style/line_horizontal_1dp"/>
 
             <EditText
                 android:id="@+id/et_new_pwd"
@@ -87,7 +87,7 @@
                 android:hint="请输入新密码"
                 android:inputType="textPassword"/>
 
-            <View style="@style/line_horizontal"/>
+            <View style="@style/line_horizontal_1dp"/>
 
             <TextView
                 android:layout_width="match_parent"

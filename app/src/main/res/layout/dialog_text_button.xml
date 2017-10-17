@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/dialog_width_270dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_round_white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/dp_14">
+
+    <TextView
+        android:id="@+id/tv_title_dialog_text_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black_text"
+        android:textSize="@dimen/sp_15"
+        tools:text="系统提示"/>
+
+    <TextView
+        android:id="@+id/tv_content_dialog_text_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:paddingLeft="@dimen/dp_14"
+        android:paddingRight="@dimen/dp_14"
+        android:textColor="@color/black_text"
+        tools:text="你尚未完成简单森安静安静反打三番大三番啊懂金帆达三番ad三分"/>
+
+    <View
+        style="@style/line_horizontal_1px"
+        android:layout_marginTop="17dp"/>
+
+    <TextView
+        android:id="@+id/tv_confirm_dialog_text_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="@dimen/dp_14"
+        android:paddingTop="@dimen/dp_14"
+        android:text="确定"
+        android:textColor="@color/black_text"
+        android:textSize="@dimen/sp_15"/>
+
+</LinearLayout>

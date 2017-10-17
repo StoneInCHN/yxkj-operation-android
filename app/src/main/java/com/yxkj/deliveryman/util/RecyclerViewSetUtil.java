@@ -19,21 +19,7 @@ import jp.wasabeef.recyclerview.adapters.AnimationAdapter;
 
 public class RecyclerViewSetUtil {
     public static void setRecyclerView(Context context, LRecyclerView recyclerView, RecyclerView.Adapter adapter) {
-        //设置动画
-        AnimationAdapter mAdapter = new AlphaInAnimationAdapter(adapter);
-        mAdapter.setFirstOnly(false);
-        mAdapter.setDuration(500);
-        //设置LayoutManager
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-//        recyclerView.setLayoutManager(new GridLayoutManager(context,5));
-        //设置adpter
-        recyclerView.setAdapter(new LRecyclerViewAdapter(mAdapter));
-        //设置分割线
-//        recyclerView.addItemDecoration(SuperDividerUtil.newShapeDivider().setStartSkipCount(1).setEndSkipCount(0));
-        //设置头部加载颜色
-        recyclerView.setHeaderViewColor(R.color.gray_text, R.color.gray_text, R.color.app_bg);
-        //设置底部加载颜色
-        recyclerView.setFooterViewColor(R.color.gray_text, R.color.gray_text, R.color.app_bg);
+        setRecyclerView(context, recyclerView, adapter, false);
     }
 
     public static void setRecyclerView(Context context, LRecyclerView recyclerView, RecyclerView.Adapter adapter, boolean isLine) {
@@ -47,8 +33,9 @@ public class RecyclerViewSetUtil {
         //设置adpter
         recyclerView.setAdapter(new LRecyclerViewAdapter(mAdapter));
         //设置分割线
-        if (isLine)
+        if (isLine) {
             recyclerView.addItemDecoration(SuperDividerUtil.newShapeDivider().setStartSkipCount(1).setEndSkipCount(0));
+        }
         //设置头部加载颜色
         recyclerView.setHeaderViewColor(R.color.gray_text, R.color.gray_text, R.color.app_bg);
         //设置底部加载颜色

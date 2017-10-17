@@ -10,9 +10,14 @@
         <item name="windowActionBar">false</item>
     </style>
 
-    <style name="line_horizontal">
+    <style name="line_horizontal_1dp">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/divider_1dp</item>
+        <item name="android:background">@color/gray_divider</item>
+    </style>
+    <style name="line_horizontal_1px">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/divider_1px</item>
         <item name="android:background">@color/gray_divider</item>
     </style>
 
@@ -24,6 +29,6 @@
         <item name="android:textColor">@color/black_text</item>
         <item name="android:textColorHint">@color/gray_edittext_hint</item>
 
-
     </style>
+
 </resources>

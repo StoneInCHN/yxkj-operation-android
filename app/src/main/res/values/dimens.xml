@@ -8,4 +8,7 @@
     <dimen name="divider_1px">1px</dimen>
     <dimen name="set_pwd_padding_43dp">43dp</dimen>
     <dimen name="drawablepadding_18dp">18dp</dimen>
+    <dimen name="sp_15">15dp</dimen>
+    <dimen name="dialog_width_270dp">270dp</dimen>
+    <dimen name="radius_10dp">10dp</dimen>
 </resources>

@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void initData() {
-        tabHost.setup(this, getSupportFragmentManager(), R.id.layout_fragments);
+        tabHost.setup(this, getSupportFragmentManager(), R.id.fm_fragments);
         tabWidget = tabHost.getTabWidget();
         tabWidget.setDividerDrawable(null);
         Observable.range(0, 3).subscribe(n -> tabHost.addTab(tabHost.newTabSpec(titles[n]).setIndicator(getItemView(n)), fragments[n], null));

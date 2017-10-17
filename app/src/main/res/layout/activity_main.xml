@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <FrameLayout
-        android:id="@+id/layout_fragments"
+        android:id="@+id/fm_fragments"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
@@ -17,11 +17,5 @@
         android:id="@android:id/tabhost"
         android:layout_width="match_parent"
         android:background="@color/white"
-        android:layout_height="wrap_content">
-
-        <FrameLayout
-            android:id="@android:id/tabcontent"
-            android:layout_width="0dp"
-            android:layout_height="0dp" />
-    </android.support.v4.app.FragmentTabHost>
+        android:layout_height="wrap_content"/>
 </LinearLayout>

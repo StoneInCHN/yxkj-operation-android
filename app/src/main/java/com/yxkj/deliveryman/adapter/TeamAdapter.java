@@ -3,12 +3,13 @@ package com.yxkj.deliveryman.adapter;
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseRecyclerViewAdapter;
 import com.yxkj.deliveryman.base.BaseViewHolder;
-import com.yxkj.deliveryman.view.popupwindow.ContainerSupPopWindow;
+import com.yxkj.deliveryman.util.ToastUtil;
+import com.yxkj.deliveryman.view.dialog.TextButtonDialog;
+import com.yxkj.deliveryman.view.dialog.TextShortTimeDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ class TeamAdapter extends BaseRecyclerViewAdapter<String> {
     public TeamAdapter(Context context) {
         super(context);
         for (int i = 0; i < 6; i++) {
-            list.add(i+"");
+            list.add(i + "");
         }
     }
 
@@ -43,8 +44,9 @@ class TeamAdapter extends BaseRecyclerViewAdapter<String> {
         containerAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, Object data) {
-                ContainerSupPopWindow popWindow = new ContainerSupPopWindow(context);
-                popWindow.showAtLocation(holder.itemView, Gravity.NO_GRAVITY, 0, 0);
+                /*ContainerSupPopWindow popWindow = new ContainerSupPopWindow(context);
+                popWindow.showAtLocation(holder.itemView, Gravity.NO_GRAVITY, 0, 0);*/
+                new TextButtonDialog(recyclerView.getContext(), "系统提示", "就范大姐返单阿三番啊懂放大放大森达森大森", "确定").show();
             }
         });
     }
