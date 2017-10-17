@@ -1,20 +1,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.yxkj.deliveryman.frament.MessageFragment">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.yxkj.deliveryman.frament.MessageFragment">
 
-    <TextView
+    <com.yxkj.deliveryman.view.RichToolBar
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:text="消息"
-        android:textColor="@color/black"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content"
+        app:title_text="消息"/>
 
     <com.github.jdsjlzx.recyclerview.LRecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/lrv_fragment_message"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:background="@color/white"/>
 </LinearLayout>

@@ -2,16 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="12dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
+                android:layout_height="50dp"
+                android:background="@color/white"
                 android:paddingTop="12dp">
 
     <ImageView
         android:id="@+id/iv_back_toolbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="8dp"
         android:visibility="gone"
         tools:src="@mipmap/phone"
         tools:visibility="visible"/>
@@ -21,6 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textColor="@color/black_text"
+        android:textSize="@dimen/layout_title_18sp"
         android:visibility="gone"
         tools:text="title"
         tools:visibility="visible"/>
@@ -30,8 +33,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="8dp"
+        android:textColor="@color/black_text"
         android:visibility="gone"
         tools:text="右按键"
         tools:visibility="visible"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_1px"
+        android:layout_alignParentBottom="true"
+        android:background="@color/gray_divider"/>
 
 </RelativeLayout>

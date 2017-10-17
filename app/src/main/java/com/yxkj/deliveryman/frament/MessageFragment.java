@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class MessageFragment extends BaseFragment {
     /*消息列表*/
-    private LRecyclerView recyclerView;
+    private LRecyclerView mLrv;
     private MessageAdapter messageAdapter;
 
     @Override
@@ -32,13 +32,13 @@ public class MessageFragment extends BaseFragment {
 
     @Override
     protected void initView(View rootView) {
-        recyclerView = findViewByIdNoCast(R.id.recyclerView);
+        mLrv = findViewByIdNoCast(R.id.lrv_fragment_message);
     }
 
     @Override
     protected void initData() {
         messageAdapter = new MessageAdapter(getActivity());
-        RecyclerViewSetUtil.setRecyclerView(getActivity(), recyclerView, messageAdapter);
+        RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, messageAdapter);
         messageAdapter.settList(getData());
     }
 

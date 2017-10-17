@@ -1,40 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/dp_10">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="89dp"
+              android:gravity="center"
+              android:orientation="vertical"
+              android:padding="@dimen/dp_10"
+              tools:background="@color/white">
 
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher_round" />
+        android:layout_gravity="right"
+        android:text="17/8/19 15:25:12"
+        android:textSize="@dimen/sp_12"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher_round"/>
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="补货通知" />
+                android:text="补货通知"
+                android:textColor="@color/black_text"/>
 
             <TextView
+                android:layout_alignParentBottom="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="17/8/19 15:25:12" />
-        </LinearLayout>
+                android:layout_marginTop="@dimen/dp_10"
+                android:textSize="@dimen/sp_12"
+                tools:text="花样年T3优享空间急需补货15件"/>
 
-        <TextView
+        </RelativeLayout>
+
+        <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:text="花样年T3优享空间急需补货15件" />
+            android:src="@mipmap/password"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
+
 </LinearLayout>
