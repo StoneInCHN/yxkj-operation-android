@@ -36,6 +36,7 @@ public class ReplenishAdapter extends RecyclerView.Adapter<ReplenishAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        //某楼里面按组分的list
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
         TeamAdapter teamAdapter = new TeamAdapter(context);
         teamAdapter.settList(list);

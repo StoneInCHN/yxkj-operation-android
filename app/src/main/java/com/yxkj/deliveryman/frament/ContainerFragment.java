@@ -54,6 +54,7 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
 
     @Override
     protected void initData() {
+        //按大楼分的list
         replenishAdapter = new ReplenishAdapter(getData(), getActivity());
         RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, replenishAdapter);
     }
