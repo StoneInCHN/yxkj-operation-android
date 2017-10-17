@@ -5,6 +5,9 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
+import com.github.jdsjlzx.util.RecyclerViewStateUtils;
+import com.github.jdsjlzx.util.RecyclerViewUtils;
+import com.github.jdsjlzx.view.LoadingFooter;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.activity.SupRecordActivity;
 import com.yxkj.deliveryman.activity.WaitSupplementActivity;
@@ -57,6 +60,8 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
         //按大楼分的list
         replenishAdapter = new ReplenishAdapter(getData(), getActivity());
         RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, replenishAdapter);
+        mLrv.setLoadMoreEnabled(false);
+
     }
 
     @Override

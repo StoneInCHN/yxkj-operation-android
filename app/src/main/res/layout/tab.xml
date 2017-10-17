@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_tab"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
     tools:background="@color/gray_text">
@@ -20,7 +20,9 @@
         android:id="@+id/tab_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:textSize="@dimen/sp_10"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:text="首页"
         android:textColor="@color/black_text"/>
 

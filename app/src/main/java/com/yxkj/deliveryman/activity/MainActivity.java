@@ -1,6 +1,7 @@
 package com.yxkj.deliveryman.activity;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentTabHost;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,6 +22,14 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     private String[] titles = {"货柜", "消息", "我的"};
     /*首页三个个页面*/
     private Class fragments[] = {ContainerFragment.class, MessageFragment.class, MineFragment.class};
+    /**
+     * icon的图标
+     */
+    private int[] mFragmentIcons = {R.mipmap.container, R.mipmap.message, R.mipmap.my};
+    /**
+     * 灰色icon图标
+     */
+    private int[] mFragmentGreyIcons = {R.mipmap.container_grey, R.mipmap.message_grey, R.mipmap.my_grey};
 
     private FragmentTabHost tabHost;
 
@@ -66,9 +75,11 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         ImageView tab_icon = view.findViewById(R.id.tab_icon);
         tab_title.setText(titles[position]);
         if (position == 0) {
-            tab_title.setTextColor(Color.GREEN);
+            tab_title.setTextColor(getResources().getColor(R.color.orange_text));
+            tab_icon.setImageResource(mFragmentIcons[position]);
         } else {
-            tab_title.setTextColor(Color.GRAY);
+            tab_title.setTextColor(getResources().getColor(R.color.black_text));
+            tab_icon.setImageResource(mFragmentGreyIcons[position]);
         }
 
         return view;
@@ -82,9 +93,11 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             ImageView tab_icon = view.findViewById(R.id.tab_icon);
             String text = tab_title.getText().toString();
             if (tabId.equals(text)) {
-                tab_title.setTextColor(Color.GREEN);
+                tab_title.setTextColor(getResources().getColor(R.color.orange_text));
+                tab_icon.setImageResource(mFragmentIcons[i]);
             } else {
-                tab_title.setTextColor(Color.GRAY);
+                tab_title.setTextColor(getResources().getColor(R.color.black_text));
+                tab_icon.setImageResource(mFragmentGreyIcons[i]);
             }
         }
     }
