@@ -37,7 +37,7 @@ public class CommonYesOrNoDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        View view = inflater.inflate(R.layout.view_commen_dialog, container);
+        View view = inflater.inflate(R.layout.dialog_common_yesorno, container);
         tv_title = view.findViewById(R.id.tv_title);
         tv_content = view.findViewById(R.id.tv_content);
         btn_cancle = view.findViewById(R.id.btn_cancle);

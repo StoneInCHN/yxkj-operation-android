@@ -15,9 +15,16 @@
         <item name="android:layout_height">@dimen/divider_1dp</item>
         <item name="android:background">@color/gray_divider</item>
     </style>
+
     <style name="line_horizontal_1px">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/divider_1px</item>
+        <item name="android:background">@color/gray_divider</item>
+    </style>
+
+    <style name="line_vertical_1px">
+        <item name="android:layout_width">@dimen/divider_1px</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/gray_divider</item>
     </style>
 
