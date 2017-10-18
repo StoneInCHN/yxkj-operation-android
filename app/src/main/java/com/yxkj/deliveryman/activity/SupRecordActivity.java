@@ -15,7 +15,10 @@ import java.util.List;
  * 补货记录
  */
 public class SupRecordActivity extends BaseActivity {
-    private LRecyclerView recyclerView;
+    /**
+     * 按时间记录的列表
+     */
+    private LRecyclerView mRlvSupRecord;
     private SupRecordAdapter adapter;
 
     @Override
@@ -30,14 +33,14 @@ public class SupRecordActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        recyclerView = findViewByIdNoCast(R.id.recyclerView);
+        mRlvSupRecord = findViewByIdNoCast(R.id.lrv_sup_record);
     }
 
     @Override
     public void initData() {
         adapter = new SupRecordAdapter(this);
         adapter.settList(getData());
-        RecyclerViewSetUtil.setRecyclerView(this, recyclerView, adapter);
+        RecyclerViewSetUtil.setRecyclerView(this, mRlvSupRecord, adapter);
     }
 
     @Override

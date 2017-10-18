@@ -52,11 +52,13 @@ public class MainPagePopupWindow extends PopupWindow {
         tv_replenish.setOnClickListener(view1 -> {
             if (clickListener != null) {
                 clickListener.onTvreplenish();
+                dismiss();
             }
         });
         tv_replenish_record.setOnClickListener(view1 -> {
             if (clickListener != null) {
                 clickListener.onTvreplenishRecord();
+                dismiss();
             }
         });
     }

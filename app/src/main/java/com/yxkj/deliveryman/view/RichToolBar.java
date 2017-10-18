@@ -55,7 +55,10 @@ public class RichToolBar extends RelativeLayout {
         String rightText = ta.getString(R.styleable.RichToolBar_right_text);
         Drawable leftImgSrc = ta.getDrawable(R.styleable.RichToolBar_left_img_src);
         Drawable rightImgSrc = ta.getDrawable(R.styleable.RichToolBar_right_img_src);
+        boolean isLeftBackVisible = ta.getBoolean(R.styleable.RichToolBar_left_back_visible, false);
         ta.recycle();
+
+        mIvBack.setVisibility(isLeftBackVisible ? VISIBLE : INVISIBLE);
 
         setTitle(title);
         setRightText(rightText);
