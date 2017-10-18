@@ -2,8 +2,6 @@ package com.yxkj.deliveryman.activity;
 
 import android.support.design.widget.TabLayout;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
@@ -71,14 +69,28 @@ public class WaitSupplementActivity extends BaseActivity implements TabLayout.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_spinner:
-                showAddressPopup();
+                showOrDismissAddressPopup();
                 break;
         }
     }
 
-    private void showAddressPopup() {
-        waitSupAddressPopupWindow.showAsDropDown(tvSpinner);
-        waitSupAddressPopupWindow.setList(entries);
+    /**
+     * 显示或隐藏地址选择框
+     */
+
+    private boolean isAddressWindowOpen = false;
+
+    private void showOrDismissAddressPopup() {
+        if (isAddressWindowOpen) {//显示状态
+            waitSupAddressPopupWindow.dismiss();
+        } else {//收起状态
+            waitSupAddressPopupWindow.showAsDropDown(tvSpinner);
+            waitSupAddressPopupWindow.setList(entries);
+        }
+
+        isAddressWindowOpen = !isAddressWindowOpen;
+
+
     }
 
     /**

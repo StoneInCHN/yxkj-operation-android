@@ -106,7 +106,9 @@ public class RichToolBar extends RelativeLayout {
 
             //点击右边，text or image
             case R.id.fl_right_toolbar:
-                mOnViewClickListener.onClickRight();
+                if (mOnViewClickListener != null) {
+                    mOnViewClickListener.onClickRight();
+                }
                 break;
 
         }

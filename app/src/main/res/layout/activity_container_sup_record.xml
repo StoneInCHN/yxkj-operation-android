@@ -8,23 +8,11 @@
     android:orientation="vertical"
     tools:context="com.yxkj.deliveryman.activity.ContainerSupRecordActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="@dimen/dp_14"
-            android:src="@color/colorAccent" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="香年广场T3\n编号：001" />
-    </RelativeLayout>
+   <com.yxkj.deliveryman.view.RichToolBar
+       android:layout_width="match_parent"
+       app:title_text="香年广场T3（100000001）"
+       app:left_back_visible="true"
+       android:layout_height="wrap_content"/>
 
     <com.github.jdsjlzx.recyclerview.LRecyclerView
         android:id="@+id/recyclerView"

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
@@ -41,7 +43,7 @@ public class WaitSupAddressPopupWindow extends PopupWindow {
     private void initView() {
         View view = LayoutInflater.from(mContext).inflate(R.layout.view_wait_sup_address, null);
         setContentView(view);
-
+        setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         mLrv = view.findViewById(R.id.lrv_wait_sup);
         addressAdapter = new WaitSupAddressAdapter(mContext);
         RecyclerViewSetUtil.setRecyclerView(mContext, mLrv, addressAdapter, true);
