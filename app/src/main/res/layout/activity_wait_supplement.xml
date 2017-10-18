@@ -1,76 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
-                android:orientation="vertical"
-                tools:context="com.yxkj.deliveryman.activity.WaitSupplementActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical"
+              tools:context="com.yxkj.deliveryman.activity.WaitSupplementActivity">
+
+    <com.yxkj.deliveryman.view.RichToolBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:left_back_visible="true"
+        app:title_text="待补清单"/>
 
     <RelativeLayout
-        android:id="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher_round"/>
+        android:layout_height="45dp"
+        android:paddingLeft="27dp"
+        android:paddingRight="17dp">
 
         <TextView
-            android:id="@+id/tv_wait_sup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="待补清单:"/>
-
-        <Spinner
-            android:id="@+id/spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/tv_wait_sup"
-            android:dropDownVerticalOffset="25dp"
-            android:gravity="bottom"
-            android:spinnerMode="dropdown"/>
+            android:text="香年广场T3"
+            android:textColor="@color/black_text"/>
+
+        <TextView
+            android:id="@+id/tv_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawablePadding="10dp"
+            android:drawableRight="@mipmap/triangle_up"
+            android:gravity="center"
+            android:text="选择优享空间"
+            android:textColor="@color/gray_edittext_hint"/>
+
     </RelativeLayout>
 
-    <com.yxkj.deliveryman.view.RichToolBar
-        app:title_text="待补清单"
-        app:left_back_visible="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
     <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_below="@id/top"
-        android:background="@color/black"/>
+        style="@style/line_horizontal_1px"/>
+
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/top"
         app:tabGravity="fill"
         app:tabIndicatorColor="@android:color/holo_blue_light"
         app:tabMode="scrollable"
         app:tabSelectedTextColor="@android:color/holo_green_light"/>
 
-    <com.github.jdsjlzx.recyclerview.LRecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/tablayout"/>
+    <View
+        style="@style/line_horizontal_1px"/>
 
-    <Button
-        android:id="@+id/btn_complete"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dp_22"
-        android:text="完成取货"/>
-</RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.github.jdsjlzx.recyclerview.LRecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <Button
+            android:id="@+id/btn_complete"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dp_22"
+            android:background="@drawable/bg_round_orange"
+            android:text="完成取货"
+            android:textColor="@color/white"/>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

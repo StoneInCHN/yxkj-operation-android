@@ -4,12 +4,14 @@ import android.support.design.widget.TabLayout;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.adapter.WaitSupListAdapter;
 import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
+import com.yxkj.deliveryman.view.popupwindow.WaitSupAddressPopupWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +28,10 @@ public class WaitSupplementActivity extends BaseActivity implements TabLayout.On
     private String[] tabs = new String[]{"全部", "水饮牛奶", "饼干蛋糕", "美味零食", "香烟"};
     /*待补清单列表*/
     private LRecyclerView recyclerView;
+    private TextView tvSpinner;
     private WaitSupListAdapter adapter;
-    private Spinner spinner;
     private String[] entries = new String[]{"全部", "香年广场T3", "美年广场T1", "软件园C2", "软件园E1"};
+    private WaitSupAddressPopupWindow waitSupAddressPopupWindow;
 
     @Override
     public int getContentViewId() {
@@ -44,15 +47,14 @@ public class WaitSupplementActivity extends BaseActivity implements TabLayout.On
     public void initView() {
         tablayout = findViewByIdNoCast(R.id.tablayout);
         recyclerView = findViewByIdNoCast(R.id.recyclerView);
-        spinner = findViewByIdNoCast(R.id.spinner);
+        tvSpinner = findViewByIdNoCast(R.id.tv_spinner);
     }
 
     @Override
     public void initData() {
         initTabLayout();
-        ArrayAdapter<String> spinnerAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, entries);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(spinnerAdapter);
+        waitSupAddressPopupWindow = new WaitSupAddressPopupWindow(mContext);
+
         adapter = new WaitSupListAdapter(this);
         adapter.settList(getData());
         RecyclerViewSetUtil.setRecyclerView(this, recyclerView, adapter, true);
@@ -62,11 +64,21 @@ public class WaitSupplementActivity extends BaseActivity implements TabLayout.On
     public void setEvent() {
         /*设置TabLayout切换监听*/
         tablayout.addOnTabSelectedListener(this);
+        setOnClick(tvSpinner);
     }
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_spinner:
+                showAddressPopup();
+                break;
+        }
+    }
 
+    private void showAddressPopup() {
+        waitSupAddressPopupWindow.showAsDropDown(tvSpinner);
+        waitSupAddressPopupWindow.setList(entries);
     }
 
     /**
