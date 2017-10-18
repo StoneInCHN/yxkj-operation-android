@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -9,38 +10,19 @@
               android:orientation="vertical"
               tools:context="com.yxkj.deliveryman.frament.ContainerFragment">
 
-    <RelativeLayout
+    <com.yxkj.deliveryman.view.RichToolBar
+        android:id="@+id/rtb_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white"
-        android:paddingRight="12dp">
-
-        <TextView
-            android:id="@+id/tv_title_fragment_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="货柜(189)"
-            android:textColor="@color/black"
-            android:textSize="18sp"/>
-
-        <ImageView
-            android:id="@+id/iv_add_fragment_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/phone"
-            android:textColor="@color/black"
-            android:textStyle="bold"/>
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        app:right_img_src="@mipmap/add"
+        app:title_text="货柜(189)"/>
 
     <com.github.jdsjlzx.recyclerview.LRecyclerView
         android:id="@+id/lrv_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:layout_marginTop="12dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_marginTop="12dp"/>
 
 </LinearLayout>

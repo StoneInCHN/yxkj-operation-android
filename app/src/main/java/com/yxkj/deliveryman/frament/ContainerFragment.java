@@ -1,21 +1,20 @@
 package com.yxkj.deliveryman.frament;
 
 
+import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
-import com.github.jdsjlzx.util.RecyclerViewStateUtils;
-import com.github.jdsjlzx.util.RecyclerViewUtils;
-import com.github.jdsjlzx.view.LoadingFooter;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.activity.SupRecordActivity;
 import com.yxkj.deliveryman.activity.WaitSupplementActivity;
 import com.yxkj.deliveryman.adapter.ReplenishAdapter;
 import com.yxkj.deliveryman.base.BaseFragment;
 import com.yxkj.deliveryman.callback.MainPageClickListener;
+import com.yxkj.deliveryman.util.DisplayUtil;
 import com.yxkj.deliveryman.util.IntentUtil;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
+import com.yxkj.deliveryman.view.RichToolBar;
 import com.yxkj.deliveryman.view.popupwindow.MainPagePopupWindow;
 
 import java.util.ArrayList;
@@ -28,15 +27,13 @@ import butterknife.BindView;
  */
 public class ContainerFragment extends BaseFragment implements MainPageClickListener {
     /**
-     * 添加
-     */
-    @BindView(R.id.iv_add_fragment_container)
-     ImageView mIvAdd;
-    /**
      * 补货列表
      */
     @BindView(R.id.lrv_fragment_container)
-     LRecyclerView mLrv;
+    LRecyclerView mLrv;
+    @BindView(R.id.rtb_fragment_container)
+    RichToolBar mToolBar;
+
     /*补货列表适配器*/
     private ReplenishAdapter replenishAdapter;
 
@@ -52,7 +49,23 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
 
     @Override
     protected void initView(View rootView) {
+        mToolBar.setOnViewClickListener(new RichToolBar.OnViewClickListener() {
+            @Override
+            public void onClickRight() {
+                showPopupWindow();
+            }
 
+
+        });
+    }
+
+    private void showPopupWindow() {
+        MainPagePopupWindow pagePopupWindow = new MainPagePopupWindow(getActivity());
+        pagePopupWindow.setClickListener(this);
+        int offX = DisplayUtil.dip2px(getActivity(), 10);
+        int offY = mToolBar.getHeight() + DisplayUtil.getStatusBarHeight(getActivity());
+        //弹出位置用绝对位置来控制
+        pagePopupWindow.showAtLocation(mToolBar, Gravity.RIGHT | Gravity.TOP, offX, offY);
     }
 
     @Override
@@ -66,18 +79,11 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
 
     @Override
     protected void setEvent() {
-        setOnClick(mIvAdd);
+
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.iv_add_fragment_container:
-                MainPagePopupWindow pagePopupWindow = new MainPagePopupWindow(getActivity());
-                pagePopupWindow.showAsDropDown(mIvAdd);
-                pagePopupWindow.setClickListener(this);
-                break;
-        }
     }
 
     private List<String> getData() {

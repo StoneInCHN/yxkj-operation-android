@@ -21,5 +21,8 @@
     <color name="orange_text">#FBC205</color>
     <color name="gray_stroke">#CCCCCC</color>
     <color name="gray_divider">#CCCCCC</color>
+    <!--30%透明度-->
+    <color name="trans_30_black">#1E000000</color>
+
 
 </resources>

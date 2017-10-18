@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -35,6 +34,8 @@ public class RichToolBar extends RelativeLayout {
     TextView mTvTitle;
     @BindView(R.id.tv_right_toolbar)
     TextView mTvRight;
+    @BindView(R.id.iv_right_toolbar)
+    ImageView mIvRight;
 
     public RichToolBar(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -53,11 +54,13 @@ public class RichToolBar extends RelativeLayout {
         String title = ta.getString(R.styleable.RichToolBar_title_text);
         String rightText = ta.getString(R.styleable.RichToolBar_right_text);
         Drawable leftImgSrc = ta.getDrawable(R.styleable.RichToolBar_left_img_src);
+        Drawable rightImgSrc = ta.getDrawable(R.styleable.RichToolBar_right_img_src);
         ta.recycle();
 
         setTitle(title);
         setRightText(rightText);
         setLeftImgSrc(leftImgSrc);
+        setRightImgSrc(rightImgSrc);
     }
 
 
@@ -69,9 +72,19 @@ public class RichToolBar extends RelativeLayout {
     }
 
     public void setLeftImgSrc(Drawable drawable) {
-        mIvBack.setVisibility(VISIBLE);
-        mIvBack.setImageDrawable(drawable);
+        if (drawable != null) {
+            mIvBack.setVisibility(VISIBLE);
+            mIvBack.setImageDrawable(drawable);
+        }
     }
+
+    public void setRightImgSrc(Drawable drawable) {
+        if (drawable != null) {
+            mIvRight.setVisibility(VISIBLE);
+            mIvRight.setImageDrawable(drawable);
+        }
+    }
+
 
     public void setRightText(String text) {
         if (!TextUtils.isEmpty(text)) {
@@ -81,16 +94,18 @@ public class RichToolBar extends RelativeLayout {
     }
 
 
-    @OnClick({R.id.iv_back_toolbar, R.id.tv_right_toolbar})
+    @OnClick({R.id.iv_back_toolbar, R.id.fl_right_toolbar})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back_toolbar:
                 onClickBack();
                 break;
 
-            case R.id.tv_right_toolbar:
-                onClickRightText();
+            //点击右边，text or image
+            case R.id.fl_right_toolbar:
+                mOnViewClickListener.onClickRight();
                 break;
+
         }
     }
 
@@ -100,8 +115,14 @@ public class RichToolBar extends RelativeLayout {
         }
     }
 
-    protected void onClickRightText() {
 
+    public interface OnViewClickListener {
+        void onClickRight();
     }
 
+    private OnViewClickListener mOnViewClickListener;
+
+    public void setOnViewClickListener(OnViewClickListener onViewClickListener) {
+        mOnViewClickListener = onViewClickListener;
+    }
 }
