@@ -28,10 +28,8 @@ import io.reactivex.schedulers.Schedulers;
  * @Author： 曾强
  */
 
-public abstract class
-
-BaseActivity extends RxAppCompatActivity implements View.OnClickListener{
-    protected String TAG = getClass().getSimpleName();
+public abstract class BaseActivity extends RxAppCompatActivity implements View.OnClickListener{
+    protected final String TAG = getClass().getSimpleName();
     protected boolean useDefaultTitleBarColor;//状态栏颜色是否使用默认颜色
     protected Context mContext=this;
 

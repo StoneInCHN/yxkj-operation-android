@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.yxkj.deliveryman">
+          package="com.yxkj.deliveryman">
 
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".application.MyApplication"
@@ -14,26 +14,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- 登录页面 -->
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <!-- 登录页面 -->
+        <activity android:name=".activity.LoginActivity"/>
         <!-- 主页 -->
-        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.MainActivity"/>
         <!-- 忘记密码和短信登录页 -->
-        <activity android:name=".activity.ForgetPwdActivity" />
+        <activity android:name=".activity.ForgetPwdActivity"/>
         <!-- 修改密码页面 -->
-        <activity android:name=".activity.SetPwdActivity" />
-        <activity android:name=".activity.WaitSupplementActivity" />
-        <activity android:name=".activity.PassWordActivity" />
-        <activity android:name=".activity.FillinActivity" />
-        <activity android:name=".activity.ContainerManageActivity" />
-        <activity android:name=".activity.SupRecordActivity" />
-        <activity android:name=".activity.ContainerSupRecordActivity"></activity>
+        <activity android:name=".activity.SetPwdActivity"/>
+        <activity android:name=".activity.WaitSupplementActivity"/>
+        <activity android:name=".activity.PassWordActivity"/>
+        <activity android:name=".activity.FillinActivity"/>
+        <activity android:name=".activity.ContainerManageActivity"/>
+        <activity android:name=".activity.SupRecordActivity"/>
+        <activity android:name=".activity.ContainerSupRecordActivity"/>
     </application>
 
 </manifest>
