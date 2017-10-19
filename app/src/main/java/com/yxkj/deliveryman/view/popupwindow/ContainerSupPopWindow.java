@@ -5,7 +5,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -21,8 +20,7 @@ public class ContainerSupPopWindow extends PopupWindow {
     private Context context;
     /*开始补货*/
     private TextView tv_start;
-    /*取消*/
-    private ImageView img_back;
+    private TextView tv_cancel;
 
     public ContainerSupPopWindow(Context context) {
         this(context, null);
@@ -39,19 +37,20 @@ public class ContainerSupPopWindow extends PopupWindow {
     }
 
     private void init() {
-        View v = View.inflate(context, R.layout.view_container_sup, null);
-        tv_start = v.findViewById(R.id.tv_start);
-        img_back = v.findViewById(R.id.img_back);
+        View rootView = View.inflate(context, R.layout.view_sup_dialog, null);
+        tv_start = rootView.findViewById(R.id.tv_start_sup_dialog);
+        tv_cancel = rootView.findViewById(R.id.tv_cancel_sup_dialog);
+
         ViewGroup.LayoutParams l = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         setWidth(l.width);
         setHeight(l.height);
         setBackgroundDrawable(new BitmapDrawable());
         setFocusable(true);
-        setContentView(v);
+        setContentView(rootView);
         tv_start.setOnClickListener(view -> {
             IntentUtil.openActivity(context, ContainerManageActivity.class);
             dismiss();
         });
-        img_back.setOnClickListener(view -> dismiss());
+        tv_cancel.setOnClickListener(view -> dismiss());
     }
 }

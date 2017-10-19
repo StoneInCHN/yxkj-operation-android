@@ -21,6 +21,7 @@
         <item name="android:layout_height">@dimen/divider_1px</item>
         <item name="android:background">@color/gray_divider</item>
     </style>
+
     <style name="line_horizontal_white_1px">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/divider_1px</item>
@@ -40,6 +41,13 @@
         <item name="background">@null</item>
         <item name="android:textColor">@color/black_text</item>
         <item name="android:textColorHint">@color/gray_edittext_hint</item>
+    </style>
+
+    <style name="small_button_normal" parent="TextAppearance.AppCompat.Button">
+        <item name="android:layout_width">170dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textColor">@color/white</item>
 
     </style>
 

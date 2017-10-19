@@ -38,7 +38,7 @@ public class MessageFragment extends BaseFragment {
     @Override
     protected void initData() {
         messageAdapter = new MessageAdapter(getActivity());
-        RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, messageAdapter);
+        RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, messageAdapter,true);
         messageAdapter.settList(getData());
     }
 

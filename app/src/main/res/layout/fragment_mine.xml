@@ -42,7 +42,7 @@
         android:layout_height="@dimen/normal_item_52dp"
         android:layout_marginTop="10dp"
         android:background="@color/white"
-        android:drawableRight="@mipmap/password"
+        android:drawableRight="@mipmap/arrow_right"
         android:gravity="center_vertical"
         android:paddingLeft="14dp"
         android:paddingRight="14dp"

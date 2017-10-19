@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:text="17/8/19 15:25:12"
+        android:text="17/8/19 15:25"
         android:textSize="@dimen/sp_12"/>
 
     <LinearLayout
@@ -23,7 +23,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher_round"/>
+            android:src="@mipmap/inform"/>
 
 
         <RelativeLayout
@@ -46,13 +46,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:textSize="@dimen/sp_12"
-                tools:text="花样年T3优享空间急需补货15件"/>
+                android:text="花样年T3优享空间急需补货15件"/>
 
         </RelativeLayout>
 
         <ImageView
             android:layout_width="wrap_content"
-            android:src="@mipmap/password"
+            android:src="@mipmap/arrow_right"
             android:layout_gravity="center"
             android:layout_height="wrap_content"/>
 

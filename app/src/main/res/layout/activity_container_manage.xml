@@ -1,54 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.yxkj.deliveryman.activity.ContainerManageActivity">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:background="@color/white"
+                tools:context="com.yxkj.deliveryman.activity.ContainerManageActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <com.yxkj.deliveryman.view.RichToolBar
             android:layout_width="match_parent"
-            android:layout_height="50dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcher_round" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="A货柜管理" />
-        </RelativeLayout>
+            android:layout_height="wrap_content"
+            app:left_back_visible="true"
+            app:title_text="A货柜管理"/>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:tabGravity="fill"
             app:tabIndicatorColor="@android:color/holo_orange_light"
             app:tabMode="fixed"
-            app:tabGravity="fill"
-            app:tabSelectedTextColor="@color/black" />
+            app:tabSelectedTextColor="@color/black"/>
+
+        <View
+            style="@style/line_horizontal_1px"/>
 
         <com.github.jdsjlzx.recyclerview.LRecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingBottom="14dp">
+
+            <View
+                style="@style/line_horizontal_1px"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <Button
+                    style="@style/small_button_normal"
+                    android:layout_width="120dp"
+                    android:background="@drawable/bg_round_green"
+                    android:text="拍照完成"/>
+
+                <Button
+                    style="@style/small_button_normal"
+                    android:layout_width="120dp"
+                    android:layout_marginLeft="30dp"
+                    android:background="@drawable/bg_round_orange"
+                    android:text="暂停补货"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/tip_sup_need_take_picture"
+                android:textSize="@dimen/sp_12"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_photograph"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:text="拍照完成" />
 </RelativeLayout>

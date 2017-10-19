@@ -10,7 +10,7 @@
         android:layout_height="45dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/bg_round_green"
+        android:background="@drawable/bg_container_green"
         android:gravity="center"
         android:text="A货柜"/>
 
