@@ -36,6 +36,8 @@ public class RichToolBar extends RelativeLayout {
     TextView mTvRight;
     @BindView(R.id.iv_right_toolbar)
     ImageView mIvRight;
+    @BindView(R.id.view_line_divider)
+    View mLineDivider;
 
     public RichToolBar(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -56,9 +58,11 @@ public class RichToolBar extends RelativeLayout {
         Drawable leftImgSrc = ta.getDrawable(R.styleable.RichToolBar_left_img_src);
         Drawable rightImgSrc = ta.getDrawable(R.styleable.RichToolBar_right_img_src);
         boolean isLeftBackVisible = ta.getBoolean(R.styleable.RichToolBar_left_back_visible, false);
+        boolean isDividerVisible = ta.getBoolean(R.styleable.RichToolBar_is_divider_visible, true);
         ta.recycle();
 
         mIvBack.setVisibility(isLeftBackVisible ? VISIBLE : INVISIBLE);
+        mLineDivider.setVisibility(isDividerVisible ? VISIBLE : INVISIBLE);
 
         setTitle(title);
         setRightText(rightText);

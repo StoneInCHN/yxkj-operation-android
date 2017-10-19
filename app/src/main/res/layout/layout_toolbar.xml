@@ -58,6 +58,7 @@
     </FrameLayout>
 
     <View
+        android:id="@+id/view_line_divider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_1px"
         android:layout_alignParentBottom="true"

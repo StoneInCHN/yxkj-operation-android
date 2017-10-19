@@ -1,7 +1,9 @@
 package com.yxkj.deliveryman.activity;
 
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.view.View;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
@@ -52,6 +54,17 @@ public class WaitSupplementActivity extends BaseActivity implements TabLayout.On
     public void initData() {
         initTabLayout();
         waitSupAddressPopupWindow = new WaitSupAddressPopupWindow(mContext);
+        waitSupAddressPopupWindow.setBackgroundDrawable(null);
+        waitSupAddressPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                isAddressWindowOpen = !isAddressWindowOpen;
+                Drawable drawableDown = getResources().getDrawable(R.mipmap.triangle_down);
+                //必须给drawable设置setBounds
+                drawableDown.setBounds(0, 0, drawableDown.getMinimumWidth(), drawableDown.getMinimumHeight());
+                tvSpinner.setCompoundDrawables(null, null, drawableDown, null);
+            }
+        });
 
         adapter = new WaitSupListAdapter(this);
         adapter.settList(getData());
@@ -81,15 +94,15 @@ public class WaitSupplementActivity extends BaseActivity implements TabLayout.On
     private boolean isAddressWindowOpen = false;
 
     private void showOrDismissAddressPopup() {
-        if (isAddressWindowOpen) {//显示状态
-            waitSupAddressPopupWindow.dismiss();
-        } else {//收起状态
+        Drawable drawableUp = getResources().getDrawable(R.mipmap.triangle_up);
+        drawableUp.setBounds(0, 0, drawableUp.getMinimumWidth(), drawableUp.getMinimumHeight());
+        if (!isAddressWindowOpen) {//目前是收起状态
+            tvSpinner.setCompoundDrawables(null, null, drawableUp, null);
             waitSupAddressPopupWindow.showAsDropDown(tvSpinner);
             waitSupAddressPopupWindow.setList(entries);
         }
 
         isAddressWindowOpen = !isAddressWindowOpen;
-
 
     }
 

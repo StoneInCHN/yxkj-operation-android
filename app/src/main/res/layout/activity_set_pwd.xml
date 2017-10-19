@@ -13,10 +13,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.yxkj.deliveryman.view.RichToolBar
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/iv_back_get_code"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:left_img_src="@mipmap/warning"/>
+            android:padding="15dp"
+            android:src="@mipmap/back"/>
 
         <LinearLayout
             android:layout_width="match_parent"

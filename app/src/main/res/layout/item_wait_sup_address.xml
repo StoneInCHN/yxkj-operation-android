@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-          android:id="@+id/tv_address_item_wait_up"
-          android:layout_width="match_parent"
-          android:layout_height="50dp"
-          android:gravity="center_vertical"
-          android:orientation="vertical">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+
+    <TextView
+        android:id="@+id/tv_address_item_wait_up"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:paddingLeft="27dp"
+        tools:text="香年广场T3"/>
+
+    <View
+        style="@style/line_horizontal_1px"
+        android:layout_alignParentBottom="true"/>
 
 
-</TextView>
+</RelativeLayout>

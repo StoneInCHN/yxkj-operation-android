@@ -1,6 +1,7 @@
 package com.yxkj.deliveryman.view.popupwindow;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,7 @@ import java.util.List;
  *  @文件名:   WaitSupAddressPopupWindow
  *  @创建者:   hhe
  *  @创建时间:  2017/10/18 14:43
- *  @描述：    待补清单地址列表
+ *  @描述：    待补清单地址列表弹出框
  */
 public class WaitSupAddressPopupWindow extends PopupWindow {
 
@@ -44,9 +45,14 @@ public class WaitSupAddressPopupWindow extends PopupWindow {
         View view = LayoutInflater.from(mContext).inflate(R.layout.view_wait_sup_address, null);
         setContentView(view);
         setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        setBackgroundDrawable(new BitmapDrawable());
+        setFocusable(true);
+
         mLrv = view.findViewById(R.id.lrv_wait_sup);
         addressAdapter = new WaitSupAddressAdapter(mContext);
-        RecyclerViewSetUtil.setRecyclerView(mContext, mLrv, addressAdapter, true);
+        RecyclerViewSetUtil.setRecyclerView(mContext, mLrv, addressAdapter);
+        mLrv.setPullRefreshEnabled(false);
+        mLrv.setLoadMoreEnabled(false);
 
     }
 

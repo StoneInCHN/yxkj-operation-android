@@ -2,6 +2,7 @@ package com.yxkj.deliveryman.activity;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
@@ -22,6 +23,9 @@ public class ForgetPwdActivity extends BaseActivity implements CommenDialogSureL
     private Button btn_login;
     /*倒计时*/
     private TimeCountUtil timeCountUtil;
+
+    private ImageView iv_back;
+
     /*0->忘密码，1->短信验证码登录*/
     private int type;
 
@@ -39,6 +43,7 @@ public class ForgetPwdActivity extends BaseActivity implements CommenDialogSureL
     public void initView() {
         tv_get_code = findViewByIdNoCast(R.id.tv_get_code);
         btn_login = findViewByIdNoCast(R.id.btn_login);
+        iv_back = findViewByIdNoCast(R.id.iv_back_get_code);
     }
 
     @Override
@@ -49,7 +54,7 @@ public class ForgetPwdActivity extends BaseActivity implements CommenDialogSureL
 
     @Override
     public void setEvent() {
-        setOnClick(btn_login, tv_get_code);
+        setOnClick(btn_login, tv_get_code, iv_back);
         timeCountUtil.setCompleteListener(this);
     }
 
@@ -66,6 +71,9 @@ public class ForgetPwdActivity extends BaseActivity implements CommenDialogSureL
                 CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog();
                 commonYesOrNoDialog.setDialogSureListener(this);
                 commonYesOrNoDialog.show(getSupportFragmentManager(), "commonYesOrNoDialog");
+                break;
+            case R.id.iv_back_get_code:
+                finish();
                 break;
         }
     }

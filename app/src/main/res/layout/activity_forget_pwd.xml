@@ -5,13 +5,17 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/white"
+              android:fitsSystemWindows="true"
               android:orientation="vertical"
               tools:context="com.yxkj.deliveryman.activity.ForgetPwdActivity">
 
-    <com.yxkj.deliveryman.view.RichToolBar
-        android:layout_width="match_parent"
+
+    <ImageView
+        android:id="@+id/iv_back_get_code"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:left_img_src="@mipmap/warning"/>
+        android:padding="15dp"
+        android:src="@mipmap/back"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,11 +29,19 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="60dp"
             android:layout_marginTop="30dp"
             android:text="填写验证码"
             android:textColor="@color/black"
             android:textSize="24sp"/>
+
+        <TextView
+            android:id="@+id/tv_tip_have_send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/tip_have_send_code"
+            android:textColor="@color/gray_edittext_hint"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -84,6 +96,18 @@
             android:text="确 定"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_20"/>
+
+        <TextView
+            android:id="@+id/tv_forget_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:padding="10dp"
+            android:text="密码登录"
+            android:textColor="@color/orange_bg"
+            android:visibility="gone"
+            tools:visibility="visible"/>
 
     </LinearLayout>
 

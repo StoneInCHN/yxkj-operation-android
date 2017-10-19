@@ -6,6 +6,7 @@
         <attr name="left_img_src" format="reference"/>
         <attr name="left_back_visible" format="boolean"/>
         <attr name="right_img_src" format="reference"/>
+        <attr name="is_divider_visible" format="boolean"/>
     </declare-styleable>
 
 </resources>

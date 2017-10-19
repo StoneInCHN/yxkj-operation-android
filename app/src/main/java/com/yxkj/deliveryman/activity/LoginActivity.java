@@ -51,10 +51,10 @@ public class LoginActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_login_msg:
-                toForgetPwdActivity(1);
+                goToForgetPwdActivity(1);
                 break;
             case R.id.tv_forget_pwd:
-                toForgetPwdActivity(0);
+                goToForgetPwdActivity(0);
                 break;
             case R.id.btn_login:
                 IntentUtil.openActivity(this, MainActivity.class);
@@ -67,7 +67,7 @@ public class LoginActivity extends BaseActivity {
      *
      * @param type 0:忘记密码 1:短信验证码登录
      */
-    private void toForgetPwdActivity(int type) {
+    private void goToForgetPwdActivity(int type) {
         Bundle bundle = new Bundle();
         bundle.putInt("type", type);
         IntentUtil.openActivity(this, ForgetPwdActivity.class, bundle);

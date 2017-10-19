@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="香年广场T3"
+            android:textSize="@dimen/sp_15"
             android:textColor="@color/black_text"/>
 
         <TextView
@@ -35,7 +36,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:drawablePadding="10dp"
-            android:drawableRight="@mipmap/triangle_up"
+            android:drawableRight="@mipmap/triangle_down"
             android:gravity="center"
             android:text="选择优享空间"
             android:textColor="@color/gray_edittext_hint"/>
@@ -78,7 +79,6 @@
             android:background="@drawable/bg_round_orange"
             android:text="完成取货"
             android:textColor="@color/white"/>
-
 
     </RelativeLayout>
 
