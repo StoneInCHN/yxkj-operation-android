@@ -18,7 +18,6 @@ import com.yxkj.deliveryman.view.popupwindow.WaitSupGoodsInformationPopupWindow;
  */
 
 public class WaitSupListView extends LinearLayout {
-    private View line;
     /*标为未取货*/
     private TextView tv_not_recieve;
     /*未取货数量*/
@@ -45,7 +44,6 @@ public class WaitSupListView extends LinearLayout {
 
     private void init() {
         View view = View.inflate(getContext(), R.layout.view_wait_sup, null);
-        line = view.findViewById(R.id.line);
         tv_not_recieve = view.findViewById(R.id.tv_not_recieve);
         tv_rest = view.findViewById(R.id.tv_rest);
         addView(view);
@@ -77,7 +75,6 @@ public class WaitSupListView extends LinearLayout {
                 if (Math.abs(moveX) >= TouchSlop) { //移动
                     if (moveX > 100) {
                         if (!isShow) {
-                            line.setVisibility(VISIBLE);
                             isShow = true;
                         }
                     }

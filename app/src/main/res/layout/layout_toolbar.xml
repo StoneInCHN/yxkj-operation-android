@@ -12,7 +12,7 @@
         android:layout_centerVertical="true"
         android:scaleType="center"
         android:visibility="gone"
-        tools:src="@mipmap/back"
+        android:src="@mipmap/back"
         tools:visibility="visible"/>
 
     <TextView

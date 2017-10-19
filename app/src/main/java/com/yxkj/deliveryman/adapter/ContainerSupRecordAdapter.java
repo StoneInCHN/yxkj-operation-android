@@ -24,10 +24,10 @@ public class ContainerSupRecordAdapter extends BaseRecyclerViewAdapter<String> {
 
     @Override
     public void onCorvert(BaseViewHolder holder, int position, String bean) {
-        LinearLayout recyclerView = holder.getView(R.id.recyclerView);
+        LinearLayout llGoodsList = holder.getView(R.id.ll_goods_list_sup_record);
         for (int i = 0; i < tList.size(); i++) {
             WaitSupListView v = new WaitSupListView(context);
-            recyclerView.addView(v);
+            llGoodsList.addView(v);
         }
     }
 }

@@ -11,7 +11,7 @@ import com.yxkj.deliveryman.base.BaseViewHolder;
 import com.yxkj.deliveryman.util.IntentUtil;
 
 /**
- * 补货记录
+ * 补货记录adapter
  */
 
 public class SupRecordAdapter extends BaseRecyclerViewAdapter<String> {
