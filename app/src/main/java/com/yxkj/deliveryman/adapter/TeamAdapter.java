@@ -6,8 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 
 import com.yxkj.deliveryman.R;
+import com.yxkj.deliveryman.activity.ControllerManageActivity;
 import com.yxkj.deliveryman.base.BaseRecyclerViewAdapter;
 import com.yxkj.deliveryman.base.BaseViewHolder;
+import com.yxkj.deliveryman.util.IntentUtil;
 import com.yxkj.deliveryman.util.ToastUtil;
 import com.yxkj.deliveryman.view.dialog.TextButtonDialog;
 import com.yxkj.deliveryman.view.dialog.TextShortTimeDialog;
@@ -46,8 +48,9 @@ class TeamAdapter extends BaseRecyclerViewAdapter<String> {
         containerAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, Object data) {
-                ContainerSupPopWindow popWindow = new ContainerSupPopWindow(context);
-                popWindow.showAtLocation(holder.itemView, Gravity.NO_GRAVITY, 0, 0);
+                /*ContainerSupPopWindow popWindow = new ContainerSupPopWindow(context);
+                popWindow.showAtLocation(holder.itemView, Gravity.NO_GRAVITY, 0, 0);*/
+                IntentUtil.openActivity(context, ControllerManageActivity.class);
             }
         });
     }

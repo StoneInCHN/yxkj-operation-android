@@ -4,6 +4,9 @@ package com.yxkj.deliveryman.frament;
 import android.view.View;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
+import com.github.jdsjlzx.recyclerview.ProgressStyle;
+import com.github.jdsjlzx.util.RecyclerViewUtils;
+import com.github.jdsjlzx.view.LoadingFooter;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.adapter.MessageAdapter;
 import com.yxkj.deliveryman.base.BaseFragment;
@@ -38,7 +41,11 @@ public class MessageFragment extends BaseFragment {
     @Override
     protected void initData() {
         messageAdapter = new MessageAdapter(getActivity());
-        RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, messageAdapter,true);
+        RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, messageAdapter, true);
+//        mLrv.setLoadMoreFooter(new LoadingFooter(getActivity()));
+//        mLrv.setFooterViewHint("加载中", "没有更多了", "网络出错");
+//        mLrv.setLoadingMoreProgressStyle(ProgressStyle.BallSpinFadeLoader);
+        mLrv.setLoadMoreEnabled(false);
         messageAdapter.settList(getData());
     }
 
