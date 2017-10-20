@@ -16,13 +16,34 @@
         app:left_back_visible="true"
         app:title_text="中控管理"/>
 
-    <com.yxkj.deliveryman.view.VolumeBar
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        app:default_volume="6"/>
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@mipmap/volume_sub"/>
+
+        <com.yxkj.deliveryman.view.VolumeBar
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:default_volume="3"/>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@mipmap/volume_plus"/>
+
+    </LinearLayout>
 
     <View
         style="@style/line_horizontal_1px"/>

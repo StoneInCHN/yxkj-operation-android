@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.yxkj.deliveryman.R;
+import com.yxkj.deliveryman.util.DisplayUtil;
 
 
 /*
@@ -28,6 +29,7 @@ public class VolumeBar extends View {
     private int mVolumeProgress = 9;
     private int mWidth;
     private int mHeight;
+    private int minHeight;
     /**
      * 滑块半径
      */
@@ -51,6 +53,7 @@ public class VolumeBar extends View {
         mVolumeProgress = defaultVolume;
 
         initPaint();
+        minHeight = DisplayUtil.dip2px(mContext, 50);
 
     }
 
@@ -70,34 +73,27 @@ public class VolumeBar extends View {
         mBarPaint = new Paint();
         mBarPaint.setStrokeWidth(3);
     }
-/*
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        int mode=MeasureSpec.getMode(widthMeasureSpec);
-        switch (mode){
+        //super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int sizeWidth = MeasureSpec.getSize(widthMeasureSpec);
+        int heightResult = minHeight;
+        int sizeHeight = MeasureSpec.getSize(heightMeasureSpec);
+        int mode = MeasureSpec.getMode(heightMeasureSpec);
+        switch (mode) {
             case MeasureSpec.AT_MOST:
-
+                heightResult = minHeight;
                 break;
             case MeasureSpec.EXACTLY:
-
+                heightResult = Math.max(minHeight, sizeHeight);
                 break;
             case MeasureSpec.UNSPECIFIED:
 
                 break;
-
         }
-
+        setMeasuredDimension(sizeWidth, heightResult);
     }
-
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-
-
-    }*/
-
 
     /**
      * 更新进度
@@ -123,6 +119,10 @@ public class VolumeBar extends View {
         int paddingLeft = getPaddingLeft();
         //画圆
         mPickRadius = (getMeasuredWidth() - getPaddingLeft() - getPaddingRight()) / 11 / 2;
+        //高度太小
+        if (2 * mPickRadius > height) {
+            mPickRadius = height / 2 - 10;
+        }
         float cicleRadius = mPickRadius;
         //圆不能太小
         if (mPickRadius < 10) {
