@@ -35,8 +35,7 @@
         <activity android:name=".activity.ContainerManageActivity"/>
         <activity android:name=".activity.SupRecordActivity"/>
         <activity android:name=".activity.ContainerSupRecordActivity"/>
-        <activity android:name=".activity.ControllerManageActivity">
-        </activity>
+        <activity android:name=".activity.ControllerManageActivity"/>
     </application>
 
 </manifest>

@@ -20,7 +20,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white"
-        app:default_volume="10"/>
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:default_volume="6"/>
 
     <View
         style="@style/line_horizontal_1px"/>

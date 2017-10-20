@@ -119,17 +119,25 @@ public class VolumeBar extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         int height = getMeasuredHeight();
-
+        //考虑padding的位置
+        int paddingLeft = getPaddingLeft();
+        //画圆
         mPickRadius = (getMeasuredWidth() - getPaddingLeft() - getPaddingRight()) / 11 / 2;
-        canvas.drawCircle((2 * mVolumeProgress + 1) * mPickRadius, height / 2, mPickRadius, mPickPaint);
+        float cicleRadius = mPickRadius;
+        //圆不能太小
+        if (mPickRadius < 10) {
+            cicleRadius = 10;
+        }
+        canvas.drawCircle((2 * mVolumeProgress + 1) * mPickRadius + paddingLeft, height / 2, cicleRadius, mPickPaint);
+        //画左边的绿线
         if (mVolumeProgress != 0) {
             mBarPaint.setColor(getResources().getColor(R.color.green_text));
-            canvas.drawLine(mPickRadius, height / 2, mVolumeProgress * 2 * mPickRadius, height / 2, mBarPaint);
+            canvas.drawLine(mPickRadius + paddingLeft, height / 2, mVolumeProgress * 2 * mPickRadius + paddingLeft, height / 2, mBarPaint);
         }
-
+        //画右边的灰线
         if (mVolumeProgress != 10) {
             mBarPaint.setColor(getResources().getColor(R.color.gray1_text));
-            canvas.drawLine(2 * (mVolumeProgress + 1) * mPickRadius, height / 2, (11 * 2 - 1) * mPickRadius, height / 2, mBarPaint);
+            canvas.drawLine(2 * (mVolumeProgress + 1) * mPickRadius + paddingLeft, height / 2, (11 * 2 - 1) * mPickRadius + paddingLeft, height / 2, mBarPaint);
         }
         invalidate();
     }
