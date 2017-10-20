@@ -3,6 +3,8 @@ package com.yxkj.deliveryman.view.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
@@ -39,7 +41,11 @@ public class TextButtonDialog extends Dialog {
     }
 
     private void initData(String title, String content, String confirmText) {
-        mTvTitle.setText(title);
+        if (TextUtils.isEmpty(title)) {
+            mTvTitle.setVisibility(View.GONE);
+        } else {
+            mTvTitle.setText(title);
+        }
         mTvContent.setText(content);
         mTvConfirm.setText(confirmText);
     }

@@ -26,8 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="香年广场T3"
-            android:textSize="@dimen/sp_15"
-            android:textColor="@color/black_text"/>
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/sp_15"/>
 
         <TextView
             android:id="@+id/tv_spinner"
@@ -78,7 +78,22 @@
             android:layout_marginBottom="@dimen/dp_22"
             android:background="@drawable/bg_round_orange"
             android:text="完成取货"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:visibility="visible"/>
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/bg_round_grey"
+            android:elevation="3dp"
+            android:gravity="center"
+            android:text="完成\n取货"
+            android:textColor="@color/white"
+            android:textSize="14sp"/>
 
     </RelativeLayout>
 

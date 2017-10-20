@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="27dp"
         android:paddingLeft="@dimen/dp_14"
+        android:gravity="center_horizontal"
         android:paddingRight="@dimen/dp_14"
         android:textColor="@color/black_text"
         tools:text="你尚未完成简单森安静安静反打三番大三番啊懂金帆达三番ad三分"/>

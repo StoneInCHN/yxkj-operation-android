@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    android:orientation="vertical"
+    tools:context="com.yxkj.deliveryman.activity.ControllerManageActivity">
+
+    <com.yxkj.deliveryman.view.RichToolBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:left_back_visible="true"
+        app:title_text="中控管理"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:paddingBottom="10dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:paddingTop="10dp"
+        android:src="@mipmap/volume_sub"/>
+
+    <View
+        style="@style/line_horizontal_1px"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
+            android:text="货柜重启"
+            android:textSize="@dimen/sp_15"/>
+
+        <TextView
+            android:id="@+id/tv_reboot_controller"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="15dp"
+            android:text="@string/reboot"
+            android:textColor="@color/green_text"
+            android:textSize="@dimen/sp_15"/>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -8,12 +8,14 @@ import com.yxkj.deliveryman.base.BaseViewHolder;
 
 /**
  * 某商品待补货物列表
+ * // TODO: 2017/10/20  无用，待删除
  */
 
 public class WaitSupInfoListAdapter extends BaseRecyclerViewAdapter<String> {
 
     public WaitSupInfoListAdapter(Context context) {
         super(context);
+
     }
 
     @Override

@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.adapter.WaitSupInfoListAdapter;
+import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
+import com.yxkj.deliveryman.util.SuperDividerUtil;
 
 import java.util.ArrayList;
 import java.util.List;

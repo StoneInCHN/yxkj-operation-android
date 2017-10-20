@@ -1,85 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#80000000"
-    android:gravity="center"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/trans_80_black"
+              android:gravity="center"
+              android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="293dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_22"
-        android:background="@drawable/pop_radius_bg"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/bg_round_white"
         android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/img_goods"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="@dimen/dp_14"
-            android:src="@color/colorAccent" />
-
-        <TextView
-            android:id="@+id/tv_goods_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:text="安慕希酸奶" />
-
-        <TextView
-            android:id="@+id/tv_goods_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:text="商品编号：345678910" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10" />
-
-        <TextView
-            android:id="@+id/tv_all_wait_sup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:text="总待补数:40" />
+            android:layout_width="243dp"
+            android:layout_height="243dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/bg_stroke_gray_round"
+            android:src="@mipmap/inform"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:gravity="center_vertical">
+            android:layout_marginLeft="44dp"
+            android:layout_marginRight="44dp"
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_goods_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="实际取货数:" />
+                android:layout_marginTop="18dp"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="安慕希酸奶安慕希酸奶安慕希酸奶安慕希酸奶安慕希酸奶"
+                android:textColor="@color/black_text"/>
 
-            <EditText
-                android:id="@+id/et_true_num"
+            <TextView
+                android:id="@+id/tv_goods_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edit_login_bg"
-                android:minWidth="50dp"
-                android:text="40" />
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="商品条码:1234567899999"
+                android:textColor="@color/gray_edittext_hint"
+                android:textSize="@dimen/sp_10"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_all_wait_sup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="总待补数:40"
+                    android:textColor="@color/black_text"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="实际取货数:"
+                        android:textColor="@color/black_text"/>
+
+                    <EditText
+                        android:id="@+id/et_true_num"
+                        style="@style/edit_green_underline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:maxLength="8"
+                        android:minWidth="50dp"
+                        android:shadowColor="@color/green_text"
+                        android:text="40"
+                        android:textColor="@color/green_text"
+                        android:textSize="@dimen/sp_14"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
 
-        <include
-            layout="@layout/line"
-            android:layout_width="wrap_content"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="@dimen/dp_22" />
-
-        <TextView
-            android:id="@+id/tv_sure"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:text="确定"
-            android:textColor="@android:color/holo_blue_light" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_sure"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_round_green"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/white"/>
+
 </LinearLayout>

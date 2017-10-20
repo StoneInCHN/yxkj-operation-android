@@ -33,7 +33,7 @@ import io.reactivex.Observable;
 public class ContainerManageActivity extends BaseActivity implements CommenDialogSureListener {
     private LRecyclerView recyclerView;
     private TabLayout tablayout;
-    /*拍照*/
+    /**拍照*/
     private Button btn_photograph;
     private WaitSupListAdapter adapter;
     private CompleteSupPopWindow completeSupPopWindow;

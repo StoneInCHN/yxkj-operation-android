@@ -6,4 +6,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tip_have_send_code">短信验证码已发送，请填写验证码</string>
     <string name="tip_sup_need_take_picture">* 若完成了整个货柜的补货，需要拍照记录</string>
+    <string name="reboot">重启</string>
 </resources>
