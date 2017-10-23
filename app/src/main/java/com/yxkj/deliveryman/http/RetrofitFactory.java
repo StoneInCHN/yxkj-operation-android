@@ -3,6 +3,8 @@ package com.yxkj.deliveryman.http;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
+import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.LogUtil;
 
 import java.io.IOException;
@@ -36,8 +38,7 @@ public class RetrofitFactory {
                 public Response intercept(Chain chain) throws IOException {
                     Request.Builder builder = chain.request().newBuilder();
                     // 替换为自己的token
-//                    builder.addHeader("token", "123");
-                    LogUtil.i(builder.build().tag().toString());
+                   // builder.addHeader("token", SharePrefreceHelper.getInstance().getString(SharedKey.TOKEN));
                     return chain.proceed(builder.build());
                 }
             })

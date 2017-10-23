@@ -1,5 +1,6 @@
 package com.yxkj.deliveryman.activity;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -30,7 +31,7 @@ public class ForgetPwdActivity extends BaseActivity {
     /*获取短信验证码*/
     private TextView mTvGetCode;
     /*登录*/
-    private Button btn_login;
+    private Button bt_confirm;
     /*倒计时*/
     private TimeCountUtil timeCountUtil;
 
@@ -58,7 +59,7 @@ public class ForgetPwdActivity extends BaseActivity {
     @Override
     public void initView() {
         mTvGetCode = findViewByIdNoCast(R.id.tv_get_code);
-        btn_login = findViewByIdNoCast(R.id.bt_confirm);
+        bt_confirm = findViewByIdNoCast(R.id.bt_confirm);
         iv_back = findViewByIdNoCast(R.id.iv_back_get_code);
     }
 
@@ -76,7 +77,7 @@ public class ForgetPwdActivity extends BaseActivity {
 
     @Override
     public void setEvent() {
-        setOnClick(btn_login, mTvGetCode, iv_back);
+        setOnClick(bt_confirm, mTvGetCode, iv_back);
     }
 
     @Override
@@ -140,7 +141,9 @@ public class ForgetPwdActivity extends BaseActivity {
                 .subscribe(new BaseObserver<NullBean>() {
                     @Override
                     protected void onHandleSuccess(NullBean bean) {
-                        IntentUtil.openActivity(mContext, SetPwdActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("phone", phone);
+                        IntentUtil.openActivity(mContext, SetPwdActivity.class, bundle);
                         cancleTimeCount();
                     }
 

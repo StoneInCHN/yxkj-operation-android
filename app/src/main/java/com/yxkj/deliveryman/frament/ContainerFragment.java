@@ -8,9 +8,14 @@ import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.activity.SupRecordActivity;
 import com.yxkj.deliveryman.activity.WaitSupplementActivity;
-import com.yxkj.deliveryman.adapter.ReplenishAdapter;
+import com.yxkj.deliveryman.adapter.SupplementAdapter;
 import com.yxkj.deliveryman.base.BaseFragment;
+import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.callback.MainPageClickListener;
+import com.yxkj.deliveryman.http.HttpApi;
+import com.yxkj.deliveryman.response.WaitSupStateBean;
+import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
+import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.DisplayUtil;
 import com.yxkj.deliveryman.util.IntentUtil;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
@@ -19,8 +24,11 @@ import com.yxkj.deliveryman.view.popupwindow.MainPagePopupWindow;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 首页货柜页
@@ -34,8 +42,13 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
     @BindView(R.id.rtb_fragment_container)
     RichToolBar mToolBar;
 
+    /**
+     * 页码
+     */
+    private int mPageNum = 1;
+
     /*补货列表适配器*/
-    private ReplenishAdapter replenishAdapter;
+    private SupplementAdapter mSupplementAdapter;
 
     @Override
     protected int getResource() {
@@ -71,9 +84,44 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
     @Override
     protected void initData() {
         //按大楼分的list
-        replenishAdapter = new ReplenishAdapter(getData(), getActivity());
-        RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, replenishAdapter);
+        mSupplementAdapter = new SupplementAdapter(getActivity());
+        RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, mSupplementAdapter);
         mLrv.setLoadMoreEnabled(false);
+
+
+        getWaitSupplyState();
+
+    }
+
+    private void getWaitSupplyState() {
+        String id = SharePrefreceHelper.getInstance().getString(SharedKey.USER_ID);
+        HttpApi.getInstance()
+                .getWaitSupplyState(id, mPageNum + "", "10")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<WaitSupStateBean>() {
+                    @Override
+                    protected void onHandleSuccess(WaitSupStateBean waitSupStateBean) {
+                        updateView(waitSupStateBean);
+                    }
+
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+
+                    }
+                });
+
+    }
+
+    /**
+     * 更新数据
+     *
+     * @param waitSupStateBean
+     */
+    private void updateView(WaitSupStateBean waitSupStateBean) {
+        String title = String.format(Locale.SIMPLIFIED_CHINESE, "货柜（%d）", waitSupStateBean.waitSupplySumCount);
+        mToolBar.setTitle(title);
+        mSupplementAdapter.setScenesBeanList(waitSupStateBean.scenes);
 
     }
 

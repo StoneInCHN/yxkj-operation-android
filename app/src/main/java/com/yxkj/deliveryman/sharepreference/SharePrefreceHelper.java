@@ -34,4 +34,5 @@ public class SharePrefreceHelper extends PrefrenceWrapper {
     public boolean getFirstBoolean(boolean defaultValue) {
         return getBoolean("is_first_start", defaultValue);
     }
+
 }

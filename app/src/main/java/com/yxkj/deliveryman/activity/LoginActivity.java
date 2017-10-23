@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseActivity;
+import com.yxkj.deliveryman.base.BaseEntity;
 import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.response.LoginBean;
@@ -139,7 +140,14 @@ public class LoginActivity extends BaseActivity {
                     .subscribe(new BaseObserver<LoginBean>() {
                         @Override
                         protected void onHandleSuccess(LoginBean loginBean) {
+                            SharePrefreceHelper.getInstance().setString(SharedKey.USER_ID, loginBean.id);
                             IntentUtil.openActivity(mContext, MainActivity.class);
+                        }
+
+                        @Override
+                        protected void onHandleSuccess(BaseEntity<LoginBean> baseEntity) {
+                            super.onHandleSuccess(baseEntity);
+                            SharePrefreceHelper.getInstance().setString(SharedKey.TOKEN, baseEntity.token);
                         }
 
                         @Override

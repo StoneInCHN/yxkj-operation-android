@@ -22,6 +22,10 @@ public class PrefrenceWrapper {
         mEditor.putString(key, value).apply();
     }
 
+    public void setString(String key, int value) {
+        setString(key, value + "");
+    }
+
     public String getString(String key, String defaultVaule) {
         return sharedPreferences.getString(key, defaultVaule);
     }

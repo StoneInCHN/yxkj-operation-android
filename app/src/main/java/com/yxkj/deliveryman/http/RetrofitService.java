@@ -6,12 +6,14 @@ import com.yxkj.deliveryman.response.GetCodeBean;
 import com.yxkj.deliveryman.response.LoginBean;
 import com.yxkj.deliveryman.response.NullBean;
 import com.yxkj.deliveryman.response.PublicKeyBean;
+import com.yxkj.deliveryman.response.WaitSupStateBean;
 
 import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 /**
@@ -38,7 +40,7 @@ public interface RetrofitService {
     Observable<BaseEntity<GetCodeBean>> getVerificationCode(@Body Map<String, String> reqest);
 
     /**
-     * 获取验证码
+     * 根据验证码登录
      */
     @POST("keeper/loginByVft")
     Observable<BaseEntity<LoginBean>> loginByVft(@Body Map<String, String> reqest);
@@ -48,6 +50,18 @@ public interface RetrofitService {
      */
     @POST("keeper/forgetPwd")
     Observable<BaseEntity<NullBean>> forgetPwdVft(@Body Map<String, String> reqest);
+
+    /**
+     * 重置密码
+     */
+    @POST("keeper/resetPwd")
+    Observable<BaseEntity<NullBean>> resetPwd(@Body Map<String, String> reqest);
+
+    /**
+     * 获取货柜待补情况
+     */
+    @POST("keeper/getWaitSupplyState")
+    Observable<BaseEntity<WaitSupStateBean>> getWaitSupplyState( @Body Map<String, String> request);
 
 
 }

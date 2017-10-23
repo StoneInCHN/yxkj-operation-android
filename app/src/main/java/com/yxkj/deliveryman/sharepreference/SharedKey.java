@@ -18,5 +18,13 @@ public class SharedKey {
      * 是否第一次启动
      */
     public static final String IS_FIRST_START = "is_first_start";
+    /**
+     * 用户id
+     */
+    public static final String USER_ID = "id";
+    /**
+     * token
+     */
+    public static final String TOKEN = "token";
 
 }

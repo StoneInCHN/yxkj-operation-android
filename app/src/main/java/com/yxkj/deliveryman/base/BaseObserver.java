@@ -38,6 +38,7 @@ public abstract class BaseObserver<T> implements Observer<BaseEntity<T>> {
         if (value.code == 0000) {
             T t = value.msg;
             onHandleSuccess(t);
+            onHandleSuccess(value);
         } else {
             onHandleError(value.desc);
         }
@@ -66,6 +67,10 @@ public abstract class BaseObserver<T> implements Observer<BaseEntity<T>> {
     }
 
     protected abstract void onHandleSuccess(T t);
+
+    protected void onHandleSuccess(BaseEntity<T> baseEntity) {
+
+    }
 
     protected abstract void onFailure(Throwable e, boolean isNetWorkError) throws Exception;
 

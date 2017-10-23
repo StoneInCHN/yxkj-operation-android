@@ -5,6 +5,10 @@ import com.yxkj.deliveryman.response.GetCodeBean;
 import com.yxkj.deliveryman.response.LoginBean;
 import com.yxkj.deliveryman.response.NullBean;
 import com.yxkj.deliveryman.response.PublicKeyBean;
+import com.yxkj.deliveryman.response.WaitSupStateBean;
+import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
+import com.yxkj.deliveryman.sharepreference.SharedKey;
+import com.yxkj.deliveryman.util.LogUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -106,6 +110,38 @@ public class HttpApi {
         req.put("cellPhoneNum", cellPhoneNum);
         req.put("verificationCode", verificationCode);
         return RetrofitFactory.getInstance().forgetPwdVft(req);
+    }
+
+    /**
+     * 重置密码
+     *
+     * @param cellPhoneNum
+     * @param newPwd
+     * @return
+     */
+    public Observable<BaseEntity<NullBean>> resetPwd(String cellPhoneNum, String newPwd) {
+        Map<String, String> req = new HashMap<>();
+        req.put("cellPhoneNum", cellPhoneNum);
+        req.put("newPwd", newPwd);
+        return RetrofitFactory.getInstance().resetPwd(req);
+    }
+
+    /**
+     * 获取货柜待补情况
+     *
+     * @param userId
+     * @param pageSize
+     * @param pageSize
+     * @return
+     */
+    public Observable<BaseEntity<WaitSupStateBean>> getWaitSupplyState(String userId, String pageNo, String pageSize) {
+        Map<String, String> req = new HashMap<>();
+        req.put("userId", userId);
+        req.put("pageNo", pageNo);
+        req.put("pageSize", pageSize);
+        String token= SharePrefreceHelper.getInstance().getString(SharedKey.TOKEN);
+        LogUtil.i("token",token);
+        return RetrofitFactory.getInstance().getWaitSupplyState(req);
     }
 
 

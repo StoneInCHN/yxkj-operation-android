@@ -5,12 +5,13 @@ import android.content.Context;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseRecyclerViewAdapter;
 import com.yxkj.deliveryman.base.BaseViewHolder;
+import com.yxkj.deliveryman.response.WaitSupStateBean;
 
 /**
  * 货柜适配器
  */
 
-public class ContainerAdapter extends BaseRecyclerViewAdapter<String> {
+public class ContainerAdapter extends BaseRecyclerViewAdapter<WaitSupStateBean.ScenesBean.VendingContainerGroupsBean.VendingContainersBean> {
 
 
     public ContainerAdapter(Context context) {
@@ -24,7 +25,8 @@ public class ContainerAdapter extends BaseRecyclerViewAdapter<String> {
     }
 
     @Override
-    public void onCorvert(BaseViewHolder holder, int position, String bean) {
+    public void onCorvert(BaseViewHolder holder, int position, WaitSupStateBean.ScenesBean.VendingContainerGroupsBean.VendingContainersBean bean) {
 
     }
+
 }
