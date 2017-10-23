@@ -4,6 +4,7 @@ import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.yxkj.deliveryman.application.MyApplication;
 import com.yxkj.deliveryman.util.LogUtil;
 
 import java.net.ConnectException;
@@ -22,8 +23,8 @@ public abstract class BaseObserver<T> implements Observer<BaseEntity<T>> {
     private static final String TAG = "BaseObserver";
     private Context mContext;
 
-    protected BaseObserver(Context context) {
-        this.mContext = context.getApplicationContext();
+    protected BaseObserver( ) {
+        this.mContext = MyApplication.getAppContext();
     }
 
     @Override
@@ -33,7 +34,7 @@ public abstract class BaseObserver<T> implements Observer<BaseEntity<T>> {
 
     @Override
     public void onNext(BaseEntity<T> value) {
-        LogUtil.e("values  " + value.toString());
+        LogUtil.i(TAG, "values  " + value.toString());
         if (value.code == 0000) {
             T t = value.msg;
             onHandleSuccess(t);

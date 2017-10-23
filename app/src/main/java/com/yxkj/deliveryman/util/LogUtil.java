@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.util.Log;
 
+import com.yxkj.deliveryman.BuildConfig;
+
 import java.util.Locale;
 
 /**
@@ -11,8 +13,8 @@ import java.util.Locale;
  */
 public class LogUtil {
 
-    private static boolean isLogEnabled = true;// 默认开启
-    private static final String defaultTag = "Landz";// log默认的 tag
+    private static boolean isLogEnabled = BuildConfig.DEBUG;// 默认开启
+    private static final String TAG = "LogUtil";// log默认的 tag
     private static final String TAG_CONTENT_PRINT = "%s.%s:%d";
 
     /**
@@ -96,7 +98,7 @@ public class LogUtil {
      */
     public static void d(String msg) {
         if (isLogEnabled) {
-            Log.d(defaultTag, getContent(getCurrentStackTraceElement()) + "--->" + msg);
+            Log.d(TAG, getContent(getCurrentStackTraceElement()) + "--->" + msg);
         }
     }
 
@@ -131,7 +133,7 @@ public class LogUtil {
      */
     public static void e(String msg) {
         if (isLogEnabled) {
-            Log.e(defaultTag, getContent(getCurrentStackTraceElement()) + "--->" + msg);
+            Log.e(TAG, getContent(getCurrentStackTraceElement()) + "--->" + msg);
         }
     }
 
@@ -166,7 +168,7 @@ public class LogUtil {
      */
     public static void i(String msg) {
         if (isLogEnabled) {
-            Log.i(defaultTag, getContent(getCurrentStackTraceElement()) + "--->" + msg);
+            Log.i(TAG, getContent(getCurrentStackTraceElement()) + "--->" + msg);
         }
     }
 
@@ -201,7 +203,7 @@ public class LogUtil {
      */
     public static void v(String msg) {
         if (isLogEnabled) {
-            Log.v(defaultTag, getContent(getCurrentStackTraceElement()) + "--->" + msg);
+            Log.v(TAG, getContent(getCurrentStackTraceElement()) + "--->" + msg);
         }
     }
 
@@ -236,7 +238,7 @@ public class LogUtil {
      */
     public static void w(String msg) {
         if (isLogEnabled) {
-            Log.w(defaultTag, getContent(getCurrentStackTraceElement()) + "--->" + msg);
+            Log.w(TAG, getContent(getCurrentStackTraceElement()) + "--->" + msg);
         }
     }
 }

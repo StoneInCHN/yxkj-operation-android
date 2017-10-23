@@ -1,6 +1,7 @@
 package com.yxkj.deliveryman.application;
 
 import android.app.Application;
+import android.content.Context;
 
 /**
  *
@@ -17,5 +18,9 @@ public class MyApplication extends Application {
 
     public static MyApplication getMyApplication() {
         return myApplication;
+    }
+
+    public static Context getAppContext() {
+        return getMyApplication().getApplicationContext();
     }
 }

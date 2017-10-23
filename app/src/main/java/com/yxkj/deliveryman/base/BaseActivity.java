@@ -18,6 +18,8 @@ import com.yxkj.deliveryman.tools.AppManager;
 import com.yxkj.deliveryman.tools.SystemStatusManager;
 import com.yxkj.deliveryman.util.NetConnectUtil;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -28,10 +30,11 @@ import io.reactivex.schedulers.Schedulers;
  * @Author： 曾强
  */
 
-public abstract class BaseActivity extends RxAppCompatActivity implements View.OnClickListener{
+public abstract class BaseActivity extends RxAppCompatActivity implements View.OnClickListener {
     protected final String TAG = getClass().getSimpleName();
     protected boolean useDefaultTitleBarColor;//状态栏颜色是否使用默认颜色
-    protected Context mContext=this;
+    protected Context mContext = this;
+    private Unbinder unbinder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
             getSaveData(savedInstanceState);
         }
         setContentView(getContentViewId());
+        unbinder = ButterKnife.bind(this);
         initBase();
         beforeInitView();
         if (useDefaultTitleBarColor) {
@@ -118,7 +122,12 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
 
     public abstract int getContentViewId();//放layoutId
 
-    public abstract void beforeInitView();//初始化View之前做的事
+    /**
+     * 初始化View之前做的事
+     */
+    public void beforeInitView() {
+
+    }
 
     public abstract void initView();//初始化View
 
@@ -211,6 +220,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
         AppManager.getInstance().remove(this);
         //注：unregister官方是放入到onStop方法中，真实开发一般是放入onDestroy即当被销毁才取消注册
 //        EventBus.getDefault().unregister(this);
+        unbinder.unbind();
         super.onDestroy();
     }
 

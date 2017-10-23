@@ -8,6 +8,7 @@ import com.yxkj.deliveryman.util.LogUtil;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -23,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitFactory {
 
-    private static final String BASE_URL = "http://xgg.wa12580.cn";
+    private static final String BASE_URL = "http://192.167.1.242:8080/";
 
     private static final long TIMEOUT = 30;
 
@@ -36,7 +37,7 @@ public class RetrofitFactory {
                     Request.Builder builder = chain.request().newBuilder();
                     // 替换为自己的token
 //                    builder.addHeader("token", "123");
-                    LogUtil.e(builder.build().tag().toString());
+                    LogUtil.i(builder.build().tag().toString());
                     return chain.proceed(builder.build());
                 }
             })
@@ -76,4 +77,5 @@ public class RetrofitFactory {
 //                .registerTypeAdapter(User.class, new UserTypeAdapter())
                 .create();
     }
+
 }
