@@ -36,11 +36,18 @@ public interface RetrofitService {
      */
     @POST("keeper/getVerificationCode")
     Observable<BaseEntity<GetCodeBean>> getVerificationCode(@Body Map<String, String> reqest);
+
     /**
      * 获取验证码
      */
     @POST("keeper/loginByVft")
     Observable<BaseEntity<LoginBean>> loginByVft(@Body Map<String, String> reqest);
+
+    /**
+     * 忘记密码时，验证码身份验证
+     */
+    @POST("keeper/forgetPwd")
+    Observable<BaseEntity<NullBean>> forgetPwdVft(@Body Map<String, String> reqest);
 
 
 }

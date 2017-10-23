@@ -14,6 +14,7 @@ import com.yxkj.deliveryman.callback.CompleteListener;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.response.GetCodeBean;
 import com.yxkj.deliveryman.response.LoginBean;
+import com.yxkj.deliveryman.response.NullBean;
 import com.yxkj.deliveryman.util.IntentUtil;
 import com.yxkj.deliveryman.util.TimeCountUtil;
 import com.yxkj.deliveryman.util.ToastUtil;
@@ -126,8 +127,30 @@ public class ForgetPwdActivity extends BaseActivity {
     }
 
     private void goToSetNewPwd() {
-        IntentUtil.openActivity(this, SetPwdActivity.class);
-        cancleTimeCount();
+        String code = mEtCode.getText().toString();
+        if (TextUtils.isEmpty(code)) {
+            ToastUtil.showShort("请填写验证码");
+            return;
+        }
+
+        HttpApi.getInstance()
+                .forgetPwdVft(phone, code)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<NullBean>() {
+                    @Override
+                    protected void onHandleSuccess(NullBean bean) {
+                        IntentUtil.openActivity(mContext, SetPwdActivity.class);
+                        cancleTimeCount();
+                    }
+
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+
+                    }
+                });
+
+
     }
 
     private void getVertificationCode() {

@@ -94,6 +94,20 @@ public class HttpApi {
         return RetrofitFactory.getInstance().loginByVft(req);
     }
 
+    /**
+     * 忘记密码验证验证码
+     *
+     * @param cellPhoneNum
+     * @param verificationCode
+     * @return
+     */
+    public Observable<BaseEntity<NullBean>> forgetPwdVft(String cellPhoneNum, String verificationCode) {
+        Map<String, String> req = new HashMap<>();
+        req.put("cellPhoneNum", cellPhoneNum);
+        req.put("verificationCode", verificationCode);
+        return RetrofitFactory.getInstance().forgetPwdVft(req);
+    }
+
 
 }
 
