@@ -1,12 +1,12 @@
 package com.yxkj.deliveryman.http;
 
 import com.yxkj.deliveryman.base.BaseEntity;
+import com.yxkj.deliveryman.response.GetCodeBean;
 import com.yxkj.deliveryman.response.LoginBean;
+import com.yxkj.deliveryman.response.NullBean;
 import com.yxkj.deliveryman.response.PublicKeyBean;
 
-import java.security.PublicKey;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -66,6 +66,32 @@ public class HttpApi {
         req.put("cellPhoneNum", cellPhoneNum);
         req.put("password", password);
         return RetrofitFactory.getInstance().loginByPwd(req);
+    }
+
+    /**
+     * 获取验证码
+     *
+     * @param cellPhoneNum
+     * @return
+     */
+    public Observable<BaseEntity<GetCodeBean>> getVerificationCode(String cellPhoneNum) {
+        Map<String, String> req = new HashMap<>();
+        req.put("cellPhoneNum", cellPhoneNum);
+        return RetrofitFactory.getInstance().getVerificationCode(req);
+    }
+
+    /**
+     * 验证码登录
+     *
+     * @param cellPhoneNum
+     * @param verificationCode
+     * @return
+     */
+    public Observable<BaseEntity<LoginBean>> loginByVft(String cellPhoneNum, String verificationCode) {
+        Map<String, String> req = new HashMap<>();
+        req.put("cellPhoneNum", cellPhoneNum);
+        req.put("verificationCode", verificationCode);
+        return RetrofitFactory.getInstance().loginByVft(req);
     }
 
 

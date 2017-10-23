@@ -51,7 +51,7 @@ public class LoginActivity extends BaseActivity {
     public void initView() {
         tv_forget_pwd = findViewByIdNoCast(R.id.tv_forget_pwd);
         tv_login_msg = findViewByIdNoCast(R.id.tv_login_msg);
-        btn_login = findViewByIdNoCast(R.id.btn_login);
+        btn_login = findViewByIdNoCast(R.id.bt_confirm);
     }
 
     private String publicKeyString;
@@ -95,13 +95,15 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            //登录
             case R.id.tv_login_msg:
                 goToForgetPwdActivity(1);
                 break;
+            //忘记密码
             case R.id.tv_forget_pwd:
                 goToForgetPwdActivity(0);
                 break;
-            case R.id.btn_login:
+            case R.id.bt_confirm:
                 login();
                 break;
         }

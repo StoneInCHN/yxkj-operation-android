@@ -23,7 +23,7 @@ public abstract class BaseObserver<T> implements Observer<BaseEntity<T>> {
     private static final String TAG = "BaseObserver";
     private Context mContext;
 
-    protected BaseObserver( ) {
+    protected BaseObserver() {
         this.mContext = MyApplication.getAppContext();
     }
 
