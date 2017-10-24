@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseRecyclerViewAdapter;
 import com.yxkj.deliveryman.base.BaseViewHolder;
+import com.yxkj.deliveryman.response.SceneListBean;
 
 /*
  *  @项目名：  yxkj-operation-android 
@@ -15,7 +16,7 @@ import com.yxkj.deliveryman.base.BaseViewHolder;
  *  @创建时间:  2017/10/18 14:59
  *  @描述：    补货清单地址list
  */
-public class WaitSupAddressAdapter extends BaseRecyclerViewAdapter<String> {
+public class WaitSupAddressAdapter extends BaseRecyclerViewAdapter<SceneListBean.GroupsBean> {
     public WaitSupAddressAdapter(Context context) {
         super(context);
     }
@@ -26,8 +27,8 @@ public class WaitSupAddressAdapter extends BaseRecyclerViewAdapter<String> {
     }
 
     @Override
-    public void onCorvert(BaseViewHolder holder, int position, String bean) {
+    public void onCorvert(BaseViewHolder holder, int position, SceneListBean.GroupsBean bean) {
         TextView tvAddress = holder.getView(R.id.tv_address_item_wait_up);
-        tvAddress.setText(bean);
+        tvAddress.setText(bean.sceneName);
     }
 }

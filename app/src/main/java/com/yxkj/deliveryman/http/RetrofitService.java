@@ -3,9 +3,14 @@ package com.yxkj.deliveryman.http;
 
 import com.yxkj.deliveryman.base.BaseEntity;
 import com.yxkj.deliveryman.response.GetCodeBean;
+import com.yxkj.deliveryman.response.GoodsCategoryBean;
 import com.yxkj.deliveryman.response.LoginBean;
 import com.yxkj.deliveryman.response.NullBean;
 import com.yxkj.deliveryman.response.PublicKeyBean;
+import com.yxkj.deliveryman.response.SceneListBean;
+import com.yxkj.deliveryman.response.WaitSupContainerGoodsBean;
+import com.yxkj.deliveryman.response.WaitSupGoodsDetailBean;
+import com.yxkj.deliveryman.response.WaitSupGoodsListBean;
 import com.yxkj.deliveryman.response.WaitSupStateBean;
 
 import java.util.Map;
@@ -68,6 +73,36 @@ public interface RetrofitService {
      */
     @POST("keeper/getWaitSupplyState")
     Observable<BaseEntity<WaitSupStateBean>> getWaitSupplyState( @Body Map<String, String> request);
+
+    /**
+     * 获取待补优享空间
+     */
+    @POST("keeper/getWaitSupplySceneList")
+    Observable<BaseEntity<SceneListBean>> getWaitSupplySceneList(@Body Map<String, String> request);
+
+    /**
+     * 获取待补商品类别列表
+     */
+    @POST("keeper/getWaitSupplyGoodsCategoryList")
+    Observable<BaseEntity<GoodsCategoryBean>> getWaitSupplyGoodsCategoryList(@Body Map<String, String> request);
+
+    /**
+     * 获取待补商品清单
+     */
+    @POST("keeper/getWaitSupplyGoodsList")
+    Observable<BaseEntity<WaitSupGoodsListBean>> getWaitSupplyGoodsList(@Body Map<String, String> request);
+
+    /**
+     * 获取待补商品详情
+     */
+    @POST("keeper/getWaitSupplyGoodsDetails")
+    Observable<BaseEntity<WaitSupGoodsDetailBean>> getWaitSupplyGoodsDetails(@Body Map<String, String> request);
+
+    /**
+     * 获取货柜待补商品
+     */
+    @POST("keeper/getWaitSupplyContainerGoodsList")
+    Observable<BaseEntity<WaitSupContainerGoodsBean>> getWaitSupplyContainerGoodsList(@Body Map<String, String> request);
 
 
 }

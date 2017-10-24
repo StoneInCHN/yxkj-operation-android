@@ -131,7 +131,7 @@ public class LoginActivity extends BaseActivity {
             e.printStackTrace();
             ToastUtil.showShort("加密失败");
         }
-        LogUtil.e(pwdEncryped);
+        LogUtil.e(TAG,pwdEncryped);
         try {
             HttpApi.getInstance()
                     .loginByPwd(phone, pwdEncryped)

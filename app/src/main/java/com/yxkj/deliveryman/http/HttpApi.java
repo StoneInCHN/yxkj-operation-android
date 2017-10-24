@@ -2,9 +2,14 @@ package com.yxkj.deliveryman.http;
 
 import com.yxkj.deliveryman.base.BaseEntity;
 import com.yxkj.deliveryman.response.GetCodeBean;
+import com.yxkj.deliveryman.response.GoodsCategoryBean;
 import com.yxkj.deliveryman.response.LoginBean;
 import com.yxkj.deliveryman.response.NullBean;
 import com.yxkj.deliveryman.response.PublicKeyBean;
+import com.yxkj.deliveryman.response.SceneListBean;
+import com.yxkj.deliveryman.response.WaitSupContainerGoodsBean;
+import com.yxkj.deliveryman.response.WaitSupGoodsDetailBean;
+import com.yxkj.deliveryman.response.WaitSupGoodsListBean;
 import com.yxkj.deliveryman.response.WaitSupStateBean;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
@@ -76,7 +81,7 @@ public class HttpApi {
      * 获取验证码
      *
      * @param cellPhoneNum
-     * @param type 验证码类型，login或resetPwd
+     * @param type         验证码类型，login或resetPwd
      * @return
      */
     public Observable<BaseEntity<GetCodeBean>> getVerificationCode(String cellPhoneNum, String type) {
@@ -160,6 +165,74 @@ public class HttpApi {
         String token = SharePrefreceHelper.getInstance().getString(SharedKey.TOKEN);
         LogUtil.i("token", token);
         return RetrofitFactory.getInstance().getWaitSupplyState(req);
+    }
+
+    /**
+     * 获取待补优享空间
+     *
+     * @param userId
+     * @return
+     */
+    public Observable<BaseEntity<SceneListBean>> getWaitSupplySceneList(String userId) {
+        Map<String, String> req = new HashMap<>();
+        req.put("userId", userId);
+        return RetrofitFactory.getInstance().getWaitSupplySceneList(req);
+    }
+
+    /**
+     * 获取待补商品类别列表
+     *
+     * @param userId
+     * @return
+     */
+    public Observable<BaseEntity<GoodsCategoryBean>> getWaitSupplyGoodsCategoryList(String userId) {
+        Map<String, String> req = new HashMap<>();
+        req.put("userId", userId);
+        return RetrofitFactory.getInstance().getWaitSupplyGoodsCategoryList(req);
+    }
+
+    /**
+     * 获取待补商品清单
+     *
+     * @param userId
+     * @return
+     */
+    public Observable<BaseEntity<WaitSupGoodsListBean>> getWaitSupplyGoodsList(String userId, String sceneSn, String cateId, String pageNo, String pageSize) {
+        Map<String, String> req = new HashMap<>();
+        req.put("userId", userId);
+        req.put("sceneSn", sceneSn);
+        req.put("cateId", cateId);
+        req.put("pageNo", pageNo);
+        req.put("pageSize", pageSize);
+        return RetrofitFactory.getInstance().getWaitSupplyGoodsList(req);
+    }
+
+    /**
+     * 获取待补商品详情
+     *
+     * @param userId
+     * @return
+     */
+    public Observable<BaseEntity<WaitSupGoodsDetailBean>> getWaitSupplyGoodsDetails(String userId, String goodSn) {
+        Map<String, String> req = new HashMap<>();
+        req.put("userId", userId);
+        req.put("goodSn", goodSn);
+        return RetrofitFactory.getInstance().getWaitSupplyGoodsDetails(req);
+    }
+
+    /**
+     * 获取货柜待补商品
+     *
+     * @param userId
+     * @return
+     */
+    public Observable<BaseEntity<WaitSupContainerGoodsBean>> getWaitSupplyContainerGoodsList(String userId, String cntrId, String pageNo, String pageSize) {
+        Map<String, String> req = new HashMap<>();
+        req.put("userId", userId);
+        req.put("cntrId", cntrId);
+        req.put("pageNo", pageNo);
+        req.put("pageSize", pageSize);
+        return RetrofitFactory.getInstance().getWaitSupplyContainerGoodsList(req);
     }
 
 

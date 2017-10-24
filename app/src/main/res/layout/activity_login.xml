@@ -61,7 +61,7 @@
         style="@style/et_normal"
         android:layout_marginLeft="43dp"
         android:layout_marginRight="43dp"
-        android:text="123456"
+        android:text="111111"
         android:background="@null"
         android:drawableLeft="@mipmap/password"
         android:drawablePadding="@dimen/drawablepadding_18dp"

@@ -1,6 +1,6 @@
 package com.yxkj.deliveryman.activity;
 
-import android.text.TextUtils;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,6 +18,8 @@ import com.yxkj.deliveryman.util.ToastUtil;
 import com.yxkj.deliveryman.view.dialog.TextShortTimeDialog;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -29,9 +31,6 @@ public class SetPwdActivity extends BaseActivity {
     TextView mTvPhone;
     @BindView(R.id.et_pwd1_set_pwd)
     TextView mEtPwd1;
-    /**
-     * 确认密码
-     */
     @BindView(R.id.et_pwd2_set_pwd)
     TextView mEtPwd2;
     @BindView(R.id.bt_confirm_set_pwd)
@@ -127,5 +126,10 @@ public class SetPwdActivity extends BaseActivity {
         }
 
         return true;
+    }
+
+    @OnClick(R.id.iv_back_set_pwd)
+    public void onViewClicked() {
+        finish();
     }
 }

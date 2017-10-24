@@ -30,5 +30,9 @@ public class SharedKey {
      * 手机号
      */
     public static final String PHONE = "phone";
+    /**
+     * 商品类别,以“|”分开
+     */
+    public static final String GOODS_CATEGORY = "goods_category";
 
 }
