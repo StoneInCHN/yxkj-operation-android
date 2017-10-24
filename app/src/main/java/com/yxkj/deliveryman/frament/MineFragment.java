@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
-import com.yxkj.deliveryman.activity.PassWordActivity;
+import com.yxkj.deliveryman.activity.UpdatePasswordActivity;
 import com.yxkj.deliveryman.base.BaseFragment;
 import com.yxkj.deliveryman.util.IntentUtil;
 
@@ -45,7 +45,7 @@ public class MineFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_pwd:
-                IntentUtil.openActivity(getActivity(), PassWordActivity.class);
+                IntentUtil.openActivity(getActivity(), UpdatePasswordActivity.class);
                 break;
         }
     }

@@ -76,11 +76,13 @@ public class HttpApi {
      * 获取验证码
      *
      * @param cellPhoneNum
+     * @param type 验证码类型，login或resetPwd
      * @return
      */
-    public Observable<BaseEntity<GetCodeBean>> getVerificationCode(String cellPhoneNum) {
+    public Observable<BaseEntity<GetCodeBean>> getVerificationCode(String cellPhoneNum, String type) {
         Map<String, String> req = new HashMap<>();
         req.put("cellPhoneNum", cellPhoneNum);
+        req.put("type", type);
         return RetrofitFactory.getInstance().getVerificationCode(req);
     }
 
@@ -127,6 +129,22 @@ public class HttpApi {
     }
 
     /**
+     * 修改密码
+     *
+     * @param cellPhoneNum
+     * @param oldPwd
+     * @param newPwd
+     * @return
+     */
+    public Observable<BaseEntity<NullBean>> updatePwd(String cellPhoneNum, String oldPwd, String newPwd) {
+        Map<String, String> req = new HashMap<>();
+        req.put("cellPhoneNum", cellPhoneNum);
+        req.put("oldPwd", oldPwd);
+        req.put("newPwd", newPwd);
+        return RetrofitFactory.getInstance().updatePwd(req);
+    }
+
+    /**
      * 获取货柜待补情况
      *
      * @param userId
@@ -139,8 +157,8 @@ public class HttpApi {
         req.put("userId", userId);
         req.put("pageNo", pageNo);
         req.put("pageSize", pageSize);
-        String token= SharePrefreceHelper.getInstance().getString(SharedKey.TOKEN);
-        LogUtil.i("token",token);
+        String token = SharePrefreceHelper.getInstance().getString(SharedKey.TOKEN);
+        LogUtil.i("token", token);
         return RetrofitFactory.getInstance().getWaitSupplyState(req);
     }
 

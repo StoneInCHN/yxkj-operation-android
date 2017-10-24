@@ -141,6 +141,7 @@ public class LoginActivity extends BaseActivity {
                         @Override
                         protected void onHandleSuccess(LoginBean loginBean) {
                             SharePrefreceHelper.getInstance().setString(SharedKey.USER_ID, loginBean.id);
+                            SharePrefreceHelper.getInstance().setString(SharedKey.PHONE, phone);
                             IntentUtil.openActivity(mContext, MainActivity.class);
                         }
 

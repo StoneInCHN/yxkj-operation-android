@@ -55,7 +55,7 @@ public class WaitSupStateBean {
                  */
 
                 public int id;
-                public Object vendingContainerName;
+                public String vendingContainerName;
                 public String cntrSn;
                 public boolean central;
                 public int waitSupplyCount;

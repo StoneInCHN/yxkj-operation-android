@@ -58,6 +58,12 @@ public interface RetrofitService {
     Observable<BaseEntity<NullBean>> resetPwd(@Body Map<String, String> reqest);
 
     /**
+     * 修改密码
+     */
+    @POST("keeper/updatePwd")
+    Observable<BaseEntity<NullBean>> updatePwd(@Body Map<String, String> reqest);
+
+    /**
      * 获取货柜待补情况
      */
     @POST("keeper/getWaitSupplyState")

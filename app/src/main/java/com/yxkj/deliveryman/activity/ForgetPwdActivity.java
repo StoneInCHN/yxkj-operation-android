@@ -12,6 +12,7 @@ import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.callback.CompleteListener;
+import com.yxkj.deliveryman.constant.VerificationCodeType;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.response.GetCodeBean;
 import com.yxkj.deliveryman.response.LoginBean;
@@ -43,7 +44,7 @@ public class ForgetPwdActivity extends BaseActivity {
     EditText mEtCode;
 
     /*0->忘密码，1->短信验证码登录*/
-    private int type;
+    private int mType;
     private String phone;
 
     @Override
@@ -53,7 +54,7 @@ public class ForgetPwdActivity extends BaseActivity {
 
     @Override
     public void beforeInitView() {
-        type = getIntent().getIntExtra("type", 0);
+        mType = getIntent().getIntExtra("type", 0);
     }
 
     @Override
@@ -85,7 +86,7 @@ public class ForgetPwdActivity extends BaseActivity {
         switch (view.getId()) {
 
             case R.id.bt_confirm:
-                switch (type) {
+                switch (mType) {
                     case 0://忘记密码,下一步是设置新密码
                         goToSetNewPwd();
                         break;
@@ -163,8 +164,21 @@ public class ForgetPwdActivity extends BaseActivity {
             return;
         }
 
+        String verificationCodeType;
+        switch (mType) {
+            case 0:
+                verificationCodeType = VerificationCodeType.TYPE_RESETPWD;
+                break;
+            case 1:
+                verificationCodeType = VerificationCodeType.TYPE_LOGIN;
+                break;
+            default:
+                verificationCodeType = VerificationCodeType.TYPE_LOGIN;
+                break;
+        }
+
         HttpApi.getInstance()
-                .getVerificationCode(phone)
+                .getVerificationCode(phone, verificationCodeType)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<GetCodeBean>() {

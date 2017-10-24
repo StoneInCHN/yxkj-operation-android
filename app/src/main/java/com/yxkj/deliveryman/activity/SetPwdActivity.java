@@ -11,6 +11,7 @@ import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.response.NullBean;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
+import com.yxkj.deliveryman.util.IntentUtil;
 import com.yxkj.deliveryman.util.RsaUtil;
 import com.yxkj.deliveryman.util.StringUtil;
 import com.yxkj.deliveryman.util.ToastUtil;
@@ -101,27 +102,27 @@ public class SetPwdActivity extends BaseActivity {
         new TextShortTimeDialog(mContext, "密码设置成功", new TextShortTimeDialog.OnLoadEndListener() {
             @Override
             public void onLoadEnd() {
-                ToastUtil.showShort("假装跳转");
+                IntentUtil.openActivity(mContext, MainActivity.class);
             }
         }).show();
     }
 
     private boolean checkPwd() {
-        String pwd1 = mEtPwd1.getText().toString();
-        String pwd2 = mEtPwd2.getText().toString();
+        String newPwd = mEtPwd1.getText().toString();
+        String surePwd = mEtPwd2.getText().toString();
 
-        if (pwd1.length() < 8) {
-            ToastUtil.showShort("新密码至少8个字符");
+        if (newPwd.length() < 8) {
+            ToastUtil.showShort(getString(R.string.pwd_least_8));
             return false;
         }
 
-        if (!pwd1.equals(pwd2)) {
-            ToastUtil.showShort("两次密码输入不一致，请重新输入");
+        if (!newPwd.equals(surePwd)) {
+            ToastUtil.showShort(getString(R.string.pwd_not_same));
             return false;
         }
 
-        if (!StringUtil.isBothContainLetterAndDigit(pwd1)) {
-            ToastUtil.showShort("密码必须同时含有数字和字母，请重新输入");
+        if (!StringUtil.isBothContainLetterAndDigit(newPwd)) {
+            ToastUtil.showShort(getString(R.string.pwd_both_letter_digit));
             return false;
         }
 

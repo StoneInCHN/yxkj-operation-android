@@ -4,11 +4,13 @@ package com.yxkj.deliveryman.frament;
 import android.view.Gravity;
 import android.view.View;
 
+import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
+import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.activity.SupRecordActivity;
 import com.yxkj.deliveryman.activity.WaitSupplementActivity;
-import com.yxkj.deliveryman.adapter.SupplementAdapter;
+import com.yxkj.deliveryman.adapter.AddressSupAdapter;
 import com.yxkj.deliveryman.base.BaseFragment;
 import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.callback.MainPageClickListener;
@@ -48,7 +50,7 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
     private int mPageNum = 1;
 
     /*补货列表适配器*/
-    private SupplementAdapter mSupplementAdapter;
+    private AddressSupAdapter mAddressSupAdapter;
 
     @Override
     protected int getResource() {
@@ -84,10 +86,24 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
     @Override
     protected void initData() {
         //按大楼分的list
-        mSupplementAdapter = new SupplementAdapter(getActivity());
-        RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, mSupplementAdapter);
-        mLrv.setLoadMoreEnabled(false);
+        mAddressSupAdapter = new AddressSupAdapter(getActivity());
+        RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, mAddressSupAdapter);
 
+        mLrv.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPageNum = 1;
+                getWaitSupplyState();
+            }
+        });
+
+        mLrv.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                mPageNum++;
+                getWaitSupplyState();
+            }
+        });
 
         getWaitSupplyState();
 
@@ -103,6 +119,7 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
                     @Override
                     protected void onHandleSuccess(WaitSupStateBean waitSupStateBean) {
                         updateView(waitSupStateBean);
+                        mLrv.refreshComplete(mPageNum);
                     }
 
                     @Override
@@ -121,7 +138,10 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
     private void updateView(WaitSupStateBean waitSupStateBean) {
         String title = String.format(Locale.SIMPLIFIED_CHINESE, "货柜（%d）", waitSupStateBean.waitSupplySumCount);
         mToolBar.setTitle(title);
-        mSupplementAdapter.setScenesBeanList(waitSupStateBean.scenes);
+        if (mPageNum == 1) {
+            mAddressSupAdapter.mScenesBeanList.clear();
+        }
+        mAddressSupAdapter.setMoreList(waitSupStateBean.scenes);
 
     }
 

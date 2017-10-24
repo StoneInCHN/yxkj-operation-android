@@ -6,29 +6,31 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.response.WaitSupStateBean;
+import com.yxkj.deliveryman.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 /**
- * 补货列表
+ * 按地址的补货列表
  */
 
-public class SupplementAdapter extends RecyclerView.Adapter<SupplementAdapter.ViewHolder> {
-    private List<WaitSupStateBean.ScenesBean> mScenesBeanList = new ArrayList<>();
+public class AddressSupAdapter extends RecyclerView.Adapter<AddressSupAdapter.ViewHolder> {
+    public List<WaitSupStateBean.ScenesBean> mScenesBeanList = new ArrayList<>();
     private List<WaitSupStateBean.ScenesBean.VendingContainerGroupsBean> mGroupsBeanList = new ArrayList<>();
     private Context mContext;
 
-    public SupplementAdapter(Context context) {
+    public AddressSupAdapter(Context context) {
         mContext = context;
     }
 
-    public void setScenesBeanList(List<WaitSupStateBean.ScenesBean> scenesBeanList) {
-        mScenesBeanList = scenesBeanList;
+    public void setMoreList(List<WaitSupStateBean.ScenesBean> scenesBeanList) {
+        mScenesBeanList.addAll(scenesBeanList);
         notifyDataSetChanged();
     }
 
@@ -39,11 +41,21 @@ public class SupplementAdapter extends RecyclerView.Adapter<SupplementAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        WaitSupStateBean.ScenesBean bean = mScenesBeanList.get(position);
+        holder.tvAddress.setText(bean.sceneName);
+        holder.tvNum.setText(bean.sceneSn);
+        holder.tvFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 2017/10/24
+                ToastUtil.showShort("完成补货");
+            }
+        });
         //某楼里面按组分的list
         holder.rvGroups.setLayoutManager(new LinearLayoutManager(mContext));
         TeamAdapter teamAdapter = new TeamAdapter(mContext);
         holder.rvGroups.setAdapter(teamAdapter);
-        teamAdapter.settList(mGroupsBeanList);
+        teamAdapter.settList(mScenesBeanList.get(position).vendingContainerGroups);
     }
 
     @Override
@@ -51,12 +63,18 @@ public class SupplementAdapter extends RecyclerView.Adapter<SupplementAdapter.Vi
         return mScenesBeanList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         RecyclerView rvGroups;
+        TextView tvAddress;
+        TextView tvNum;
+        TextView tvFinish;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             rvGroups = itemView.findViewById(R.id.rv_group);
+            tvAddress = itemView.findViewById(R.id.tv_address_item_replenish);
+            tvNum = itemView.findViewById(R.id.tv_num_item_replenish);
+            tvFinish = itemView.findViewById(R.id.tv_finish_item_replenish);
         }
     }
 }

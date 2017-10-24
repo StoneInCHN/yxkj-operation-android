@@ -26,5 +26,9 @@ public class SharedKey {
      * token
      */
     public static final String TOKEN = "token";
+    /**
+     * 手机号
+     */
+    public static final String PHONE = "phone";
 
 }
