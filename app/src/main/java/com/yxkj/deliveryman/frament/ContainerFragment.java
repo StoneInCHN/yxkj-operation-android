@@ -1,6 +1,7 @@
 package com.yxkj.deliveryman.frament;
 
 
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 
@@ -163,12 +164,12 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
     }
 
     @Override
-    public void onTvreplenish() {
+    public void onClickWaitSup() {
         IntentUtil.openActivity(getActivity(), WaitSupplementActivity.class);
     }
 
     @Override
-    public void onTvreplenishRecord() {
+    public void onClickSupRecord() {
         IntentUtil.openActivity(getActivity(), SupRecordActivity.class);
     }
 }

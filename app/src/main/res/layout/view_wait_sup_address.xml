@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
-             android:layout_height="wrap_content"
+             android:layout_height="match_parent"
              android:background="@color/trans_30_black">
 
-    <com.github.jdsjlzx.recyclerview.LRecyclerView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/lrv_wait_sup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

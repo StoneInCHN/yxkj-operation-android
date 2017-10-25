@@ -49,6 +49,7 @@ dependencies {
     compile 'com.github.jdsjlzx:LRecyclerView:1.4.3'
     compile 'jp.wasabeef:recyclerview-animators:2.2.3'
     compile 'com.jakewharton:butterknife:8.8.1'
+    compile 'org.greenrobot:eventbus:3.0.0'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }

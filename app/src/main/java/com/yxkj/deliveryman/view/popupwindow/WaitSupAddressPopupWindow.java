@@ -2,6 +2,8 @@ package com.yxkj.deliveryman.view.popupwindow;
 
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,20 +11,13 @@ import android.widget.PopupWindow;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.yxkj.deliveryman.R;
+import com.yxkj.deliveryman.event.WaitSupAddressEvent;
 import com.yxkj.deliveryman.adapter.WaitSupAddressAdapter;
-import com.yxkj.deliveryman.base.BaseObserver;
-import com.yxkj.deliveryman.http.HttpApi;
+import com.yxkj.deliveryman.base.BaseRecyclerViewAdapter;
 import com.yxkj.deliveryman.response.SceneListBean;
-import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
-import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+import org.greenrobot.eventbus.EventBus;
 
 
 /*
@@ -36,8 +31,8 @@ import io.reactivex.schedulers.Schedulers;
 public class WaitSupAddressPopupWindow extends PopupWindow {
 
     private Context mContext;
-    private LRecyclerView mLrv;
-    private WaitSupAddressAdapter mAddressAdapter;
+    private RecyclerView mLrv;
+    public WaitSupAddressAdapter mAddressAdapter;
 
     public WaitSupAddressPopupWindow(Context context) {
         super(context);
@@ -54,32 +49,18 @@ public class WaitSupAddressPopupWindow extends PopupWindow {
 
         mLrv = view.findViewById(R.id.lrv_wait_sup);
         mAddressAdapter = new WaitSupAddressAdapter(mContext);
-        RecyclerViewSetUtil.setRecyclerView(mContext, mLrv, mAddressAdapter);
-        mLrv.setPullRefreshEnabled(false);
-        mLrv.setLoadMoreEnabled(false);
+//        RecyclerViewSetUtil.setRecyclerView(mContext, mLrv, mAddressAdapter);
+//        mLrv.setPullRefreshEnabled(false);
+//        mLrv.setLoadMoreEnabled(false);
+        mLrv.setLayoutManager(new LinearLayoutManager(mContext));
+        mLrv.setAdapter(mAddressAdapter);
+        mAddressAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, Object data) {
+                EventBus.getDefault().post(new WaitSupAddressEvent((SceneListBean.GroupsBean) data));
+                dismiss();
+            }
+        });
 
     }
-
-
-    public void getWaitSupList() {
-        HttpApi.getInstance()
-                .getWaitSupplySceneList(SharePrefreceHelper.getInstance().getString(SharedKey.USER_ID))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<SceneListBean>() {
-                    @Override
-                    protected void onHandleSuccess(SceneListBean sceneListBean) {
-                        mAddressAdapter.settList(sceneListBean.groups);
-                    }
-
-                    @Override
-                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-
-                    }
-                });
-
-
-    }
-
-
 }

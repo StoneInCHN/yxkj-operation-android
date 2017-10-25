@@ -8,49 +8,55 @@ import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.github.jdsjlzx.recyclerview.LRecyclerView;
+import com.google.gson.Gson;
 import com.yxkj.deliveryman.R;
+import com.yxkj.deliveryman.event.WaitSupAddressEvent;
 import com.yxkj.deliveryman.adapter.GoodsCategoryPagerAdapter;
-import com.yxkj.deliveryman.adapter.WaitSupListAdapter;
 import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.response.GoodsCategoryBean;
+import com.yxkj.deliveryman.response.SceneListBean;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
-import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
+import com.yxkj.deliveryman.util.LogUtil;
 import com.yxkj.deliveryman.view.popupwindow.WaitSupAddressPopupWindow;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
+import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 /**
  * 待补清单页面
  */
-public class WaitSupplementActivity extends BaseActivity implements TabLayout.OnTabSelectedListener {
-    /*导航栏*/
-    private TabLayout tablayout;
-    /*导航标签*/
-    private String[] tabs;
-    /*待补清单列表*/
-    private LRecyclerView recyclerView;
-    private TextView tvSpinner;
-    private WaitSupListAdapter adapter;
-    private WaitSupAddressPopupWindow waitSupAddressPopupWindow;
+public class WaitSupplementActivity extends BaseActivity {
+    @BindView(R.id.tab_wait_sup)
+    TabLayout mTablayout;
+    @BindView(R.id.vp_wait_sup)
+    ViewPager mViewPager;
+    @BindView(R.id.tv_spinner)
+    TextView mTvSpinner;
+    @BindView(R.id.tv_complete_wait_sup)
+    TextView mTvComplete;
+    @BindView(R.id.tv_current_address_wait_sup)
+    TextView mTvCurrentAdress;
 
-    private ViewPager mViewPager;
+    private WaitSupAddressPopupWindow mWaitSupAddressPopupWindow;
+    private GoodsCategoryPagerAdapter mGoodsCategoryPagerAdapter;
     /**
      * 商品类别
      */
-    private List<GoodsCategoryBean.GroupsBean> goodsCategoryList;
+    private List<GoodsCategoryBean.GroupsBean> mGoodsCategoryList;
+    /**
+     * 缓存中取出来的
+     */
+    private String tabsRaw;
 
     @Override
     public int getContentViewId() {
@@ -64,29 +70,51 @@ public class WaitSupplementActivity extends BaseActivity implements TabLayout.On
 
     @Override
     public void initView() {
-        tablayout = findViewByIdNoCast(R.id.tablayout);
-        recyclerView = findViewByIdNoCast(R.id.recyclerView);
-        tvSpinner = findViewByIdNoCast(R.id.tv_spinner);
-        mViewPager = findViewByIdNoCast(R.id.vp_wait_sup);
+
     }
 
     @Override
     public void initData() {
         initTabLayout();
-        initViewpager();
         initPopupWindow();
-        initRv();
-
+        getWaitSupAdresses();
         getGoodsCategories();
+        EventBus.getDefault().register(this);
 
     }
 
-    private GoodsCategoryPagerAdapter mGoodsCategoryPagerAdapter;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
-    private void initViewpager() {
-        mGoodsCategoryPagerAdapter = new GoodsCategoryPagerAdapter();
+    private void initTabLayout() {
+        mGoodsCategoryPagerAdapter = new GoodsCategoryPagerAdapter(mContext);
         mViewPager.setAdapter(mGoodsCategoryPagerAdapter);
+        mTablayout.setupWithViewPager(mViewPager);
+
+        //先从本地缓存取
+        tabsRaw = SharePrefreceHelper.getInstance().getString(SharedKey.GOODS_CATEGORY);
+        if (!TextUtils.isEmpty(tabsRaw)) {
+            Gson gson = new Gson();
+            GoodsCategoryBean bean = gson.fromJson(tabsRaw, GoodsCategoryBean.class);
+            mGoodsCategoryList = bean.groups;
+            mGoodsCategoryPagerAdapter.setList(mGoodsCategoryList);
+        }
     }
+
+  /*  private void setTabTitles() {
+        mTablayout.removeAllTabs();
+        Observable.fromIterable(mGoodsCategoryList)
+                .subscribe(new Consumer<GoodsCategoryBean.GroupsBean>() {
+                    @Override
+                    public void accept(@NonNull GoodsCategoryBean.GroupsBean groupsBean) throws Exception {
+                        mTablayout.addTab(mTablayout.newTab().setText(groupsBean.cateName));
+                    }
+                });
+    }*/
+
 
     private void getGoodsCategories() {
         HttpApi.getInstance()
@@ -96,20 +124,16 @@ public class WaitSupplementActivity extends BaseActivity implements TabLayout.On
                 .subscribe(new BaseObserver<GoodsCategoryBean>() {
                     @Override
                     protected void onHandleSuccess(GoodsCategoryBean goodsCategoryBean) {
-                        goodsCategoryList = goodsCategoryBean.groups;
-                        tabs = new String[goodsCategoryList.size()];
-                        // TODO: 2017/10/24 改成rxjava处理
-                        StringBuilder tabSaved = new StringBuilder();
-                        for (int i = 0; i < goodsCategoryList.size(); i++) {
-                            GoodsCategoryBean.GroupsBean bean = goodsCategoryList.get(i);
-                            tabs[i] = bean.cateName;
-                            tabSaved.append(bean.cateName);
-                            if (i != goodsCategoryList.size() - 1) {
-                                tabSaved.append("|");
-                            }
+                        Gson gson = new Gson();
+                        String categoryJson = gson.toJson(goodsCategoryBean);
+                        LogUtil.i(TAG, "categoryjson--" + categoryJson);
+
+                        mGoodsCategoryList = goodsCategoryBean.groups;
+                        //不相等则存起来
+                        if (!tabsRaw.equals(categoryJson)) {
+                            SharePrefreceHelper.getInstance().setString(SharedKey.GOODS_CATEGORY, categoryJson);
+                            mGoodsCategoryPagerAdapter.setList(mGoodsCategoryList);
                         }
-                        SharePrefreceHelper.getInstance().setString(SharedKey.GOODS_CATEGORY, tabSaved.toString());
-                        setTabs();
 
                     }
 
@@ -120,32 +144,24 @@ public class WaitSupplementActivity extends BaseActivity implements TabLayout.On
                 });
     }
 
-    private void initRv() {
-        adapter = new WaitSupListAdapter(this);
-        adapter.settList(getData());
-        RecyclerViewSetUtil.setRecyclerView(this, recyclerView, adapter, true);
-    }
-
     private void initPopupWindow() {
-        waitSupAddressPopupWindow = new WaitSupAddressPopupWindow(mContext);
-        waitSupAddressPopupWindow.setBackgroundDrawable(null);
-        waitSupAddressPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+        mWaitSupAddressPopupWindow = new WaitSupAddressPopupWindow(mContext);
+        mWaitSupAddressPopupWindow.setBackgroundDrawable(null);
+        mWaitSupAddressPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
                 isAddressWindowOpen = !isAddressWindowOpen;
                 Drawable drawableDown = getResources().getDrawable(R.mipmap.triangle_down);
                 //必须给drawable设置setBounds
                 drawableDown.setBounds(0, 0, drawableDown.getMinimumWidth(), drawableDown.getMinimumHeight());
-                tvSpinner.setCompoundDrawables(null, null, drawableDown, null);
+                mTvSpinner.setCompoundDrawables(null, null, drawableDown, null);
             }
         });
     }
 
     @Override
     public void setEvent() {
-        /*设置TabLayout切换监听*/
-        tablayout.addOnTabSelectedListener(this);
-        setOnClick(tvSpinner);
+        setOnClick(mTvSpinner, mTvComplete);
     }
 
     @Override
@@ -154,7 +170,21 @@ public class WaitSupplementActivity extends BaseActivity implements TabLayout.On
             case R.id.tv_spinner:
                 showOrDismissAddressPopup();
                 break;
+            case R.id.tv_complete_wait_sup:
+                // TODO: 2017/10/25 完成取货
+                break;
         }
+    }
+
+    /**
+     * 收到点击选择优享空间事件
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onChooseWaitSupAddress(WaitSupAddressEvent event) {
+        mCurrentAdressBean = event.addressBean;
+        mTvCurrentAdress.setText(event.addressBean.sceneName);
     }
 
     /**
@@ -167,9 +197,9 @@ public class WaitSupplementActivity extends BaseActivity implements TabLayout.On
         Drawable drawableUp = getResources().getDrawable(R.mipmap.triangle_up);
         drawableUp.setBounds(0, 0, drawableUp.getMinimumWidth(), drawableUp.getMinimumHeight());
         if (!isAddressWindowOpen) {//目前是收起状态
-            tvSpinner.setCompoundDrawables(null, null, drawableUp, null);
-            waitSupAddressPopupWindow.showAsDropDown(tvSpinner);
-            waitSupAddressPopupWindow.getWaitSupList();
+            mTvSpinner.setCompoundDrawables(null, null, drawableUp, null);
+            mWaitSupAddressPopupWindow.showAsDropDown(mTvSpinner);
+            LogUtil.e("TAG", mWaitSupAddressPopupWindow.mAddressAdapter.gettList().toString());
         }
 
         isAddressWindowOpen = !isAddressWindowOpen;
@@ -177,48 +207,31 @@ public class WaitSupplementActivity extends BaseActivity implements TabLayout.On
     }
 
     /**
-     * 初始化TabLayout
+     * 获取待补优享空间地点
      */
-    private void initTabLayout() {
-        String tabRaw = SharePrefreceHelper.getInstance().getString(SharedKey.GOODS_CATEGORY);
-        if (TextUtils.isEmpty(tabRaw)) {
-            return;
-        }
 
-        tabs = tabRaw.split("\\|");
-        setTabs();
-        tablayout.setupWithViewPager(mViewPager);
-    }
+    private SceneListBean.GroupsBean mCurrentAdressBean;
 
-    private void setTabs() {
-        tablayout.removeAllTabs();
-        Observable.fromArray(tabs).subscribe(tab -> {
-            TabLayout.Tab t = tablayout.newTab().setText(tab);
-            tablayout.addTab(t);
-        });
-    }
+    public void getWaitSupAdresses() {
+        HttpApi.getInstance()
+                .getWaitSupplySceneList(SharePrefreceHelper.getInstance().getString(SharedKey.USER_ID))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<SceneListBean>() {
+                    @Override
+                    protected void onHandleSuccess(SceneListBean sceneListBean) {
+                        mCurrentAdressBean = sceneListBean.groups.get(0);
+                        mTvCurrentAdress.setText(mCurrentAdressBean.sceneName);
+                        mWaitSupAddressPopupWindow.mAddressAdapter.settList(sceneListBean.groups);
+                        mGoodsCategoryPagerAdapter.setSceneSn(mCurrentAdressBean.sceneSn);
+                    }
 
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
 
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
+                    }
+                });
 
     }
 
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
-    }
-
-    private List<String> getData() {
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            list.add(i + "");
-        }
-        return list;
-    }
 }

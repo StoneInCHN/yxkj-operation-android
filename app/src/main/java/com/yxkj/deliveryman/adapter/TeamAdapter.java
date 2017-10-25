@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
+import com.yxkj.deliveryman.activity.ContainerManageActivity;
 import com.yxkj.deliveryman.activity.ControllerManageActivity;
 import com.yxkj.deliveryman.base.BaseRecyclerViewAdapter;
 import com.yxkj.deliveryman.base.BaseViewHolder;
@@ -43,9 +44,12 @@ public class TeamAdapter extends BaseRecyclerViewAdapter<WaitSupStateBean.Scenes
         containerAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, Object data) {
-                /*ContainerSupPopWindow popWindow = new ContainerSupPopWindow(context);
-                popWindow.showAtLocation(holder.itemView, Gravity.NO_GRAVITY, 0, 0);*/
-                IntentUtil.openActivity(context, ControllerManageActivity.class);
+                if (bean.vendingContainers.get(position).central) {//中控台
+                    IntentUtil.openActivity(context, ControllerManageActivity.class);
+                } else {//其他货柜
+                    IntentUtil.openActivity(context, ContainerManageActivity.class);
+                }
+
             }
         });
     }

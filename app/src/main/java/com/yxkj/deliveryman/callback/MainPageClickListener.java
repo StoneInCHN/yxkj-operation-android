@@ -5,7 +5,7 @@ package com.yxkj.deliveryman.callback;
  */
 
 public interface MainPageClickListener {
-    void onTvreplenish();
+    void onClickWaitSup();
 
-    void onTvreplenishRecord();
+    void onClickSupRecord();
 }

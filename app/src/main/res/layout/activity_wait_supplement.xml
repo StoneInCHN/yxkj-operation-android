@@ -22,6 +22,7 @@
         android:paddingRight="17dp">
 
         <TextView
+            android:id="@+id/tv_current_address_wait_sup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -48,13 +49,13 @@
 
 
     <android.support.design.widget.TabLayout
-        android:id="@+id/tablayout"
+        android:id="@+id/tab_wait_sup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabGravity="fill"
-        app:tabIndicatorColor="@android:color/holo_blue_light"
+        app:tabIndicatorColor="@color/orange_text"
         app:tabMode="scrollable"
-        app:tabSelectedTextColor="@android:color/holo_green_light"/>
+        app:tabSelectedTextColor="@color/orange_text"/>
 
     <View
         style="@style/line_horizontal_1px"/>
@@ -69,19 +70,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <Button
-            android:id="@+id/btn_complete"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/dp_22"
-            android:background="@drawable/bg_round_orange"
-            android:text="完成取货"
-            android:textColor="@color/white"
-            android:visibility="visible"/>
 
         <TextView
+            android:id="@+id/tv_complete_wait_sup"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentBottom="true"

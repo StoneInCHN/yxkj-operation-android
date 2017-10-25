@@ -24,4 +24,5 @@ public class GoodsCategoryBean {
         public int cateId;
         public String cateName;
     }
+
 }

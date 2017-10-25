@@ -49,30 +49,70 @@
                 android:gravity="center_vertical"
                 android:inputType="phone"
                 android:text="18144398117"
-                android:textColor="@color/gray1_text"
+                android:textColor="@color/gray_text_fixed"
                 android:textSize="@dimen/sp_14"/>
 
             <View style="@style/line_horizontal_1dp"/>
 
-            <EditText
-                android:id="@+id/et_pwd1_set_pwd"
-                style="@style/et_normal"
-                android:background="@null"
-                android:drawableLeft="@mipmap/password"
-                android:drawablePadding="@dimen/drawablepadding_18dp"
-                android:hint="请输入新密码"
-                android:inputType="textPassword"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_pwd1_set_pwd"
+                    style="@style/et_normal"
+                    android:background="@null"
+                    android:drawableLeft="@mipmap/password"
+                    android:drawablePadding="@dimen/drawablepadding_18dp"
+                    android:hint="请输入新密码"
+                    android:inputType="textPassword"/>
+
+                <TextView
+                    android:id="@+id/tv_tip_new_pwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@mipmap/warning"
+                    android:drawablePadding="2dp"
+                    android:text="@string/pwd_least_8"
+                    android:textColor="@color/red_text"
+                    android:textSize="@dimen/sp_12"
+                    android:visibility="gone"
+                    tools:visibility="visible"/>
+
+            </RelativeLayout>
 
             <View style="@style/line_horizontal_1dp"/>
 
-            <EditText
-                android:id="@+id/et_pwd2_set_pwd"
-                style="@style/et_normal"
-                android:background="@null"
-                android:drawableLeft="@mipmap/password"
-                android:drawablePadding="@dimen/drawablepadding_18dp"
-                android:hint="请确认新密码"
-                android:inputType="textPassword"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_pwd2_set_pwd"
+                    style="@style/et_normal"
+                    android:background="@null"
+                    android:drawableLeft="@mipmap/password"
+                    android:drawablePadding="@dimen/drawablepadding_18dp"
+                    android:hint="请确认新密码"
+                    android:inputType="textPassword"/>
+
+                <TextView
+                    android:id="@+id/tv_tip_sure_pwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@mipmap/warning"
+                    android:drawablePadding="2dp"
+                    android:text="@string/pwd_least_8"
+                    android:textColor="@color/red_text"
+                    android:textSize="@dimen/sp_12"
+                    android:visibility="gone"
+                    tools:visibility="visible"/>
+
+            </RelativeLayout>
 
             <View style="@style/line_horizontal_1dp"/>
 

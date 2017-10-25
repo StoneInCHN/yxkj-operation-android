@@ -192,12 +192,12 @@ public class HttpApi {
     }
 
     /**
-     * 获取待补商品清单
+     * 根据类别获取待补商品清单
      *
      * @param userId
      * @return
      */
-    public Observable<BaseEntity<WaitSupGoodsListBean>> getWaitSupplyGoodsList(String userId, String sceneSn, String cateId, String pageNo, String pageSize) {
+    public Observable<BaseEntity<WaitSupGoodsListBean>> getWaitSupplyGoodsByCategory(String userId, String sceneSn, String cateId, String pageNo, String pageSize) {
         Map<String, String> req = new HashMap<>();
         req.put("userId", userId);
         req.put("sceneSn", sceneSn);

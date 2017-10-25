@@ -32,7 +32,7 @@
         <activity android:name=".activity.SetPwdActivity"/>
         <activity android:name=".activity.WaitSupplementActivity"/>
         <activity android:name=".activity.UpdatePasswordActivity"/>
-        <activity android:name=".activity.FillinActivity"/>
+        <activity android:name=".activity.UpdatePwdGetCodeActivity"/>
         <activity android:name=".activity.ContainerManageActivity"/>
         <activity android:name=".activity.SupRecordActivity"/>
         <activity android:name=".activity.ContainerSupRecordActivity"/>

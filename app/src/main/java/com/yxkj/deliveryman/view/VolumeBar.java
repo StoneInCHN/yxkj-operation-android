@@ -3,7 +3,6 @@ package com.yxkj.deliveryman.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
@@ -136,7 +135,7 @@ public class VolumeBar extends View {
         }
         //画右边的灰线
         if (mVolumeProgress != 10) {
-            mBarPaint.setColor(getResources().getColor(R.color.gray1_text));
+            mBarPaint.setColor(getResources().getColor(R.color.gray_text_fixed));
             canvas.drawLine(2 * (mVolumeProgress + 1) * mPickRadius + paddingLeft, height / 2, (11 * 2 - 1) * mPickRadius + paddingLeft, height / 2, mBarPaint);
         }
         invalidate();

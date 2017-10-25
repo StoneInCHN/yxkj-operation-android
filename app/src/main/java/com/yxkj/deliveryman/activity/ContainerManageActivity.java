@@ -51,7 +51,7 @@ public class ContainerManageActivity extends BaseActivity implements CommenDialo
     @Override
     public void initView() {
         recyclerView = findViewByIdNoCast(R.id.recyclerView);
-        tablayout = findViewByIdNoCast(R.id.tablayout);
+        tablayout = findViewByIdNoCast(R.id.tab_container_manage);
         btn_photograph = findViewByIdNoCast(R.id.btn_photograph);
     }
 
@@ -61,7 +61,7 @@ public class ContainerManageActivity extends BaseActivity implements CommenDialo
         completeSupPopWindow = new CompleteSupPopWindow(this);
         completeSupPopWindow.setList(getData());
         adapter = new WaitSupListAdapter(this);
-        adapter.settList(getData());
+       // adapter.settList(getData());
         RecyclerViewSetUtil.setRecyclerView(this, recyclerView, adapter, true);
     }
 

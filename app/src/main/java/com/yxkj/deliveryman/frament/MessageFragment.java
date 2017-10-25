@@ -45,7 +45,7 @@ public class MessageFragment extends BaseFragment {
 //        mLrv.setLoadMoreFooter(new LoadingFooter(getActivity()));
 //        mLrv.setFooterViewHint("加载中", "没有更多了", "网络出错");
 //        mLrv.setLoadingMoreProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        mLrv.setLoadMoreEnabled(false);
+        //mLrv.setLoadMoreEnabled(false);
         messageAdapter.settList(getData());
     }
 
@@ -61,7 +61,7 @@ public class MessageFragment extends BaseFragment {
 
     private List<String> getData() {
         List<String> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 7; i++) {
             list.add(i + "");
         }
         return list;

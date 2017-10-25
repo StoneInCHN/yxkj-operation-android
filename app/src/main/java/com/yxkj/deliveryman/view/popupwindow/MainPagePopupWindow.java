@@ -51,13 +51,13 @@ public class MainPagePopupWindow extends PopupWindow {
         setFocusable(true);
         tv_replenish.setOnClickListener(view1 -> {
             if (clickListener != null) {
-                clickListener.onTvreplenish();
+                clickListener.onClickWaitSup();
                 dismiss();
             }
         });
         tv_replenish_record.setOnClickListener(view1 -> {
             if (clickListener != null) {
-                clickListener.onTvreplenishRecord();
+                clickListener.onClickSupRecord();
                 dismiss();
             }
         });

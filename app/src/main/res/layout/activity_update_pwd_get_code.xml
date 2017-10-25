@@ -6,10 +6,10 @@
               android:layout_height="match_parent"
               android:fitsSystemWindows="true"
               android:orientation="vertical"
-              tools:context="com.yxkj.deliveryman.activity.FillinActivity">
+              tools:context="com.yxkj.deliveryman.activity.UpdatePwdGetCodeActivity">
 
     <ImageView
-        android:id="@+id/iv_back_set_pwd"
+        android:id="@+id/iv_back_get_code_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="15dp"
@@ -29,7 +29,7 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="60dp"
-            android:text="设置密码"
+            android:text="填写验证码"
             android:textColor="@color/black"
             android:textSize="24sp"/>
 
@@ -47,20 +47,22 @@
             android:layout_marginTop="@dimen/dp_10"
             android:gravity="center_vertical">
 
-            <EditText
+            <TextView
+                android:id="@+id/tv_phone_update_pwd_get_code"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/et_height_60dp"
                 android:layout_weight="1"
                 android:background="@null"
                 android:drawableLeft="@mipmap/phone"
                 android:drawablePadding="@dimen/drawablepadding_18dp"
-                android:hint="请输入手机号"
+                android:gravity="center_vertical"
                 android:inputType="phone"
-                android:textColor="@color/black_text"
+                android:text="18144398117"
+                android:textColor="@color/gray_text_fixed"
                 android:textSize="@dimen/sp_14"/>
 
             <TextView
-                android:id="@+id/tv_timecounter"
+                android:id="@+id/tv_get_code_update_pwd"
                 android:layout_width="90dp"
                 android:layout_height="30dp"
                 android:background="@drawable/bg_stroke_gray_round"
@@ -74,6 +76,7 @@
         <View style="@style/line_horizontal_1dp"/>
 
         <EditText
+            android:id="@+id/et_code_update_pwd"
             style="@style/et_normal"
             android:background="@null"
             android:drawableLeft="@mipmap/password"
@@ -85,12 +88,12 @@
         <View style="@style/line_horizontal_1dp"/>
 
         <Button
-            android:id="@+id/bt_login"
+            android:id="@+id/bt_confirm_update_pwd_get_code"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="30dp"
             android:background="@drawable/btn_login_bg"
-            android:text="登 录"
+            android:text="确 定"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_20"/>
 

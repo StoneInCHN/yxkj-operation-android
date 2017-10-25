@@ -98,7 +98,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/sp_20"/>
 
-        <TextView
+       <!-- <TextView
             android:id="@+id/tv_forget_pwd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
             android:text="密码登录"
             android:textColor="@color/orange_bg"
             android:visibility="gone"
-            tools:visibility="visible"/>
+            tools:visibility="visible"/>-->
 
     </LinearLayout>
 

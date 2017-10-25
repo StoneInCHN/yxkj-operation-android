@@ -26,5 +26,22 @@ public class WaitSupGoodsListBean {
         public String goodsName;
         public String goodsPic;
         public int waitSupplyCount;
+
+        @Override
+        public String toString() {
+            return "GroupsBean{" +
+                    "goodsSn='" + goodsSn + '\'' +
+                    ", goodsName='" + goodsName + '\'' +
+                    ", goodsPic='" + goodsPic + '\'' +
+                    ", waitSupplyCount=" + waitSupplyCount +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "WaitSupGoodsListBean{" +
+                "groups=" + groups +
+                '}';
     }
 }
