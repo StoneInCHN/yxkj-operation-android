@@ -25,6 +25,8 @@
     <!--30%透明度-->
     <color name="trans_30_black">#1E000000</color>
     <color name="trans_80_black">#80000000</color>
+
+    <color name="trans_70_black">#4d000000</color>
     <color name="transparent">#00000000</color>
 
 

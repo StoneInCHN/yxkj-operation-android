@@ -14,11 +14,14 @@ import android.widget.TextView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.adapter.WaitSupScenesAdapter;
 import com.yxkj.deliveryman.base.BaseObserver;
+import com.yxkj.deliveryman.event.CompleteSupEvent;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.response.WaitSupGoodsDetailBean;
 import com.yxkj.deliveryman.response.WaitSupGoodsListBean;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,7 +33,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * 待补货物详细信息
  */
-public class WaitSupGoodsInfoPopupWindow extends PopupWindow {
+public abstract class WaitSupGoodsInfoPopupWindow extends PopupWindow implements View.OnClickListener {
 
     private Context mContext;
     @BindView(R.id.iv_goods_sup_info)
@@ -45,6 +48,8 @@ public class WaitSupGoodsInfoPopupWindow extends PopupWindow {
     TextView tvShouldSupNum;
     @BindView(R.id.et_actual_sup_num_sum_info)
     EditText etActualSupNum;
+    @BindView(R.id.tv_confirm_sum_info)
+    TextView tvConfirm;
 
     private WaitSupScenesAdapter mWaitSupInfoListAdapter;
     private Unbinder unbinder;
@@ -64,7 +69,7 @@ public class WaitSupGoodsInfoPopupWindow extends PopupWindow {
     private void initView() {
         View view = View.inflate(mContext, R.layout.popup_wait_sup_goods_info, null);
         unbinder = ButterKnife.bind(this, view);
-
+        tvConfirm.setOnClickListener(this);
         //手动设置最大宽高
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         setWidth(layoutParams.width);
@@ -111,9 +116,4 @@ public class WaitSupGoodsInfoPopupWindow extends PopupWindow {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.tv_confirm_sum_info)
-    public void onViewClicked() {
-        // TODO: 2017/10/26 取货完成
-        dismiss();
-    }
 }

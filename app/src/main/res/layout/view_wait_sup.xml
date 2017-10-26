@@ -37,7 +37,7 @@
                 android:textColor="@color/black"/>
 
             <TextView
-                android:id="@+id/tv_container_name_wait_sup"
+                android:id="@+id/tv_serial_num_wait_sup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -56,10 +56,6 @@
                     android:id="@+id/tv_should_sup_num_wait_sup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/textView2"
-                    android:layout_alignBottom="@+id/textView2"
-                    android:layout_toEndOf="@+id/tv_not_recieve"
-                    android:layout_toRightOf="@+id/tv_not_recieve"
                     android:text="应补数量:15"
                     android:textSize="@dimen/sp_12"/>
 

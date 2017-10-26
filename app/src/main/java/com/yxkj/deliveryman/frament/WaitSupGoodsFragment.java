@@ -98,14 +98,6 @@ public class WaitSupGoodsFragment extends Fragment {
                 getWaitSupplyGoodsByCategory();
             }
         });
-        mWaitSupListAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position, Object data) {
-                WaitSupGoodsInfoPopupWindow popupWindow = new WaitSupGoodsInfoPopupWindow(getContext(), (WaitSupGoodsListBean.GroupsBean) data);
-                popupWindow.showAtLocation(mLrv, Gravity.NO_GRAVITY, 0, 0);
-
-            }
-        });
     }
 
     private int mPageNum = 1;
