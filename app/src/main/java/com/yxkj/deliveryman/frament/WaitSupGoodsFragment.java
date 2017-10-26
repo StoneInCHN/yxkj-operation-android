@@ -3,6 +3,7 @@ package com.yxkj.deliveryman.frament;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,17 @@ import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.adapter.WaitSupListAdapter;
 import com.yxkj.deliveryman.base.BaseObserver;
+import com.yxkj.deliveryman.event.WaitSupAddressEvent;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.response.WaitSupGoodsListBean;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
+import com.yxkj.deliveryman.util.LogUtil;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,9 +51,15 @@ public class WaitSupGoodsFragment extends Fragment {
     /**
      * 商品地点
      */
-    private String mSceneSn;
+    public String mSceneSn;
     private WaitSupListAdapter mWaitSupListAdapter;
     private Unbinder mUnbinder;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
 
     @Nullable
     @Override
@@ -56,10 +69,20 @@ public class WaitSupGoodsFragment extends Fragment {
 
         mCateId = getArguments().getString("cateId");
         mSceneSn = getArguments().getString("sceneSn");
-        initRv();
 
+        initRv();
         getWaitSupplyGoodsByCategory();
         return rootView;
+    }
+
+    /**
+     * 由于切换优享空间，更新数据
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void updateData(WaitSupAddressEvent event) {
+        mSceneSn = event.addressBean.sceneSn;
+        mPageNum = 1;
+        getWaitSupplyGoodsByCategory();
     }
 
     private void initRv() {
@@ -105,5 +128,6 @@ public class WaitSupGoodsFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         mUnbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 }

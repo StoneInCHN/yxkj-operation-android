@@ -100,10 +100,9 @@ public class WaitSupplementActivity extends BaseActivity {
         //先从本地缓存取
         setTabsFromCache();
         mGoodsCategoryFragmentAdapter = new GoodsCategoryFragmentAdapter(getSupportFragmentManager(), getFragmentList(), mGoodsCategoryList);
-
+        mViewPager.setOffscreenPageLimit(10);
         mViewPager.setAdapter(mGoodsCategoryFragmentAdapter);
         mTablayout.setupWithViewPager(mViewPager);
-
     }
 
     private void initScene() {
@@ -224,6 +223,8 @@ public class WaitSupplementActivity extends BaseActivity {
     public void onChooseWaitSupAddress(WaitSupAddressEvent event) {
         mCurrentAdressBean = event.addressBean;
         mTvCurrentAdress.setText(event.addressBean.sceneName);
+
+
     }
 
     /**
