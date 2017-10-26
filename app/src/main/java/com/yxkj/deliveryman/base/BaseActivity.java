@@ -48,10 +48,10 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
         unbinder = ButterKnife.bind(this);
         initBase();
         beforeInitView();
-        if (useDefaultTitleBarColor) {
-            //改变状态栏颜色;注意：此处一旦设置 android:fitsSystemWindows="false"将无效
-            setTitleBarColor(R.color.colorAccent);
-        }
+//        if (useDefaultTitleBarColor) {
+//            //改变状态栏颜色;注意：此处一旦设置 android:fitsSystemWindows="false"将无效
+//            setTitleBarColor(R.color.colorAccent);
+//        }
         initView();
         initData();
         setEvent();

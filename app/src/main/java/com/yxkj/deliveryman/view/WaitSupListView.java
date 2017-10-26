@@ -11,7 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
-import com.yxkj.deliveryman.view.popupwindow.WaitSupGoodsInformationPopupWindow;
+import com.yxkj.deliveryman.response.WaitSupGoodsListBean;
+import com.yxkj.deliveryman.view.popupwindow.WaitSupGoodsInfoPopupWindow;
 
 /**
  * 待补清单Item
@@ -83,8 +84,9 @@ public class WaitSupListView extends LinearLayout {
             case MotionEvent.ACTION_UP:
                 long upTime = System.currentTimeMillis();
                 if (Math.abs(moveX) < TouchSlop && upTime - downTime < 1000) {
-                    WaitSupGoodsInformationPopupWindow popupWindow = new WaitSupGoodsInformationPopupWindow(getContext());
-                    popupWindow.showAtLocation(this, Gravity.NO_GRAVITY, 0, 0);
+                    // TODO: 2017/10/26 待处理
+//                    WaitSupGoodsInfoPopupWindow popupWindow = new WaitSupGoodsInfoPopupWindow(getContext(), (WaitSupGoodsListBean) data);
+//                    popupWindow.showAtLocation(this, Gravity.NO_GRAVITY, 0, 0);
                 }
                 break;
 

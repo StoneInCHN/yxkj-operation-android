@@ -213,10 +213,10 @@ public class HttpApi {
      * @param userId
      * @return
      */
-    public Observable<BaseEntity<WaitSupGoodsDetailBean>> getWaitSupplyGoodsDetails(String userId, String goodSn) {
+    public Observable<BaseEntity<WaitSupGoodsDetailBean>> getWaitSupplyGoodsDetails(String userId, String goodsSn) {
         Map<String, String> req = new HashMap<>();
         req.put("userId", userId);
-        req.put("goodSn", goodSn);
+        req.put("goodsSn", goodsSn);
         return RetrofitFactory.getInstance().getWaitSupplyGoodsDetails(req);
     }
 
