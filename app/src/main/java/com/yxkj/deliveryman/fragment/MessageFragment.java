@@ -1,12 +1,9 @@
-package com.yxkj.deliveryman.frament;
+package com.yxkj.deliveryman.fragment;
 
 
 import android.view.View;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
-import com.github.jdsjlzx.recyclerview.ProgressStyle;
-import com.github.jdsjlzx.util.RecyclerViewUtils;
-import com.github.jdsjlzx.view.LoadingFooter;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.adapter.MessageAdapter;
 import com.yxkj.deliveryman.base.BaseFragment;

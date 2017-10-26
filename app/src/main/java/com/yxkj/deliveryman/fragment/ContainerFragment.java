@@ -1,7 +1,6 @@
-package com.yxkj.deliveryman.frament;
+package com.yxkj.deliveryman.fragment;
 
 
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 

@@ -16,7 +16,7 @@ import com.yxkj.deliveryman.event.WaitSupAddressEvent;
 import com.yxkj.deliveryman.adapter.GoodsCategoryFragmentAdapter;
 import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.base.BaseObserver;
-import com.yxkj.deliveryman.frament.WaitSupGoodsFragment;
+import com.yxkj.deliveryman.fragment.WaitSupGoodsFragment;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.response.GoodsCategoryBean;
 import com.yxkj.deliveryman.response.SceneListBean;

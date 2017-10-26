@@ -1,6 +1,7 @@
 package com.yxkj.deliveryman.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
@@ -47,7 +48,10 @@ public class TeamAdapter extends BaseRecyclerViewAdapter<WaitSupStateBean.Scenes
                 if (bean.vendingContainers.get(position).central) {//中控台
                     IntentUtil.openActivity(context, ControllerManageActivity.class);
                 } else {//其他货柜
-                    IntentUtil.openActivity(context, ContainerManageActivity.class);
+                    Bundle bundle = new Bundle();
+                    String cntrId = ((WaitSupStateBean.ScenesBean.VendingContainerGroupsBean.VendingContainersBean) data).id + "";
+                    bundle.putString("cntrId", cntrId);
+                    IntentUtil.openActivity(context, ContainerManageActivity.class,bundle);
                 }
 
             }

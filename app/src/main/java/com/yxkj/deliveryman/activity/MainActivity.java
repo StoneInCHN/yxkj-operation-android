@@ -1,7 +1,5 @@
 package com.yxkj.deliveryman.activity;
 
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentTabHost;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,9 +9,9 @@ import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseActivity;
-import com.yxkj.deliveryman.frament.ContainerFragment;
-import com.yxkj.deliveryman.frament.MessageFragment;
-import com.yxkj.deliveryman.frament.MineFragment;
+import com.yxkj.deliveryman.fragment.ContainerFragment;
+import com.yxkj.deliveryman.fragment.MessageFragment;
+import com.yxkj.deliveryman.fragment.MineFragment;
 
 import io.reactivex.Observable;
 

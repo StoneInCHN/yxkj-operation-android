@@ -1,4 +1,4 @@
-package com.yxkj.deliveryman.frament;
+package com.yxkj.deliveryman.fragment;
 
 
 import android.view.View;

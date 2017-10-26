@@ -9,6 +9,7 @@ import java.io.File;
  */
 
 public class Constants {
+    public static final String BASE_URL = "http://192.167.1.242:8080/";
     /* 图片保存路径 */
     public static final String PHOTO_URI = "/Deliveryman/Image";
     /*拍照的照片存储位置*/

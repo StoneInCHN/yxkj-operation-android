@@ -6,15 +6,19 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.Settings;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.yxkj.deliveryman.R;
+import com.yxkj.deliveryman.adapter.ContainerSupFragmentViewpagerAdapter;
 import com.yxkj.deliveryman.adapter.WaitSupListAdapter;
 import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.callback.CommenDialogSureListener;
+import com.yxkj.deliveryman.fragment.ContainerManageFragment;
 import com.yxkj.deliveryman.permission.RxPermissions;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
 import com.yxkj.deliveryman.util.UploadImageUtil;
@@ -32,37 +36,43 @@ import io.reactivex.Observable;
  */
 public class ContainerManageActivity extends BaseActivity implements CommenDialogSureListener {
     private LRecyclerView recyclerView;
-    private TabLayout tablayout;
-    /**拍照*/
+    private TabLayout mTablayout;
+    /**
+     * 拍照
+     */
     private Button btn_photograph;
     private WaitSupListAdapter adapter;
     private CompleteSupPopWindow completeSupPopWindow;
+    private ViewPager mViewPager;
+    private ContainerSupFragmentViewpagerAdapter mContainerAdapter;
 
     @Override
     public int getContentViewId() {
         return R.layout.activity_container_manage;
     }
 
+    /**
+     * 货柜ID
+     */
+    public String cntrId;
+
     @Override
     public void beforeInitView() {
-
+        cntrId = getIntent().getExtras().getString("cntrId");
     }
 
     @Override
     public void initView() {
+        mViewPager = findViewByIdNoCast(R.id.vp_container_manage);
         recyclerView = findViewByIdNoCast(R.id.recyclerView);
-        tablayout = findViewByIdNoCast(R.id.tab_container_manage);
+        mTablayout = findViewByIdNoCast(R.id.tab_container_manage);
         btn_photograph = findViewByIdNoCast(R.id.btn_photograph);
     }
 
     @Override
     public void initData() {
-        initTab();
-        completeSupPopWindow = new CompleteSupPopWindow(this);
-        completeSupPopWindow.setList(getData());
-        adapter = new WaitSupListAdapter(this);
-       // adapter.settList(getData());
-        RecyclerViewSetUtil.setRecyclerView(this, recyclerView, adapter, true);
+        initTablayout();
+
     }
 
     @Override
@@ -81,9 +91,23 @@ public class ContainerManageActivity extends BaseActivity implements CommenDialo
         }
     }
 
-    private void initTab() {
-        tablayout.addTab(tablayout.newTab().setText("待补商品"));
-        tablayout.addTab(tablayout.newTab().setText("全部商品"));
+    private List<Fragment> mFragmentList;
+    private List<String> mTitles;
+
+    private void initTablayout() {
+        mTitles = new ArrayList<>();
+        mTitles.add("待补商品");
+        mTitles.add("全部商品");
+
+        mFragmentList = new ArrayList<>();
+        ContainerManageFragment waitSupFragment = new ContainerManageFragment();
+        ContainerManageFragment allGoodsFragment = new ContainerManageFragment();
+        mFragmentList.add(waitSupFragment);
+        mFragmentList.add(allGoodsFragment);
+
+        mContainerAdapter = new ContainerSupFragmentViewpagerAdapter(getSupportFragmentManager(), mFragmentList, mTitles);
+        mViewPager.setAdapter(mContainerAdapter);
+        mTablayout.setupWithViewPager(mViewPager);
     }
 
     private List<String> getData() {

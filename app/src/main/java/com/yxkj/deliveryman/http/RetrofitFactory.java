@@ -3,6 +3,7 @@ package com.yxkj.deliveryman.http;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.yxkj.deliveryman.constant.Constants;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.LogUtil;
@@ -25,8 +26,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by zengqiang on 2017/8/24.
  */
 public class RetrofitFactory {
-
-    private static final String BASE_URL = "http://192.167.1.242:8080/";
 
     private static final long TIMEOUT = 30;
 
@@ -58,7 +57,7 @@ public class RetrofitFactory {
             .build();
 
     private static RetrofitService retrofitService = new Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(Constants.BASE_URL)
             // 添加Gson转换器
             .addConverterFactory(GsonConverterFactory.create(buildGson()))
             // 添加Retrofit到RxJava的转换器
