@@ -39,6 +39,7 @@ public class RetrofitFactory {
                     Request.Builder builder = chain.request().newBuilder();
                     // 替换为自己的token
                    // builder.addHeader("token", SharePrefreceHelper.getInstance().getString(SharedKey.TOKEN));
+                    LogUtil.i(builder.build().tag().toString());
                     return chain.proceed(builder.build());
                 }
             })

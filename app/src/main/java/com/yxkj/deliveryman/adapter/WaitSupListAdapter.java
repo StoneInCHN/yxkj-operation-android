@@ -4,13 +4,11 @@ import android.content.Context;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseRecyclerViewAdapter;
 import com.yxkj.deliveryman.base.BaseViewHolder;
 import com.yxkj.deliveryman.response.WaitSupGoodsListBean;
 import com.yxkj.deliveryman.util.ImageLoadUtil;
-import com.yxkj.deliveryman.util.ImageUtil;
 
 /**
  * 待补清单列表
@@ -24,7 +22,7 @@ public class WaitSupListAdapter extends BaseRecyclerViewAdapter<WaitSupGoodsList
 
     @Override
     public int getLayoutId() {
-        return R.layout.item_wait_sup;
+        return R.layout.item_wait_sup_goods;
     }
 
     @Override

@@ -1,7 +1,9 @@
 package com.yxkj.deliveryman.activity;
 
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,9 +13,10 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.event.WaitSupAddressEvent;
-import com.yxkj.deliveryman.adapter.GoodsCategoryPagerAdapter;
+import com.yxkj.deliveryman.adapter.GoodsCategoryFragmentAdapter;
 import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.base.BaseObserver;
+import com.yxkj.deliveryman.frament.WaitSupGoodsFragment;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.response.GoodsCategoryBean;
 import com.yxkj.deliveryman.response.SceneListBean;
@@ -26,6 +29,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,11 +52,11 @@ public class WaitSupplementActivity extends BaseActivity {
     TextView mTvCurrentAdress;
 
     private WaitSupAddressPopupWindow mWaitSupAddressPopupWindow;
-    private GoodsCategoryPagerAdapter mGoodsCategoryPagerAdapter;
+    private GoodsCategoryFragmentAdapter mGoodsCategoryFragmentAdapter;
     /**
      * 商品类别
      */
-    private List<GoodsCategoryBean.GroupsBean> mGoodsCategoryList;
+    private List<GoodsCategoryBean.GroupsBean> mGoodsCategoryList = new ArrayList<>();
     /**
      * 缓存中取出来的
      */
@@ -75,9 +79,10 @@ public class WaitSupplementActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        initScene();
         initTabLayout();
         initPopupWindow();
-        getWaitSupAdresses();
+        getWaitSupAdressList();
         getGoodsCategories();
         EventBus.getDefault().register(this);
 
@@ -89,18 +94,45 @@ public class WaitSupplementActivity extends BaseActivity {
         EventBus.getDefault().unregister(this);
     }
 
+    private SceneListBean.GroupsBean mCurrentAdressBean;
+
     private void initTabLayout() {
-        mGoodsCategoryPagerAdapter = new GoodsCategoryPagerAdapter(mContext);
-        mViewPager.setAdapter(mGoodsCategoryPagerAdapter);
+        //先从本地缓存取
+        setTabsFromCache();
+        mGoodsCategoryFragmentAdapter = new GoodsCategoryFragmentAdapter(getSupportFragmentManager(), getFragmentList(), mGoodsCategoryList);
+
+        mViewPager.setAdapter(mGoodsCategoryFragmentAdapter);
         mTablayout.setupWithViewPager(mViewPager);
 
-        //先从本地缓存取
+    }
+
+    private void initScene() {
+        mCurrentAdressBean = new SceneListBean.GroupsBean();
+        mCurrentAdressBean.sceneSn = "";
+        mCurrentAdressBean.sceneName = "全部商品";
+    }
+
+    private List<Fragment> mFragmentList = new ArrayList<>();
+
+    private List<Fragment> getFragmentList() {
+        mFragmentList.clear();
+        for (GoodsCategoryBean.GroupsBean bean : mGoodsCategoryList) {
+            WaitSupGoodsFragment fragment = new WaitSupGoodsFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("sceneSn", mCurrentAdressBean.sceneSn);
+            bundle.putString("cateId", bean.cateId + "");
+            fragment.setArguments(bundle);
+            mFragmentList.add(fragment);
+        }
+        return mFragmentList;
+    }
+
+    private void setTabsFromCache() {
         tabsRaw = SharePrefreceHelper.getInstance().getString(SharedKey.GOODS_CATEGORY);
         if (!TextUtils.isEmpty(tabsRaw)) {
             Gson gson = new Gson();
             GoodsCategoryBean bean = gson.fromJson(tabsRaw, GoodsCategoryBean.class);
             mGoodsCategoryList = bean.groups;
-            mGoodsCategoryPagerAdapter.setList(mGoodsCategoryList);
         }
     }
 
@@ -124,15 +156,22 @@ public class WaitSupplementActivity extends BaseActivity {
                 .subscribe(new BaseObserver<GoodsCategoryBean>() {
                     @Override
                     protected void onHandleSuccess(GoodsCategoryBean goodsCategoryBean) {
+                        //添加一个全部商品类别
+                        GoodsCategoryBean.GroupsBean allCategoryBean = new GoodsCategoryBean.GroupsBean();
+                        allCategoryBean.cateName = "全部商品";
+                        allCategoryBean.cateId = 0;
+                        goodsCategoryBean.groups.add(0, allCategoryBean);
+
                         Gson gson = new Gson();
                         String categoryJson = gson.toJson(goodsCategoryBean);
                         LogUtil.i(TAG, "categoryjson--" + categoryJson);
 
-                        mGoodsCategoryList = goodsCategoryBean.groups;
+
                         //不相等则存起来
                         if (!tabsRaw.equals(categoryJson)) {
+                            mGoodsCategoryList = goodsCategoryBean.groups;
                             SharePrefreceHelper.getInstance().setString(SharedKey.GOODS_CATEGORY, categoryJson);
-                            mGoodsCategoryPagerAdapter.setList(mGoodsCategoryList);
+                            mGoodsCategoryFragmentAdapter.setTitlesAndFragmentList(mGoodsCategoryList, getFragmentList());
                         }
 
                     }
@@ -209,10 +248,7 @@ public class WaitSupplementActivity extends BaseActivity {
     /**
      * 获取待补优享空间地点
      */
-
-    private SceneListBean.GroupsBean mCurrentAdressBean;
-
-    public void getWaitSupAdresses() {
+    public void getWaitSupAdressList() {
         HttpApi.getInstance()
                 .getWaitSupplySceneList(SharePrefreceHelper.getInstance().getString(SharedKey.USER_ID))
                 .subscribeOn(Schedulers.io())
@@ -220,10 +256,16 @@ public class WaitSupplementActivity extends BaseActivity {
                 .subscribe(new BaseObserver<SceneListBean>() {
                     @Override
                     protected void onHandleSuccess(SceneListBean sceneListBean) {
+                        SceneListBean.GroupsBean allSceneBean = new SceneListBean.GroupsBean();
+                        //添加一个全部地点类别
+                        allSceneBean.sceneName = "全部";
+                        allSceneBean.sceneSn = "";
+                        sceneListBean.groups.add(0, allSceneBean);
+
                         mCurrentAdressBean = sceneListBean.groups.get(0);
                         mTvCurrentAdress.setText(mCurrentAdressBean.sceneName);
                         mWaitSupAddressPopupWindow.mAddressAdapter.settList(sceneListBean.groups);
-                        mGoodsCategoryPagerAdapter.setSceneSn(mCurrentAdressBean.sceneSn);
+                        // mGoodsCategoryFragmentAdapter.setSceneSn(mCurrentAdressBean.sceneSn);
                     }
 
                     @Override
