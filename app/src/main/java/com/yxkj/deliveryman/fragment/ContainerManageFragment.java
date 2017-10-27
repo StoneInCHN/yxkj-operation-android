@@ -98,7 +98,7 @@ public class ContainerManageFragment extends Fragment {
                     @Override
                     protected void onHandleSuccess(WaitSupContainerGoodsBean waitSupContainerGoodsBean) {
                         mLrv.refreshComplete(10);
-                        mSupGoodsAdapter.settList(waitSupContainerGoodsBean.groups);
+                        mSupGoodsAdapter.setGroupsBeanList(waitSupContainerGoodsBean.groups);
                     }
 
                     @Override

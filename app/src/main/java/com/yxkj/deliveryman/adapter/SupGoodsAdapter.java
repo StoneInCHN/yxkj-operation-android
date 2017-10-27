@@ -1,6 +1,9 @@
 package com.yxkj.deliveryman.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,10 +16,14 @@ import com.yxkj.deliveryman.base.BaseRecyclerViewAdapter;
 import com.yxkj.deliveryman.base.BaseViewHolder;
 import com.yxkj.deliveryman.constant.Constants;
 import com.yxkj.deliveryman.response.WaitSupContainerGoodsBean;
+import com.yxkj.deliveryman.util.DisplayUtil;
 import com.yxkj.deliveryman.util.ImageLoadUtil;
 import com.yxkj.deliveryman.util.ToastUtil;
 import com.yxkj.deliveryman.view.popupwindow.CancelPopupWindow;
 import com.yxkj.deliveryman.view.popupwindow.SupGoodsPopupWindow;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /*
@@ -27,35 +34,41 @@ import com.yxkj.deliveryman.view.popupwindow.SupGoodsPopupWindow;
  *  @创建时间:  2017/10/26 17:02
  *  @描述：    真正在补货页面
  */
-public class SupGoodsAdapter extends BaseRecyclerViewAdapter<WaitSupContainerGoodsBean.GroupsBean> {
+public class SupGoodsAdapter extends RecyclerView.Adapter {
     private Context mContext;
 
+    public List<WaitSupContainerGoodsBean.GroupsBean> mGroupsBeanList;
+
     public SupGoodsAdapter(Context context) {
-        super(context);
         mContext = context;
+        mGroupsBeanList = new ArrayList<>();
+    }
+
+    public void setGroupsBeanList(List<WaitSupContainerGoodsBean.GroupsBean> groupsBeanList) {
+        mGroupsBeanList.clear();
+        mGroupsBeanList.addAll(groupsBeanList);
+        notifyDataSetChanged();
     }
 
     @Override
-    public int getLayoutId() {
-        return R.layout.item_sup_goods;
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_sup_goods, parent, false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
     }
 
     @Override
-    public void onCorvert(BaseViewHolder holder, int position, WaitSupContainerGoodsBean.GroupsBean bean) {
-        ImageView ivGoodsPic = holder.getView(R.id.iv_goods_pic_item_sup_goods);
-        TextView tvGoodsName = holder.getView(R.id.tv_goods_name_item_sup_goods);
-        TextView tvContainerName = holder.getView(R.id.tv_container_name_item_sup_goods);
-        TextView tvRemainNum = holder.getView(R.id.tv_remain_num_item_sup_goods);
-        TextView tvWaitNum = holder.getView(R.id.tv_wait_sup_num_item_sup_goods);
-        RelativeLayout rlItem = holder.getView(R.id.rl_item_sup_goods);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        WaitSupContainerGoodsBean.GroupsBean bean = mGroupsBeanList.get(position);
 
-        ImageLoadUtil.loadImage(ivGoodsPic, Constants.BASE_URL + bean.goodsPic);
-        tvGoodsName.setText(bean.goodsName);
-        tvContainerName.setText(bean.channelSn);
-        tvRemainNum.setText("剩余数量：" + bean.waitSupplyCount);
-        tvWaitNum.setText("待补货数：" + bean.waitSupplyCount);
+        ViewHolder viewHolder = (ViewHolder) holder;
+        ImageLoadUtil.loadImage(viewHolder.ivGoodsPic, Constants.BASE_URL + bean.goodsPic);
+        viewHolder.tvGoodsName.setText(bean.goodsName);
+        viewHolder.tvContainerName.setText(bean.channelSn);
+        viewHolder.tvRemainNum.setText("剩余数量：" + bean.waitSupplyCount);
+        viewHolder.tvWaitNum.setText("待补货数：" + bean.waitSupplyCount);
 
-        rlItem.setOnClickListener(new View.OnClickListener() {
+        viewHolder.rlItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SupGoodsPopupWindow popupWindow = new SupGoodsPopupWindow(mContext, bean) {
@@ -64,11 +77,11 @@ public class SupGoodsAdapter extends BaseRecyclerViewAdapter<WaitSupContainerGoo
                         dismiss();
                     }
                 };
-                popupWindow.showAsDropDown(rlItem);
+                popupWindow.showAsDropDown(viewHolder.rlItem);
             }
         });
 
-        rlItem.setOnLongClickListener(new View.OnLongClickListener() {
+        viewHolder.rlItem.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 CancelPopupWindow cancelPopupWindow = new CancelPopupWindow(mContext) {
@@ -77,9 +90,34 @@ public class SupGoodsAdapter extends BaseRecyclerViewAdapter<WaitSupContainerGoo
                         ToastUtil.showShort("取消完成");
                     }
                 };
-                cancelPopupWindow.showAsDropDown(rlItem);
+
+                cancelPopupWindow.showAsDropDown(viewHolder.rlItem, (int) (DisplayUtil.getDensity_Width(mContext) * 0.4), -30);
                 return true;//返回true则不会附加一个短按动作
             }
         });
+    }
+
+    @Override
+    public int getItemCount() {
+        return mGroupsBeanList.size();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView ivGoodsPic;
+        public TextView tvGoodsName;
+        public TextView tvContainerName;
+        public TextView tvRemainNum;
+        public TextView tvWaitNum;
+        public RelativeLayout rlItem;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            ivGoodsPic = itemView.findViewById(R.id.iv_goods_pic_item_sup_goods);
+            tvGoodsName = itemView.findViewById(R.id.tv_goods_name_item_sup_goods);
+            tvContainerName = itemView.findViewById(R.id.tv_container_name_item_sup_goods);
+            tvRemainNum = itemView.findViewById(R.id.tv_remain_num_item_sup_goods);
+            tvWaitNum = itemView.findViewById(R.id.tv_wait_sup_num_item_sup_goods);
+            rlItem = itemView.findViewById(R.id.rl_item_sup_goods);
+        }
     }
 }

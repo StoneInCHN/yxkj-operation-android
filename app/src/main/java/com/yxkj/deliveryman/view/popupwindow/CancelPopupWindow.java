@@ -1,8 +1,10 @@
 package com.yxkj.deliveryman.view.popupwindow;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -29,6 +31,15 @@ public abstract class CancelPopupWindow extends PopupWindow implements View.OnCl
 
     private void initView() {
         View view = LayoutInflater.from(mContext).inflate(R.layout.popup_cancel, null);
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        setWidth(layoutParams.width);
+        setHeight(layoutParams.height);
+        setContentView(view);
+        //背景色
+        setBackgroundDrawable(new BitmapDrawable());
+        //不可点击外面取消?
+        setFocusable(true);
+
         tvCancel = view.findViewById(R.id.tv_cancel_popup_cancel);
         tvCancel.setOnClickListener(this);
     }
