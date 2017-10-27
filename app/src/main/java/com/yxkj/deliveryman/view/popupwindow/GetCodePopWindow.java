@@ -9,7 +9,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
-import com.yxkj.deliveryman.callback.CommenDialogSureListener;
+import com.yxkj.deliveryman.callback.CommonDialogSureListener;
 
 /**
  * 重新获取验证码
@@ -19,9 +19,9 @@ public class GetCodePopWindow extends PopupWindow {
     private Context context;
     private TextView tv_get_code;
     private TextView tv_cancle;
-    private CommenDialogSureListener commenDialogSureListener;
+    private CommonDialogSureListener commenDialogSureListener;
 
-    public void setCommenDialogSureListener(CommenDialogSureListener commenDialogSureListener) {
+    public void setCommenDialogSureListener(CommonDialogSureListener commenDialogSureListener) {
         this.commenDialogSureListener = commenDialogSureListener;
     }
 

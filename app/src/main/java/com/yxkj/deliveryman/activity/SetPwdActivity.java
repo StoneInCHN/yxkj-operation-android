@@ -35,6 +35,8 @@ public class SetPwdActivity extends BaseActivity {
     TextView mEtPwd2;
     @BindView(R.id.bt_confirm_set_pwd)
     TextView mBtConfirm;
+    @BindView(R.id.tv_tip_new_pwd)
+    TextView mTvTipNewPwd;
     private String phone;
 
 
@@ -111,17 +113,20 @@ public class SetPwdActivity extends BaseActivity {
         String surePwd = mEtPwd2.getText().toString();
 
         if (newPwd.length() < 8) {
-            ToastUtil.showShort(getString(R.string.pwd_least_8));
+            mTvTipNewPwd.setText(R.string.pwd_least_8);
+            mTvTipNewPwd.setVisibility(View.VISIBLE);
             return false;
         }
 
         if (!newPwd.equals(surePwd)) {
-            ToastUtil.showShort(getString(R.string.pwd_not_same));
+            mTvTipNewPwd.setText(R.string.pwd_not_same);
+            mTvTipNewPwd.setVisibility(View.VISIBLE);
             return false;
         }
 
         if (!StringUtil.isBothContainLetterAndDigit(newPwd)) {
-            ToastUtil.showShort(getString(R.string.pwd_both_letter_digit));
+            mTvTipNewPwd.setText(R.string.pwd_both_letter_digit);
+            mTvTipNewPwd.setVisibility(View.VISIBLE);
             return false;
         }
 

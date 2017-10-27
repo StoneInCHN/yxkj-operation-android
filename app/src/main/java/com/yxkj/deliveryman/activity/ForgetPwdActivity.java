@@ -14,6 +14,7 @@ import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.callback.CompleteListener;
 import com.yxkj.deliveryman.constant.VerificationCodeType;
 import com.yxkj.deliveryman.http.HttpApi;
+import com.yxkj.deliveryman.http.RetrofitFactory;
 import com.yxkj.deliveryman.response.GetCodeBean;
 import com.yxkj.deliveryman.response.LoginBean;
 import com.yxkj.deliveryman.response.NullBean;

@@ -16,7 +16,7 @@ import com.yxkj.deliveryman.util.IntentUtil;
  * 首页补货货柜信息
  */
 
-public class ContainerSupPopWindow extends PopupWindow {
+public abstract class ContainerSupPopWindow extends PopupWindow implements View.OnClickListener{
     private Context context;
     /*开始补货*/
     private TextView tv_start;
@@ -47,10 +47,7 @@ public class ContainerSupPopWindow extends PopupWindow {
         setBackgroundDrawable(new BitmapDrawable());
         setFocusable(true);
         setContentView(rootView);
-        tv_start.setOnClickListener(view -> {
-            IntentUtil.openActivity(context, ContainerManageActivity.class);
-            dismiss();
-        });
+        tv_start.setOnClickListener(this);
         tv_cancel.setOnClickListener(view -> dismiss());
     }
 }

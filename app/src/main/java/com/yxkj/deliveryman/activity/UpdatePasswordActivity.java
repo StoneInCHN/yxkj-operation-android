@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
@@ -30,6 +31,8 @@ import io.reactivex.schedulers.Schedulers;
 public class UpdatePasswordActivity extends BaseActivity {
     @BindView(R.id.tv_forget_pwd_update)
     TextView mTvForgetPwdUpdate;
+    @BindView(R.id.tv_tip_new_pwd)
+    TextView mTvTipNewPwd;
     @BindView(R.id.et_old_pwd_update)
     EditText mEtOldPwd;
     @BindView(R.id.et_new_pwd_update)
@@ -38,6 +41,8 @@ public class UpdatePasswordActivity extends BaseActivity {
     EditText mEtSurePwd;
     @BindView(R.id.bt_confirm_update)
     Button mBtConfirm;
+    @BindView(R.id.iv_eye_update_pwd)
+    ImageView ivEye;
 
     @Override
     public int getContentViewId() {
@@ -91,17 +96,20 @@ public class UpdatePasswordActivity extends BaseActivity {
         }
         //至少8个字符
         if (newPwd.length() < 8) {
-            ToastUtil.showShort(getString(R.string.pwd_least_8));
+            mTvTipNewPwd.setText(R.string.pwd_least_8);
+            mTvTipNewPwd.setVisibility(View.VISIBLE);
             return;
         }
         //新旧密码不一致
         if (!newPwd.equals(surePwd)) {
-            ToastUtil.showShort(getString(R.string.pwd_not_same));
+            mTvTipNewPwd.setText(R.string.pwd_not_same);
+            mTvTipNewPwd.setVisibility(View.VISIBLE);
             return;
         }
         //必须同时包含字母和数字
         if (!StringUtil.isBothContainLetterAndDigit(newPwd)) {
-            ToastUtil.showShort(getString(R.string.pwd_both_letter_digit));
+            mTvTipNewPwd.setText(R.string.pwd_both_letter_digit);
+            mTvTipNewPwd.setVisibility(View.VISIBLE);
             return;
         }
 

@@ -13,24 +13,31 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 
-import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.adapter.ContainerSupFragmentViewpagerAdapter;
-import com.yxkj.deliveryman.adapter.WaitSupListAdapter;
 import com.yxkj.deliveryman.base.BaseActivity;
-import com.yxkj.deliveryman.callback.CommenDialogSureListener;
+import com.yxkj.deliveryman.base.BaseObserver;
+import com.yxkj.deliveryman.callback.OnCommon2Listener;
 import com.yxkj.deliveryman.fragment.ContainerManageFragment;
+import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.permission.RxPermissions;
+import com.yxkj.deliveryman.response.NullBean;
+import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
+import com.yxkj.deliveryman.sharepreference.SharedKey;
+import com.yxkj.deliveryman.util.ToastUtil;
 import com.yxkj.deliveryman.util.UploadImageUtil;
 import com.yxkj.deliveryman.view.RichToolBar;
 import com.yxkj.deliveryman.view.popupwindow.BottomTakePhotoAndPicPopupWindow;
 import com.yxkj.deliveryman.view.dialog.CommonYesOrNoDialog;
 import com.yxkj.deliveryman.view.popupwindow.CompleteSupPopWindow;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 货柜管理
@@ -95,17 +102,19 @@ public class ContainerManageActivity extends BaseActivity {
     }
 
     private void showBottomPopupWindow() {
-        BottomTakePhotoAndPicPopupWindow pupWIndow = new BottomTakePhotoAndPicPopupWindow(this);
-        pupWIndow.showAtLocation(btTakePhoto, Gravity.NO_GRAVITY, 0, 0);
-        pupWIndow.setOnTakePhotoListener(new BottomTakePhotoAndPicPopupWindow.OnTakePhotoListener() {
+        BottomTakePhotoAndPicPopupWindow picPopupWindow = new BottomTakePhotoAndPicPopupWindow(this);
+        picPopupWindow.showAtLocation(btTakePhoto, Gravity.NO_GRAVITY, 0, 0);
+        picPopupWindow.setOnTakePhotoListener(new BottomTakePhotoAndPicPopupWindow.OnTakePhotoListener() {
             @Override
             public void onTakePhto() {
                 goTakePhoto();
+                picPopupWindow.dismiss();
             }
 
             @Override
             public void onGetFromAlbum() {
-
+                goAlbum();
+                picPopupWindow.dismiss();
             }
         });
     }
@@ -161,19 +170,89 @@ public class ContainerManageActivity extends BaseActivity {
                 });
     }
 
+    private void goAlbum() {
+        RxPermissions rxPermissions = new RxPermissions(this);
+        Observable.just(rxPermissions)
+                .compose(rxPermissions.ensureEach(Manifest.permission.READ_EXTERNAL_STORAGE))
+                .subscribe(permission -> {
+                    if (permission.granted) {
+                        //跳转相机拍照
+                        UploadImageUtil.doPickPhotoFromGallery(this);
+                    } else if (permission.shouldShowRequestPermissionRationale) {
+
+                    } else {
+                        //如果用户选择了不再提醒，那么就会一直走这一步
+                        CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog();
+                        commonYesOrNoDialog.setTv_content("请允许读取相册");
+                        commonYesOrNoDialog.setBtn_sure("去授权");
+                        commonYesOrNoDialog.setDialogSureListener(() -> {
+                            //引导用户至设置页手动授权
+                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            Uri uri = Uri.fromParts("package", getApplicationContext().getPackageName(), null);
+                            intent.setData(uri);
+                            startActivity(intent);
+                        });
+                    }
+                });
+
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        UploadImageUtil.dealWithUploadImageOnActivityResult(this, requestCode, resultCode, data,
+        File picResultFile = UploadImageUtil.dealWithUploadImageOnActivityResult(this, requestCode, resultCode, data,
                 (final Bitmap bitmap) -> {
                     if (bitmap != null) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                completeSupPopWindow.setBitmaps(bitmap);
+                                completeSupPopWindow = new CompleteSupPopWindow(mContext);
                                 completeSupPopWindow.showAtLocation(btTakePhoto, Gravity.CENTER, 0, 0);
+                                completeSupPopWindow.setBitmaps(bitmap);
+
+                                completeSupPopWindow.setCommon2Listener(new OnCommon2Listener<String, File>() {
+                                    @Override
+                                    public void onCommon1(String s) {
+                                        //重新拍照
+
+                                    }
+
+                                    @Override
+                                    public void onCommon2(File file) {
+                                        //上传图片，完成补货
+                                        completeSup(file);
+                                    }
+                                });
                             }
                         });
+                    }
+                });
+    }
+
+
+    /**
+     * 完成补货，上传图片
+     *
+     * @param file
+     */
+    private void completeSup(File file) {
+        String userId = SharePrefreceHelper.getInstance().getString(SharedKey.USER_ID);
+        HttpApi.getInstance()
+                .uploadSupplementPic(userId, cntrId, file)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<NullBean>() {
+                    @Override
+                    protected void onHandleSuccess(NullBean bean) {
+                        ToastUtil.showShort("上传成功,该货柜补货完成");
+                        finish();
+
+                    }
+
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+
                     }
                 });
     }

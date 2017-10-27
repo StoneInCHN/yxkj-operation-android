@@ -129,7 +129,7 @@ public class LoginActivity extends BaseActivity {
             pwdEncryped = RsaUtil.encryptString(password, publicKeyString);
         } catch (Exception e) {
             e.printStackTrace();
-            ToastUtil.showShort("加密失败");
+            //ToastUtil.showShort("加密失败");
         }
         LogUtil.e(TAG,pwdEncryped);
         try {

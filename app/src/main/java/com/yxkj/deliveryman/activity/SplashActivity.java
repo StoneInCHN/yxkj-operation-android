@@ -4,10 +4,13 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.yxkj.deliveryman.R;
+import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
+import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.IntentUtil;
 
 /**
@@ -41,7 +44,13 @@ public class SplashActivity extends AppCompatActivity {
      * 根据登录状态打开不同activity
      */
     private void openNextActivity() {
-        IntentUtil.openActivity(mContext, LoginActivity.class);
+        String token = SharePrefreceHelper.getInstance().getString(SharedKey.TOKEN);
+        if (TextUtils.isEmpty(token)) {
+            IntentUtil.openActivity(mContext, LoginActivity.class);
+        } else {
+            IntentUtil.openActivity(mContext, MainActivity.class);
+        }
+
         finish();
     }
 }

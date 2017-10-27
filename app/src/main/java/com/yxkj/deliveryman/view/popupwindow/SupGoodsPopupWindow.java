@@ -2,8 +2,6 @@ package com.yxkj.deliveryman.view.popupwindow;
 
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -12,25 +10,19 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
-import com.yxkj.deliveryman.adapter.WaitSupScenesAdapter;
-import com.yxkj.deliveryman.base.BaseObserver;
-import com.yxkj.deliveryman.http.HttpApi;
+import com.yxkj.deliveryman.callback.CommonDialogSureListener;
+import com.yxkj.deliveryman.constant.Constants;
 import com.yxkj.deliveryman.response.WaitSupContainerGoodsBean;
-import com.yxkj.deliveryman.response.WaitSupGoodsDetailBean;
-import com.yxkj.deliveryman.response.WaitSupGoodsListBean;
-import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
-import com.yxkj.deliveryman.sharepreference.SharedKey;
+import com.yxkj.deliveryman.util.ImageLoadUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * 真正补货商品详细信息
  */
-public abstract class SupGoodsPopupWindow extends PopupWindow implements View.OnClickListener {
+public class SupGoodsPopupWindow extends PopupWindow {
 
     private Context mContext;
     @BindView(R.id.iv_goods_sup_info)
@@ -48,19 +40,31 @@ public abstract class SupGoodsPopupWindow extends PopupWindow implements View.On
 
     private Unbinder unbinder;
 
-    private WaitSupContainerGoodsBean.GroupsBean mSupGoodsListBean;
+    private WaitSupContainerGoodsBean.GroupsBean mBean;
 
     public SupGoodsPopupWindow(Context context, WaitSupContainerGoodsBean.GroupsBean groupsBean) {
         super(context);
         mContext = context;
-        mSupGoodsListBean = groupsBean;
+        mBean = groupsBean;
         initView();
+        initData();
+    }
+
+    private CommonDialogSureListener mOnClickListener;
+
+    public void setOnClickListener(CommonDialogSureListener onClickListener) {
+        mOnClickListener = onClickListener;
     }
 
     private void initView() {
-        View view = View.inflate(mContext, R.layout.popup_wait_sup_goods_info, null);
+        View view = View.inflate(mContext, R.layout.popup_sup_goods_info, null);
         unbinder = ButterKnife.bind(this, view);
-        tvConfirm.setOnClickListener(this);
+        tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnClickListener.onSure();
+            }
+        });
         //手动设置最大宽高
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         setWidth(layoutParams.width);
@@ -69,8 +73,28 @@ public abstract class SupGoodsPopupWindow extends PopupWindow implements View.On
         //背景色
         setBackgroundDrawable(new BitmapDrawable());
         //不可点击外面取消?
-        setFocusable(true);
+       // setFocusable(true);
 
+    }
+
+    private void initData() {
+        ImageLoadUtil.loadImage(ivGoodsPic, Constants.BASE_URL + mBean.goodsPic);
+        tvGoodsName.setText(mBean.goodsName);
+        tvSerialNum.setText(mBean.goodsSn);
+        tvShouldSupNum.setText(mBean.waitSupplyCount + "");
+
+    }
+
+    /**
+     * 实际补货数量不能大于待补数量
+     *
+     * @return
+     */
+    public boolean isActualNumIllegal() {
+        String actualNumString = etActualSupNum.getText().toString().trim();
+        int actualNum = Integer.parseInt(actualNumString);
+        int waitSupNum = mBean.waitSupplyCount;
+        return actualNum <= waitSupNum;
     }
 
     @Override
@@ -78,5 +102,6 @@ public abstract class SupGoodsPopupWindow extends PopupWindow implements View.On
         super.dismiss();
         unbinder.unbind();
     }
+
 
 }

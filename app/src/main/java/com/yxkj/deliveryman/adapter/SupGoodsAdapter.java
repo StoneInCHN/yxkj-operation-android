@@ -2,18 +2,15 @@ package com.yxkj.deliveryman.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
-import com.yxkj.deliveryman.base.BaseRecyclerViewAdapter;
-import com.yxkj.deliveryman.base.BaseViewHolder;
+import com.yxkj.deliveryman.callback.CommonDialogSureListener;
 import com.yxkj.deliveryman.constant.Constants;
 import com.yxkj.deliveryman.response.WaitSupContainerGoodsBean;
 import com.yxkj.deliveryman.util.DisplayUtil;
@@ -71,12 +68,18 @@ public class SupGoodsAdapter extends RecyclerView.Adapter {
         viewHolder.rlItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SupGoodsPopupWindow popupWindow = new SupGoodsPopupWindow(mContext, bean) {
+                SupGoodsPopupWindow popupWindow = new SupGoodsPopupWindow(mContext, bean);
+                popupWindow.setOnClickListener(new CommonDialogSureListener() {
                     @Override
-                    public void onClick(View v) {
-                        dismiss();
+                    public void onSure() {
+                        if (popupWindow.isActualNumIllegal()) {
+                            popupWindow.dismiss();
+                            viewHolder.tvCompleteSup.setVisibility(View.VISIBLE);
+                        } else {
+                            ToastUtil.showShort("实际补货数量不能大于待补数量");
+                        }
                     }
-                };
+                });
                 popupWindow.showAsDropDown(viewHolder.rlItem);
             }
         });
@@ -103,20 +106,22 @@ public class SupGoodsAdapter extends RecyclerView.Adapter {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView ivGoodsPic;
-        public TextView tvGoodsName;
-        public TextView tvContainerName;
-        public TextView tvRemainNum;
-        public TextView tvWaitNum;
-        public RelativeLayout rlItem;
+        ImageView ivGoodsPic;
+        TextView tvGoodsName;
+        TextView tvContainerName;
+        TextView tvRemainNum;
+        TextView tvWaitNum;
+        TextView tvCompleteSup;
+        RelativeLayout rlItem;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             ivGoodsPic = itemView.findViewById(R.id.iv_goods_pic_item_sup_goods);
             tvGoodsName = itemView.findViewById(R.id.tv_goods_name_item_sup_goods);
             tvContainerName = itemView.findViewById(R.id.tv_container_name_item_sup_goods);
             tvRemainNum = itemView.findViewById(R.id.tv_remain_num_item_sup_goods);
             tvWaitNum = itemView.findViewById(R.id.tv_wait_sup_num_item_sup_goods);
+            tvCompleteSup = itemView.findViewById(R.id.tv_tip_complete_sup_goods);
             rlItem = itemView.findViewById(R.id.rl_item_sup_goods);
         }
     }

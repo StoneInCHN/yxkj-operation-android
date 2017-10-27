@@ -21,11 +21,9 @@ import com.yxkj.deliveryman.response.WaitSupGoodsListBean;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
-import com.yxkj.deliveryman.view.popupwindow.SupGoodsPopupWindow;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-
 
 /*
  *  @项目名：  yxkj-operation-android 
@@ -69,13 +67,7 @@ public class ContainerManageFragment extends Fragment {
         mLrv = rootView.findViewById(R.id.lrv_fragment_container_manage);
         mSupGoodsAdapter = new SupGoodsAdapter(getActivity());
         RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, mSupGoodsAdapter, true);
-        mLrv.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPageNum = 1;
-                getWaitSupplyContainerGoodsList();
-            }
-        });
+        mLrv.setPullRefreshEnabled(false);
         mLrv.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {

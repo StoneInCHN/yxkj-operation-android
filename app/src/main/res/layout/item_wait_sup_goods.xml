@@ -81,7 +81,7 @@
         android:id="@+id/tv_tip_complete_sup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/trans_70_black"
+        android:background="@color/trans_70_white"
         android:gravity="center"
         android:text="完成取货"
         android:textColor="@color/white"

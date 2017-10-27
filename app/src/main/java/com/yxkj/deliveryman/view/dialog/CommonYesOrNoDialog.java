@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
-import com.yxkj.deliveryman.callback.CommenDialogSureListener;
+import com.yxkj.deliveryman.callback.CommonDialogSureListener;
 
 /**
  * 通用Dialog，有yes和no两种选项
@@ -27,9 +27,9 @@ public class CommonYesOrNoDialog extends DialogFragment {
     /*确认按钮*/
     private Button btn_sure;
     /*确认按钮监听*/
-    private CommenDialogSureListener dialogSureListener;
+    private CommonDialogSureListener dialogSureListener;
 
-    public void setDialogSureListener(CommenDialogSureListener dialogSureListener) {
+    public void setDialogSureListener(CommonDialogSureListener dialogSureListener) {
         this.dialogSureListener = dialogSureListener;
     }
 
