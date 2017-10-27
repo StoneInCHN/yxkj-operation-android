@@ -11,7 +11,6 @@ import java.io.File;
  */
 public class SDcardUtils {
 
-
     /**
      * SD卡是否存在
      */
@@ -41,6 +40,7 @@ public class SDcardUtils {
 
     /**
      * 文件目录：如sensecp/pic
+     *
      * @param fileDir
      * @return
      */
@@ -88,24 +88,25 @@ public class SDcardUtils {
 
     /**
      * 判断SD卡上的文件是否存�?
-     * @param fileDir 文件目录 如：sensecp/pic
+     *
+     * @param fileDir  文件目录 如：sensecp/pic
      * @param fileName 文件�?如：123.png
      * @return
      */
-    public static boolean isFileOnSDCard(String fileDir, String fileName){
+    public static boolean isFileOnSDCard(String fileDir, String fileName) {
         /**
          * 如果连SD卡都没有就别提还存文件了
          */
-        if(!ExistSDCard()){
+        if (!ExistSDCard()) {
             return false;
         }
 
         String fileDirectory = getSDPath(fileDir);
         //创建图片的文�?
-        File file = new File(fileDirectory,fileName);
-        if(file.exists()){
+        File file = new File(fileDirectory, fileName);
+        if (file.exists()) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

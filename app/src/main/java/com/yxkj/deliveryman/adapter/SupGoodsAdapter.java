@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
@@ -13,6 +14,9 @@ import com.yxkj.deliveryman.base.BaseViewHolder;
 import com.yxkj.deliveryman.constant.Constants;
 import com.yxkj.deliveryman.response.WaitSupContainerGoodsBean;
 import com.yxkj.deliveryman.util.ImageLoadUtil;
+import com.yxkj.deliveryman.util.ToastUtil;
+import com.yxkj.deliveryman.view.popupwindow.CancelPopupWindow;
+import com.yxkj.deliveryman.view.popupwindow.SupGoodsPopupWindow;
 
 
 /*
@@ -24,8 +28,11 @@ import com.yxkj.deliveryman.util.ImageLoadUtil;
  *  @描述：    真正在补货页面
  */
 public class SupGoodsAdapter extends BaseRecyclerViewAdapter<WaitSupContainerGoodsBean.GroupsBean> {
+    private Context mContext;
+
     public SupGoodsAdapter(Context context) {
         super(context);
+        mContext = context;
     }
 
     @Override
@@ -40,11 +47,39 @@ public class SupGoodsAdapter extends BaseRecyclerViewAdapter<WaitSupContainerGoo
         TextView tvContainerName = holder.getView(R.id.tv_container_name_item_sup_goods);
         TextView tvRemainNum = holder.getView(R.id.tv_remain_num_item_sup_goods);
         TextView tvWaitNum = holder.getView(R.id.tv_wait_sup_num_item_sup_goods);
+        RelativeLayout rlItem = holder.getView(R.id.rl_item_sup_goods);
 
         ImageLoadUtil.loadImage(ivGoodsPic, Constants.BASE_URL + bean.goodsPic);
         tvGoodsName.setText(bean.goodsName);
         tvContainerName.setText(bean.channelSn);
         tvRemainNum.setText("剩余数量：" + bean.waitSupplyCount);
         tvWaitNum.setText("待补货数：" + bean.waitSupplyCount);
+
+        rlItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SupGoodsPopupWindow popupWindow = new SupGoodsPopupWindow(mContext, bean) {
+                    @Override
+                    public void onClick(View v) {
+                        dismiss();
+                    }
+                };
+                popupWindow.showAsDropDown(rlItem);
+            }
+        });
+
+        rlItem.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                CancelPopupWindow cancelPopupWindow = new CancelPopupWindow(mContext) {
+                    @Override
+                    public void onClick(View v) {
+                        ToastUtil.showShort("取消完成");
+                    }
+                };
+                cancelPopupWindow.showAsDropDown(rlItem);
+                return true;//返回true则不会附加一个短按动作
+            }
+        });
     }
 }

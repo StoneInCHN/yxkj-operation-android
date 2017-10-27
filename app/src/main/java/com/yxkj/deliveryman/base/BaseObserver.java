@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.yxkj.deliveryman.application.MyApplication;
 import com.yxkj.deliveryman.util.LogUtil;
+import com.yxkj.deliveryman.util.ToastUtil;
 
 import java.net.ConnectException;
 import java.net.UnknownHostException;
@@ -53,6 +54,7 @@ public abstract class BaseObserver<T> implements Observer<BaseEntity<T>> {
                     || e instanceof NetworkErrorException
                     || e instanceof UnknownHostException) {
                 onFailure(e, true);
+                ToastUtil.showShort("网络出错了，请检查网络");
             } else {
                 onFailure(e, false);
             }

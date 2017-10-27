@@ -49,9 +49,12 @@ public class TeamAdapter extends BaseRecyclerViewAdapter<WaitSupStateBean.Scenes
                     IntentUtil.openActivity(context, ControllerManageActivity.class);
                 } else {//其他货柜
                     Bundle bundle = new Bundle();
-                    String cntrId = ((WaitSupStateBean.ScenesBean.VendingContainerGroupsBean.VendingContainersBean) data).id + "";
+                    WaitSupStateBean.ScenesBean.VendingContainerGroupsBean.VendingContainersBean bean1 = (WaitSupStateBean.ScenesBean.VendingContainerGroupsBean.VendingContainersBean) data;
+                    String cntrId = bean1.id + "";
+                    String cntrSn = bean1.cntrSn;
                     bundle.putString("cntrId", cntrId);
-                    IntentUtil.openActivity(context, ContainerManageActivity.class,bundle);
+                    bundle.putString("containerName", cntrSn + "货柜");
+                    IntentUtil.openActivity(context, ContainerManageActivity.class, bundle);
                 }
 
             }

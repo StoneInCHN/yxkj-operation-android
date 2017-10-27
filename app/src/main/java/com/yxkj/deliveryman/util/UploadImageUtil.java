@@ -74,9 +74,9 @@ public class UploadImageUtil {
     }
 
     public static Intent getTakePickIntent(File f) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE, null);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        //intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         return intent;
     }
 
@@ -96,6 +96,7 @@ public class UploadImageUtil {
      * @param data
      */
     public static File dealWithUploadImageOnActivityResult(Activity activity, int requestCode, int resultCode, Intent data, OnCompleteListener onCompleteListener) {
+        Log.e("获取图片", "resultCode" + resultCode);
         if (resultCode == Activity.RESULT_OK) {
 
             if (requestCode == Constants.PHOTO_PICKED_WITH_DATA) {// 从相册里面返回

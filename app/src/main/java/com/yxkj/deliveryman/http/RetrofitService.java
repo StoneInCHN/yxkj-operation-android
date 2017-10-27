@@ -16,10 +16,13 @@ import com.yxkj.deliveryman.response.WaitSupStateBean;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 /**
  * For Retrofit
@@ -72,7 +75,7 @@ public interface RetrofitService {
      * 获取货柜待补情况
      */
     @POST("keeper/getWaitSupplyState")
-    Observable<BaseEntity<WaitSupStateBean>> getWaitSupplyState( @Body Map<String, String> request);
+    Observable<BaseEntity<WaitSupStateBean>> getWaitSupplyState(@Body Map<String, String> request);
 
     /**
      * 获取待补优享空间
@@ -103,6 +106,19 @@ public interface RetrofitService {
      */
     @POST("keeper/getWaitSupplyContainerGoodsList")
     Observable<BaseEntity<WaitSupContainerGoodsBean>> getWaitSupplyContainerGoodsList(@Body Map<String, String> request);
+
+    /**
+     * 提交补货记录
+     */
+    @POST("keeper/commitSupplementRecord")
+    Observable<BaseEntity<NullBean>> commitSupplementRecord(@Body Map<String, String> request);
+
+    /**
+     * 上传补货照片
+     */
+    @Multipart
+    @POST("keeper/uploadSupplementPic")
+    Observable<BaseEntity<NullBean>> uploadSupplementPic(@Body Map<String, String> request, @Part MultipartBody.Part file);
 
 
 }

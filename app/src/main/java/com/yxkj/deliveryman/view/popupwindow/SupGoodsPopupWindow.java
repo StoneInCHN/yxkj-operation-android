@@ -14,26 +14,23 @@ import android.widget.TextView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.adapter.WaitSupScenesAdapter;
 import com.yxkj.deliveryman.base.BaseObserver;
-import com.yxkj.deliveryman.event.CompleteSupEvent;
 import com.yxkj.deliveryman.http.HttpApi;
+import com.yxkj.deliveryman.response.WaitSupContainerGoodsBean;
 import com.yxkj.deliveryman.response.WaitSupGoodsDetailBean;
 import com.yxkj.deliveryman.response.WaitSupGoodsListBean;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
 
-import org.greenrobot.eventbus.EventBus;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * 待补货物详细信息
+ * 真正补货商品详细信息
  */
-public abstract class WaitSupGoodsInfoPopupWindow extends PopupWindow implements View.OnClickListener {
+public abstract class SupGoodsPopupWindow extends PopupWindow implements View.OnClickListener {
 
     private Context mContext;
     @BindView(R.id.iv_goods_sup_info)
@@ -42,8 +39,6 @@ public abstract class WaitSupGoodsInfoPopupWindow extends PopupWindow implements
     TextView tvGoodsName;
     @BindView(R.id.tv_goods_num_sup_info)
     TextView tvSerialNum;
-    @BindView(R.id.rv_scenes_sup_info)
-    RecyclerView rvScenes;
     @BindView(R.id.tv_should_sup_num_sup_info)
     TextView tvShouldSupNum;
     @BindView(R.id.et_actual_sup_num_sum_info)
@@ -51,18 +46,15 @@ public abstract class WaitSupGoodsInfoPopupWindow extends PopupWindow implements
     @BindView(R.id.tv_confirm_sum_info)
     TextView tvConfirm;
 
-    private WaitSupScenesAdapter mWaitSupInfoListAdapter;
     private Unbinder unbinder;
 
-    private WaitSupGoodsListBean.GroupsBean mSupGoodsListBean;
+    private WaitSupContainerGoodsBean.GroupsBean mSupGoodsListBean;
 
-    public WaitSupGoodsInfoPopupWindow(Context context, WaitSupGoodsListBean.GroupsBean groupsBean) {
+    public SupGoodsPopupWindow(Context context, WaitSupContainerGoodsBean.GroupsBean groupsBean) {
         super(context);
         mContext = context;
         mSupGoodsListBean = groupsBean;
         initView();
-        initAdapter();
-        getGoodsInfo();
     }
 
     private void initView() {
@@ -79,32 +71,6 @@ public abstract class WaitSupGoodsInfoPopupWindow extends PopupWindow implements
         //不可点击外面取消?
         setFocusable(true);
 
-    }
-
-
-    private void initAdapter() {
-        mWaitSupInfoListAdapter = new WaitSupScenesAdapter(mContext);
-        rvScenes.setLayoutManager(new GridLayoutManager(mContext, 2));
-        rvScenes.setAdapter(mWaitSupInfoListAdapter);
-    }
-
-    private void getGoodsInfo() {
-        String userId = SharePrefreceHelper.getInstance().getString(SharedKey.USER_ID);
-        HttpApi.getInstance()
-                .getWaitSupplyGoodsDetails(userId, mSupGoodsListBean.goodsSn)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<WaitSupGoodsDetailBean>() {
-                    @Override
-                    protected void onHandleSuccess(WaitSupGoodsDetailBean waitSupGoodsDetailBean) {
-                        mWaitSupInfoListAdapter.settList(waitSupGoodsDetailBean.sceneCountList);
-                    }
-
-                    @Override
-                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-
-                    }
-                });
     }
 
     @Override

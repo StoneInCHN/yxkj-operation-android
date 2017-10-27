@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -20,9 +21,9 @@ import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.callback.CommenDialogSureListener;
 import com.yxkj.deliveryman.fragment.ContainerManageFragment;
 import com.yxkj.deliveryman.permission.RxPermissions;
-import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
 import com.yxkj.deliveryman.util.UploadImageUtil;
-import com.yxkj.deliveryman.view.popupwindow.BotomPopWindow;
+import com.yxkj.deliveryman.view.RichToolBar;
+import com.yxkj.deliveryman.view.popupwindow.BottomTakePhotoAndPicPopupWindow;
 import com.yxkj.deliveryman.view.dialog.CommonYesOrNoDialog;
 import com.yxkj.deliveryman.view.popupwindow.CompleteSupPopWindow;
 
@@ -34,17 +35,14 @@ import io.reactivex.Observable;
 /**
  * 货柜管理
  */
-public class ContainerManageActivity extends BaseActivity implements CommenDialogSureListener {
-    private LRecyclerView recyclerView;
-    private TabLayout mTablayout;
-    /**
-     * 拍照
-     */
-    private Button btn_photograph;
-    private WaitSupListAdapter adapter;
-    private CompleteSupPopWindow completeSupPopWindow;
+public class ContainerManageActivity extends BaseActivity {
     private ViewPager mViewPager;
+    private TabLayout mTablayout;
+    private Button btTakePhoto;
+    private Button btPauseSup;
     private ContainerSupFragmentViewpagerAdapter mContainerAdapter;
+    private CompleteSupPopWindow completeSupPopWindow;
+    private RichToolBar mToolbar;
 
     @Override
     public int getContentViewId() {
@@ -55,96 +53,112 @@ public class ContainerManageActivity extends BaseActivity implements CommenDialo
      * 货柜ID
      */
     public String cntrId;
+    public String containerName;
 
     @Override
     public void beforeInitView() {
         cntrId = getIntent().getExtras().getString("cntrId");
+        containerName = getIntent().getExtras().getString("containerName");
     }
 
     @Override
     public void initView() {
         mViewPager = findViewByIdNoCast(R.id.vp_container_manage);
-        recyclerView = findViewByIdNoCast(R.id.recyclerView);
+        mToolbar = findViewByIdNoCast(R.id.tb_container_manage);
         mTablayout = findViewByIdNoCast(R.id.tab_container_manage);
-        btn_photograph = findViewByIdNoCast(R.id.btn_photograph);
+        btTakePhoto = findViewByIdNoCast(R.id.bt_take_photo_complete);
+        btPauseSup = findViewByIdNoCast(R.id.bt_pause_sup_goods);
+
     }
 
     @Override
     public void initData() {
         initTablayout();
-
+        mToolbar.setTitle(containerName + "管理");
     }
 
     @Override
     public void setEvent() {
-        setOnClick(btn_photograph);
+        setOnClick(btTakePhoto, btPauseSup);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_photograph:
-                BotomPopWindow pupWIndow = new BotomPopWindow(this);
-                pupWIndow.showAtLocation(btn_photograph, Gravity.NO_GRAVITY, 0, 0);
-                pupWIndow.setCommenDialogSureListener(this);
+            case R.id.bt_take_photo_complete:
+                showBottomPopupWindow();
+                break;
+            case R.id.bt_pause_sup_goods:
+
                 break;
         }
     }
 
-    private List<Fragment> mFragmentList;
-    private List<String> mTitles;
+    private void showBottomPopupWindow() {
+        BottomTakePhotoAndPicPopupWindow pupWIndow = new BottomTakePhotoAndPicPopupWindow(this);
+        pupWIndow.showAtLocation(btTakePhoto, Gravity.NO_GRAVITY, 0, 0);
+        pupWIndow.setOnTakePhotoListener(new BottomTakePhotoAndPicPopupWindow.OnTakePhotoListener() {
+            @Override
+            public void onTakePhto() {
+                goTakePhoto();
+            }
+
+            @Override
+            public void onGetFromAlbum() {
+
+            }
+        });
+    }
 
     private void initTablayout() {
-        mTitles = new ArrayList<>();
-        mTitles.add("待补商品");
-        mTitles.add("全部商品");
+        List<String> titles = new ArrayList<>();
+        titles.add("待补商品");
+        titles.add("全部商品");
 
-        mFragmentList = new ArrayList<>();
+        List<Fragment> fragmentList = new ArrayList<>();
+        //等待补货
         ContainerManageFragment waitSupFragment = new ContainerManageFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("fragment_type", "wait_sup");
+        waitSupFragment.setArguments(bundle);
+        //全部商品
         ContainerManageFragment allGoodsFragment = new ContainerManageFragment();
-        mFragmentList.add(waitSupFragment);
-        mFragmentList.add(allGoodsFragment);
+        bundle.putString("fragment_type", "all_goods");
+        allGoodsFragment.setArguments(bundle);
 
-        mContainerAdapter = new ContainerSupFragmentViewpagerAdapter(getSupportFragmentManager(), mFragmentList, mTitles);
+        fragmentList.add(waitSupFragment);
+        fragmentList.add(allGoodsFragment);
+
+        mContainerAdapter = new ContainerSupFragmentViewpagerAdapter(getSupportFragmentManager(), fragmentList, titles);
         mViewPager.setAdapter(mContainerAdapter);
         mTablayout.setupWithViewPager(mViewPager);
     }
 
-    private List<String> getData() {
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            list.add(i + "");
-        }
-        return list;
-    }
-
-    /**
-     * 点击了拍照
-     */
-    @Override
-    public void onSure() {
+    private void goTakePhoto() {
         RxPermissions rxPermissions = new RxPermissions(this);
         rxPermissions.setLogging(true);
-        Observable.just(rxPermissions).compose(rxPermissions.ensureEach(Manifest.permission.CAMERA)).subscribe(permission -> {
-            if (permission.granted) {
-                /*跳转相机拍照*/
-                UploadImageUtil.doTakePhoto(this);
-            } else if (permission.shouldShowRequestPermissionRationale) {
+        Observable.just(rxPermissions)
+                .compose(rxPermissions.ensureEach(Manifest.permission.CAMERA))
+                .subscribe(permission -> {
+                    if (permission.granted) {
+                        //跳转相机拍照
+                        UploadImageUtil.doTakePhoto(this);
+                    } else if (permission.shouldShowRequestPermissionRationale) {
 
-            } else {
-                //如果用户选择了不再提醒，那么就会一直走这一步
-                CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog();
-                commonYesOrNoDialog.setTv_content("请允许系统使用您的相机");
-                commonYesOrNoDialog.setBtn_sure("去授权");
-                commonYesOrNoDialog.setDialogSureListener(() -> {
-                    //引导用户至设置页手动授权
-                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                    Uri uri = Uri.fromParts("package", getApplicationContext().getPackageName(), null);
-                    intent.setData(uri);
-                    startActivity(intent);
+                    } else {
+                        //如果用户选择了不再提醒，那么就会一直走这一步
+                        CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog();
+                        commonYesOrNoDialog.setTv_content("请允许系统使用您的相机");
+                        commonYesOrNoDialog.setBtn_sure("去授权");
+                        commonYesOrNoDialog.setDialogSureListener(() -> {
+                            //引导用户至设置页手动授权
+                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            Uri uri = Uri.fromParts("package", getApplicationContext().getPackageName(), null);
+                            intent.setData(uri);
+                            startActivity(intent);
+                        });
+                    }
                 });
-            }
-        });
     }
 
     @Override
@@ -157,7 +171,7 @@ public class ContainerManageActivity extends BaseActivity implements CommenDialo
                             @Override
                             public void run() {
                                 completeSupPopWindow.setBitmaps(bitmap);
-                                completeSupPopWindow.showAtLocation(btn_photograph, Gravity.CENTER, 0, 0);
+                                completeSupPopWindow.showAtLocation(btTakePhoto, Gravity.CENTER, 0, 0);
                             }
                         });
                     }

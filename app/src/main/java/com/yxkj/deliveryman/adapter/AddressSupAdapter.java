@@ -47,8 +47,7 @@ public class AddressSupAdapter extends RecyclerView.Adapter<AddressSupAdapter.Vi
         holder.tvFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2017/10/24
-                ToastUtil.showShort("完成补货");
+                commitRecords();
             }
         });
         //某楼里面按组分的list
@@ -56,6 +55,11 @@ public class AddressSupAdapter extends RecyclerView.Adapter<AddressSupAdapter.Vi
         TeamAdapter teamAdapter = new TeamAdapter(mContext);
         holder.rvGroups.setAdapter(teamAdapter);
         teamAdapter.settList(mScenesBeanList.get(position).vendingContainerGroups);
+    }
+
+    private void commitRecords() {
+        // TODO: 2017/10/27 待接口
+        ToastUtil.showShort("完成补货");
     }
 
     @Override

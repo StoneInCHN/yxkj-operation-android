@@ -1,76 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="95dp"
-    android:background="@color/white"
-    android:orientation="horizontal"
-    android:padding="10dp">
-
-
-    <ImageView
-        android:id="@+id/iv_goods_pic_item_sup_goods"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:scaleType="centerInside"
-        android:src="@mipmap/ic_launcher"/>
+    android:id="@+id/rl_item_sup_goods"
+    android:layout_height="95dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="15dp"
-        android:orientation="vertical">
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-        <TextView
-            android:id="@+id/tv_goods_name_item_sup_goods"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:lines="1"
-            android:text="统一康师傅冰红绿茶统一康师傅冰红绿放大森大森as"
-            android:textColor="@color/black"/>
+        <ImageView
+            android:id="@+id/iv_goods_pic_item_sup_goods"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_launcher"/>
 
-        <TextView
-            android:id="@+id/tv_container_name_item_sup_goods"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="A01"
-            android:textColor="@color/black_text"
-            android:textSize="@dimen/sp_14"/>
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_vertical">
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_remain_num_item_sup_goods"
+                android:id="@+id/tv_goods_name_item_sup_goods"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="剩余数量：10"
-                android:textColor="@color/black_text"
-                android:textSize="@dimen/sp_12"/>
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="统一康师傅冰红绿茶统一康师傅冰红绿放大森大森as"
+                android:textColor="@color/black"/>
 
             <TextView
-                android:id="@+id/tv_wait_sup_num_item_sup_goods"
+                android:id="@+id/tv_container_name_item_sup_goods"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="待补货数：20"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="A01"
                 android:textColor="@color/black_text"
-                android:textSize="@dimen/sp_12"/>
+                android:textSize="@dimen/sp_14"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_remain_num_item_sup_goods"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="剩余数量：10"
+                    android:textColor="@color/black_text"
+                    android:textSize="@dimen/sp_12"/>
+
+                <TextView
+                    android:id="@+id/tv_wait_sup_num_item_sup_goods"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="待补货数：20"
+                    android:textColor="@color/black_text"
+                    android:textSize="@dimen/sp_12"/>
 
 
-        </RelativeLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/tv_tip_complete_sup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/trans_70_black"
+        android:gravity="center"
+        android:text="完成补货"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+
+</RelativeLayout>

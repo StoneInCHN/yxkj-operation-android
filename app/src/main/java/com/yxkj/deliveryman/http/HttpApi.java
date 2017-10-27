@@ -1,6 +1,8 @@
 package com.yxkj.deliveryman.http;
 
+import com.google.gson.Gson;
 import com.yxkj.deliveryman.base.BaseEntity;
+import com.yxkj.deliveryman.bean.CommitSupRecordsBean;
 import com.yxkj.deliveryman.response.GetCodeBean;
 import com.yxkj.deliveryman.response.GoodsCategoryBean;
 import com.yxkj.deliveryman.response.LoginBean;
@@ -15,10 +17,15 @@ import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.LogUtil;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 /*
  *  @项目名：  yxkj-controller-app 
@@ -233,6 +240,43 @@ public class HttpApi {
         req.put("pageNo", pageNo);
         req.put("pageSize", pageSize);
         return RetrofitFactory.getInstance().getWaitSupplyContainerGoodsList(req);
+    }
+
+    /**
+     * 提交补货记录
+     *
+     * @param userId
+     * @return
+     */
+    public Observable<BaseEntity<NullBean>> commitSupplementRecord(String userId, String sceneSn, CommitSupRecordsBean bean) {
+        Map<String, String> req = new HashMap<>();
+        req.put("userId", userId);
+        req.put("sceneSn", sceneSn);
+
+        Gson gson = new Gson();
+        String supplementRecords = gson.toJson(bean);
+        req.put("supplementRecords", supplementRecords);
+
+        return RetrofitFactory.getInstance().commitSupplementRecord(req);
+    }
+
+    /**
+     * 上传补货照片
+     *
+     * @param userId
+     * @param cntrId
+     * @param file
+     * @return
+     */
+    public Observable<BaseEntity<NullBean>> uploadSupplementPic(String userId, String cntrId, File file) {
+        Map<String, String> req = new HashMap<>();
+        req.put("userId", userId);
+        req.put("cntrId", cntrId);
+
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+
+        return RetrofitFactory.getInstance().uploadSupplementPic(req, filePart);
     }
 
 

@@ -70,7 +70,7 @@
             android:drawablePadding="@dimen/drawablepadding_18dp"
             android:hint="请输入密码"
             android:inputType="textPassword"
-            android:text="123456bb"/>
+            android:text="123456aa"/>
 
         <TextView
             android:id="@+id/tv_tip_pwd_error"
