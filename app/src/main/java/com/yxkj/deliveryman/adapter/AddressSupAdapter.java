@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
-import com.yxkj.deliveryman.response.WaitSupStateBean;
+import com.yxkj.deliveryman.bean.response.WaitSupStateBean;
 import com.yxkj.deliveryman.util.ToastUtil;
 
 import java.util.ArrayList;

@@ -1,31 +1,12 @@
 package com.yxkj.deliveryman.adapter;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.github.jdsjlzx.recyclerview.LRecyclerView;
-import com.github.jdsjlzx.util.RecyclerViewUtils;
-import com.yxkj.deliveryman.base.BaseObserver;
-import com.yxkj.deliveryman.http.HttpApi;
-import com.yxkj.deliveryman.response.GoodsCategoryBean;
-import com.yxkj.deliveryman.response.WaitSupGoodsListBean;
-import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
-import com.yxkj.deliveryman.sharepreference.SharedKey;
-import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
+import com.yxkj.deliveryman.bean.response.GoodsCategoryBean;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.crypto.interfaces.PBEKey;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /*
  *  @项目名：  yxkj-operation-android 

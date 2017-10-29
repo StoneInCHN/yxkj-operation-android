@@ -15,7 +15,7 @@ import com.yxkj.deliveryman.base.BaseFragment;
 import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.callback.MainPageClickListener;
 import com.yxkj.deliveryman.http.HttpApi;
-import com.yxkj.deliveryman.response.WaitSupStateBean;
+import com.yxkj.deliveryman.bean.response.WaitSupStateBean;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.DisplayUtil;

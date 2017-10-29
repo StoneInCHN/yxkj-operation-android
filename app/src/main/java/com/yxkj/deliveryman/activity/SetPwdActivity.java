@@ -1,6 +1,5 @@
 package com.yxkj.deliveryman.activity;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -8,17 +7,15 @@ import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.http.HttpApi;
-import com.yxkj.deliveryman.response.NullBean;
+import com.yxkj.deliveryman.bean.response.NullBean;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.IntentUtil;
 import com.yxkj.deliveryman.util.RsaUtil;
 import com.yxkj.deliveryman.util.StringUtil;
-import com.yxkj.deliveryman.util.ToastUtil;
 import com.yxkj.deliveryman.view.dialog.TextShortTimeDialog;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;

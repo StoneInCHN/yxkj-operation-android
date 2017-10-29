@@ -9,13 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
-import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.event.WaitSupAddressEvent;
 import com.yxkj.deliveryman.adapter.WaitSupAddressAdapter;
 import com.yxkj.deliveryman.base.BaseRecyclerViewAdapter;
-import com.yxkj.deliveryman.response.SceneListBean;
-import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
+import com.yxkj.deliveryman.bean.response.SceneListBean;
 
 import org.greenrobot.eventbus.EventBus;
 

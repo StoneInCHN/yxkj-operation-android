@@ -3,23 +3,26 @@ package com.yxkj.deliveryman.http;
 import com.google.gson.Gson;
 import com.yxkj.deliveryman.base.BaseEntity;
 import com.yxkj.deliveryman.bean.CommitSupRecordsBean;
-import com.yxkj.deliveryman.response.GetCodeBean;
-import com.yxkj.deliveryman.response.GoodsCategoryBean;
-import com.yxkj.deliveryman.response.LoginBean;
-import com.yxkj.deliveryman.response.NullBean;
-import com.yxkj.deliveryman.response.PublicKeyBean;
-import com.yxkj.deliveryman.response.SceneListBean;
-import com.yxkj.deliveryman.response.WaitSupContainerGoodsBean;
-import com.yxkj.deliveryman.response.WaitSupGoodsDetailBean;
-import com.yxkj.deliveryman.response.WaitSupGoodsListBean;
-import com.yxkj.deliveryman.response.WaitSupStateBean;
+import com.yxkj.deliveryman.bean.response.GetCodeBean;
+import com.yxkj.deliveryman.bean.response.GoodsCategoryBean;
+import com.yxkj.deliveryman.bean.response.LoginBean;
+import com.yxkj.deliveryman.bean.response.MessageBean;
+import com.yxkj.deliveryman.bean.response.MessageDetailBean;
+import com.yxkj.deliveryman.bean.response.NullBean;
+import com.yxkj.deliveryman.bean.response.PublicKeyBean;
+import com.yxkj.deliveryman.bean.response.SceneListBean;
+import com.yxkj.deliveryman.bean.response.SupRecordBean;
+import com.yxkj.deliveryman.bean.response.SupRecordDetail;
+import com.yxkj.deliveryman.bean.response.WaitSupContainerGoodsBean;
+import com.yxkj.deliveryman.bean.response.WaitSupGoodsDetailBean;
+import com.yxkj.deliveryman.bean.response.WaitSupGoodsListBean;
+import com.yxkj.deliveryman.bean.response.WaitSupStateBean;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.LogUtil;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -277,6 +280,72 @@ public class HttpApi {
         MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
         return RetrofitFactory.getInstance().uploadSupplementPic(req, filePart);
+    }
+
+    /**
+     * 完成补货
+     *
+     * @param userId
+     * @param sceneSn 优享空间编号
+     * @return
+     */
+    public Observable<BaseEntity<SceneListBean.GroupsBean>> finishSupplyGoods(String userId, String sceneSn) {
+        Map<String, String> req = new HashMap<>();
+        req.put("userId", userId);
+        req.put("sceneSn", sceneSn);
+        return RetrofitFactory.getInstance().finishSupplyGoods(req);
+    }
+
+    /**
+     * 查看总补货记录
+     *
+     * @param userId
+     * @return
+     */
+    public Observable<BaseEntity<SupRecordBean>> getSupplementSumRecord(String userId, String pageNo, String pageSize) {
+        Map<String, String> req = new HashMap<>();
+        req.put("userId", userId);
+        req.put("pageNo", pageNo);
+        req.put("pageSize", pageSize);
+        return RetrofitFactory.getInstance().getSupplementSumRecord(req);
+    }
+
+    /**
+     * 查看补货记录详情
+     *
+     * @param userId
+     * @return
+     */
+    public Observable<BaseEntity<SupRecordDetail>> getSupplementRecordDetails(String userId, String sceneSn) {
+        Map<String, String> req = new HashMap<>();
+        req.put("userId", userId);
+        req.put("sceneSn", sceneSn);
+        return RetrofitFactory.getInstance().getSupplementRecordDetails(req);
+    }
+
+    /**
+     * 查看消息
+     *
+     * @param userId
+     * @return
+     */
+    public Observable<BaseEntity<MessageBean>> getMsg(String userId) {
+        Map<String, String> req = new HashMap<>();
+        req.put("userId", userId);
+        return RetrofitFactory.getInstance().getMsg(req);
+    }
+
+    /**
+     * 查看消息详情
+     *
+     * @param userId
+     * @return
+     */
+    public Observable<BaseEntity<MessageDetailBean>> getMsgDetails(String userId, String type) {
+        Map<String, String> req = new HashMap<>();
+        req.put("userId", userId);
+        req.put("type", type);
+        return RetrofitFactory.getInstance().getMsgDetails(req);
     }
 
 

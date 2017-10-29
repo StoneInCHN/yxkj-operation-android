@@ -21,7 +21,7 @@ import com.yxkj.deliveryman.callback.OnCommon2Listener;
 import com.yxkj.deliveryman.fragment.ContainerManageFragment;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.permission.RxPermissions;
-import com.yxkj.deliveryman.response.NullBean;
+import com.yxkj.deliveryman.bean.response.NullBean;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.ToastUtil;

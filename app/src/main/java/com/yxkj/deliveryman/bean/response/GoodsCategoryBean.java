@@ -1,10 +1,10 @@
-package com.yxkj.deliveryman.response;
+package com.yxkj.deliveryman.bean.response;
 
 import java.util.List;
 
 /*
  *  @项目名：  yxkj-operation-android 
- *  @包名：    com.yxkj.deliveryman.response
+ *  @包名：    com.yxkj.deliveryman.bean.response
  *  @文件名:   GoodsCategoryBean
  *  @创建者:   hhe
  *  @创建时间:  2017/10/24 15:21

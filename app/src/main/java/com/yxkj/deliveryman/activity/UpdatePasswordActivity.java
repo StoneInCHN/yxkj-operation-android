@@ -12,7 +12,7 @@ import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.http.HttpApi;
-import com.yxkj.deliveryman.response.NullBean;
+import com.yxkj.deliveryman.bean.response.NullBean;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.IntentUtil;

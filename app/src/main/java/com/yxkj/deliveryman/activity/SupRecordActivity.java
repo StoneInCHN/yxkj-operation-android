@@ -1,15 +1,25 @@
 package com.yxkj.deliveryman.activity;
 
+import android.content.SharedPreferences;
 import android.view.View;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.adapter.SupRecordAdapter;
 import com.yxkj.deliveryman.base.BaseActivity;
+import com.yxkj.deliveryman.base.BaseObserver;
+import com.yxkj.deliveryman.bean.response.SupRecordBean;
+import com.yxkj.deliveryman.http.HttpApi;
+import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
+import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.http.HTTP;
 
 /**
  * 补货记录
@@ -39,8 +49,33 @@ public class SupRecordActivity extends BaseActivity {
     @Override
     public void initData() {
         adapter = new SupRecordAdapter(this);
-        adapter.settList(getData());
         RecyclerViewSetUtil.setRecyclerView(this, mRlvSupRecord, adapter);
+
+        getRecordsList();
+    }
+
+    private int mPageNum = 1;
+
+    /**
+     * 获取补货记录
+     */
+    private void getRecordsList() {
+        String userId = SharePrefreceHelper.getInstance().getString(SharedKey.USER_ID);
+        HttpApi.getInstance()
+                .getSupplementSumRecord(userId, mPageNum + "", "10")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<SupRecordBean>() {
+                    @Override
+                    protected void onHandleSuccess(SupRecordBean supRecordBean) {
+                        adapter.settList(supRecordBean.groups);
+                    }
+
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+
+                    }
+                });
     }
 
     @Override
@@ -53,11 +88,4 @@ public class SupRecordActivity extends BaseActivity {
 
     }
 
-    private List<String> getData() {
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            list.add(i + "");
-        }
-        return list;
-    }
 }

@@ -12,22 +12,12 @@ import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.activity.ShowBigImageActivity;
-import com.yxkj.deliveryman.base.BaseObserver;
-import com.yxkj.deliveryman.callback.CommonDialogSureListener;
 import com.yxkj.deliveryman.callback.OnCommon2Listener;
-import com.yxkj.deliveryman.http.HttpApi;
-import com.yxkj.deliveryman.response.NullBean;
-import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
-import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.BitmapUtil;
 import com.yxkj.deliveryman.util.ImageLoadUtil;
 import com.yxkj.deliveryman.util.IntentUtil;
-import com.yxkj.deliveryman.util.ToastUtil;
 
 import java.io.File;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * 完成补货弹窗

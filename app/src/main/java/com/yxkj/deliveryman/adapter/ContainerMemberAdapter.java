@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseRecyclerViewAdapter;
 import com.yxkj.deliveryman.base.BaseViewHolder;
-import com.yxkj.deliveryman.response.WaitSupStateBean;
+import com.yxkj.deliveryman.bean.response.WaitSupStateBean;
 
 /**
  * 具体货柜

@@ -3,7 +3,6 @@ package com.yxkj.deliveryman.view;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -11,8 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
-import com.yxkj.deliveryman.response.WaitSupGoodsListBean;
-import com.yxkj.deliveryman.view.popupwindow.WaitSupGoodsInfoPopupWindow;
 
 /**
  * 待补清单Item

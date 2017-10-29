@@ -8,16 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
-import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.activity.ContainerManageActivity;
 import com.yxkj.deliveryman.adapter.SupGoodsAdapter;
 import com.yxkj.deliveryman.base.BaseObserver;
-import com.yxkj.deliveryman.base.BaseRecyclerViewAdapter;
 import com.yxkj.deliveryman.http.HttpApi;
-import com.yxkj.deliveryman.response.WaitSupContainerGoodsBean;
-import com.yxkj.deliveryman.response.WaitSupGoodsListBean;
+import com.yxkj.deliveryman.bean.response.WaitSupContainerGoodsBean;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;

@@ -11,6 +11,7 @@
         android:layout_marginLeft="16dp">
 
         <TextView
+            android:id="@+id/tv_date_item_sup_record"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -18,12 +19,14 @@
             android:textSize="@dimen/sp_12"/>
 
         <TextView
+            android:id="@+id/tv_wait_sip_num_item_sup_record"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:textColor="@color/black_text"
             android:text="总待补数：50"/>
         <TextView
+            android:id="@+id/tv_sup_num_item_sup_record"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black_text"
@@ -33,7 +36,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/recyclerView"
+        android:id="@+id/ll_item_sup_record"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"/>

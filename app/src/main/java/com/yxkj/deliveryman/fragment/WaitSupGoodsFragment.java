@@ -14,7 +14,7 @@ import com.yxkj.deliveryman.adapter.WaitSupListAdapter;
 import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.event.WaitSupAddressEvent;
 import com.yxkj.deliveryman.http.HttpApi;
-import com.yxkj.deliveryman.response.WaitSupGoodsListBean;
+import com.yxkj.deliveryman.bean.response.WaitSupGoodsListBean;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;

@@ -6,7 +6,7 @@ import android.widget.TextView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseRecyclerViewAdapter;
 import com.yxkj.deliveryman.base.BaseViewHolder;
-import com.yxkj.deliveryman.response.SceneListBean;
+import com.yxkj.deliveryman.bean.response.SceneListBean;
 
 /*
  *  @项目名：  yxkj-operation-android 

@@ -2,26 +2,27 @@ package com.yxkj.deliveryman.http;
 
 
 import com.yxkj.deliveryman.base.BaseEntity;
-import com.yxkj.deliveryman.response.GetCodeBean;
-import com.yxkj.deliveryman.response.GoodsCategoryBean;
-import com.yxkj.deliveryman.response.LoginBean;
-import com.yxkj.deliveryman.response.NullBean;
-import com.yxkj.deliveryman.response.PublicKeyBean;
-import com.yxkj.deliveryman.response.SceneListBean;
-import com.yxkj.deliveryman.response.WaitSupContainerGoodsBean;
-import com.yxkj.deliveryman.response.WaitSupGoodsDetailBean;
-import com.yxkj.deliveryman.response.WaitSupGoodsListBean;
-import com.yxkj.deliveryman.response.WaitSupStateBean;
+import com.yxkj.deliveryman.bean.response.GetCodeBean;
+import com.yxkj.deliveryman.bean.response.GoodsCategoryBean;
+import com.yxkj.deliveryman.bean.response.LoginBean;
+import com.yxkj.deliveryman.bean.response.MessageBean;
+import com.yxkj.deliveryman.bean.response.MessageDetailBean;
+import com.yxkj.deliveryman.bean.response.NullBean;
+import com.yxkj.deliveryman.bean.response.PublicKeyBean;
+import com.yxkj.deliveryman.bean.response.SceneListBean;
+import com.yxkj.deliveryman.bean.response.SupRecordBean;
+import com.yxkj.deliveryman.bean.response.SupRecordDetail;
+import com.yxkj.deliveryman.bean.response.WaitSupContainerGoodsBean;
+import com.yxkj.deliveryman.bean.response.WaitSupGoodsDetailBean;
+import com.yxkj.deliveryman.bean.response.WaitSupGoodsListBean;
+import com.yxkj.deliveryman.bean.response.WaitSupStateBean;
 
 import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import retrofit2.http.Body;
-import retrofit2.http.FieldMap;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -122,6 +123,36 @@ public interface RetrofitService {
     @Multipart
     @POST("keeper/uploadSupplementPic")
     Observable<BaseEntity<NullBean>> uploadSupplementPic(@PartMap Map<String, String> request, @Part MultipartBody.Part file);
+
+    /**
+     * 完成补货
+     */
+    @POST("keeper/finishSupplyGoods")
+    Observable<BaseEntity<SceneListBean.GroupsBean>> finishSupplyGoods(@Body Map<String, String> request);
+
+    /**
+     * 查看总补货记录
+     */
+    @POST("keeper/getSupplementSumRecord")
+    Observable<BaseEntity<SupRecordBean>> getSupplementSumRecord(@Body Map<String, String> request);
+
+    /**
+     * 查看补货记录详情
+     */
+    @POST("keeper/getSupplementRecordDetails")
+    Observable<BaseEntity<SupRecordDetail>> getSupplementRecordDetails(@Body Map<String, String> request);
+
+    /**
+     * 查看消息
+     */
+    @POST("keeper/getMsg")
+    Observable<BaseEntity<MessageBean>> getMsg(@Body Map<String, String> request);
+
+    /**
+     * 查看消息详情
+     */
+    @POST("keeper/getMsgDetails")
+    Observable<BaseEntity<MessageDetailBean>> getMsgDetails(@Body Map<String, String> request);
 
 
 }

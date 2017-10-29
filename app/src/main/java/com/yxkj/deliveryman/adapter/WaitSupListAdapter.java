@@ -10,14 +10,9 @@ import android.widget.TextView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseRecyclerViewAdapter;
 import com.yxkj.deliveryman.base.BaseViewHolder;
-import com.yxkj.deliveryman.response.WaitSupGoodsListBean;
+import com.yxkj.deliveryman.bean.response.WaitSupGoodsListBean;
 import com.yxkj.deliveryman.util.ImageLoadUtil;
 import com.yxkj.deliveryman.view.popupwindow.WaitSupGoodsInfoPopupWindow;
-
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * 待补清单列表

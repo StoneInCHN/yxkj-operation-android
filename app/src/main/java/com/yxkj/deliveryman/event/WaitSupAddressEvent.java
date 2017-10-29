@@ -1,6 +1,6 @@
 package com.yxkj.deliveryman.event;
 
-import com.yxkj.deliveryman.response.SceneListBean;
+import com.yxkj.deliveryman.bean.response.SceneListBean;
 
 /*
  *  @项目名：  yxkj-operation-android 

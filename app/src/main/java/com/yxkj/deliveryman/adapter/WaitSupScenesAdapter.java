@@ -6,7 +6,7 @@ import android.widget.TextView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseRecyclerViewAdapter;
 import com.yxkj.deliveryman.base.BaseViewHolder;
-import com.yxkj.deliveryman.response.WaitSupGoodsDetailBean;
+import com.yxkj.deliveryman.bean.response.WaitSupGoodsDetailBean;
 
 /**
  * 待补商品详情，弹框中优享空间列表

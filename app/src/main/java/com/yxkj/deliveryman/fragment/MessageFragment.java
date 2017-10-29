@@ -7,10 +7,16 @@ import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.adapter.MessageAdapter;
 import com.yxkj.deliveryman.base.BaseFragment;
+import com.yxkj.deliveryman.base.BaseObserver;
+import com.yxkj.deliveryman.bean.response.MessageBean;
+import com.yxkj.deliveryman.bean.response.SupRecordDetail;
+import com.yxkj.deliveryman.http.HttpApi;
+import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
+import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
 
-import java.util.ArrayList;
-import java.util.List;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 首页消息
@@ -18,7 +24,7 @@ import java.util.List;
 public class MessageFragment extends BaseFragment {
     /*消息列表*/
     private LRecyclerView mLrv;
-    private MessageAdapter messageAdapter;
+    private MessageAdapter mMessageAdapter;
 
     @Override
     protected int getResource() {
@@ -37,13 +43,33 @@ public class MessageFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        messageAdapter = new MessageAdapter(getActivity());
-        RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, messageAdapter, true);
+        mMessageAdapter = new MessageAdapter(getActivity());
+        RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, mMessageAdapter, true);
 //        mLrv.setLoadMoreFooter(new LoadingFooter(getActivity()));
 //        mLrv.setFooterViewHint("加载中", "没有更多了", "网络出错");
 //        mLrv.setLoadingMoreProgressStyle(ProgressStyle.BallSpinFadeLoader);
         //mLrv.setLoadMoreEnabled(false);
-        messageAdapter.settList(getData());
+
+        getMsgList();
+    }
+
+    private void getMsgList() {
+        String userId = SharePrefreceHelper.getInstance().getString(SharedKey.USER_ID);
+        HttpApi.getInstance()
+                .getMsg(userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<MessageBean>() {
+                    @Override
+                    protected void onHandleSuccess(MessageBean bean) {
+                        mMessageAdapter.settList(bean.groups);
+                    }
+
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+
+                    }
+                });
     }
 
     @Override
@@ -56,11 +82,4 @@ public class MessageFragment extends BaseFragment {
 
     }
 
-    private List<String> getData() {
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            list.add(i + "");
-        }
-        return list;
-    }
 }

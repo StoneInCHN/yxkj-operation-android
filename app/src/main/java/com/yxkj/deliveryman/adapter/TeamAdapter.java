@@ -12,12 +12,9 @@ import com.yxkj.deliveryman.activity.ContainerManageActivity;
 import com.yxkj.deliveryman.activity.ControllerManageActivity;
 import com.yxkj.deliveryman.base.BaseRecyclerViewAdapter;
 import com.yxkj.deliveryman.base.BaseViewHolder;
-import com.yxkj.deliveryman.response.WaitSupStateBean;
+import com.yxkj.deliveryman.bean.response.WaitSupStateBean;
 import com.yxkj.deliveryman.util.IntentUtil;
 import com.yxkj.deliveryman.view.popupwindow.ContainerSupPopWindow;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 货柜分组

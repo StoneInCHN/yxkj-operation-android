@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.callback.CommonDialogSureListener;
 import com.yxkj.deliveryman.constant.Constants;
-import com.yxkj.deliveryman.response.WaitSupContainerGoodsBean;
+import com.yxkj.deliveryman.bean.response.WaitSupContainerGoodsBean;
 import com.yxkj.deliveryman.util.DisplayUtil;
 import com.yxkj.deliveryman.util.ImageLoadUtil;
 import com.yxkj.deliveryman.util.ToastUtil;
