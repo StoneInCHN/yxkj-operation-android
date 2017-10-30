@@ -53,6 +53,8 @@ public class SupRecordAdapter extends RecyclerView.Adapter {
 
         SupRecordsItemAdapter adapter = new SupRecordsItemAdapter(mContext);
         RecyclerViewSetUtil.setRecyclerView(mContext, viewHolder.mLRecyclerView, adapter);
+        viewHolder.mLRecyclerView.setLoadMoreEnabled(false);
+        viewHolder.mLRecyclerView.setPullRefreshEnabled(false);
 
         adapter.mSupRecordItemBeanList.clear();
         adapter.mSupRecordItemBeanList.addAll(bean.supplementList);
@@ -68,7 +70,7 @@ public class SupRecordAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return mBeanList.size() ;
+        return mBeanList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

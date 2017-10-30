@@ -30,6 +30,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_item_sup_record"
         android:layout_width="match_parent"
         android:layout_height="79dp"
         android:layout_marginRight="21dp"
@@ -44,8 +45,8 @@
             <TextView
                 android:id="@+id/tv_name_item_sup_records"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="香年广场T3"
                 android:textColor="@color/black_text"/>
 

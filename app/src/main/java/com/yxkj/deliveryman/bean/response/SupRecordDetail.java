@@ -35,6 +35,32 @@ public class SupRecordDetail {
             public String goodsPic;
             public int waitSupplyCount;
             public int supplyCount;
+
+            @Override
+            public String toString() {
+                return "CntrSupplementRecordsBean{" +
+                        "channelSn='" + channelSn + '\'' +
+                        ", goodsName='" + goodsName + '\'' +
+                        ", goodsPic='" + goodsPic + '\'' +
+                        ", waitSupplyCount=" + waitSupplyCount +
+                        ", supplyCount=" + supplyCount +
+                        '}';
+            }
         }
+
+        @Override
+        public String toString() {
+            return "GroupsBean{" +
+                    "cntrSn='" + cntrSn + '\'' +
+                    ", cntrSupplementRecords=" + cntrSupplementRecords +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "SupRecordDetail{" +
+                "groups=" + groups +
+                '}';
     }
 }

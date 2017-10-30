@@ -38,6 +38,8 @@
         <activity android:name=".activity.ControllerManageActivity"/>
         <activity android:name=".activity.ShowBigImageActivity">
         </activity>
+        <activity android:name=".activity.SupRecordDetailActivity">
+        </activity>
     </application>
 
 </manifest>
