@@ -248,19 +248,13 @@ public class HttpApi {
     /**
      * 提交补货记录
      *
-     * @param userId
      * @return
      */
-    public Observable<BaseEntity<NullBean>> commitSupplementRecord(String userId, String sceneSn, CommitSupRecordsBean bean) {
-        Map<String, String> req = new HashMap<>();
-        req.put("userId", userId);
-        req.put("sceneSn", sceneSn);
-
+    public Observable<BaseEntity<NullBean>> commitSupplementRecord(CommitSupRecordsBean bean) {
         Gson gson = new Gson();
-        String supplementRecords = gson.toJson(bean);
-        req.put("supplementRecords", supplementRecords);
-
-        return RetrofitFactory.getInstance().commitSupplementRecord(req);
+        String beanString = gson.toJson(bean, CommitSupRecordsBean.class);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), beanString);
+        return RetrofitFactory.getInstance().commitSupplementRecord(body);
     }
 
     /**
@@ -274,7 +268,7 @@ public class HttpApi {
     public Observable<BaseEntity<NullBean>> uploadSupplementPic(String userId, String cntrId, File file) {
         Map<String, String> req = new HashMap<>();
         req.put("userId", userId);
-        req.put("cntrId", cntrId);
+        req.put("sceneSn", cntrId);
 
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), requestFile);

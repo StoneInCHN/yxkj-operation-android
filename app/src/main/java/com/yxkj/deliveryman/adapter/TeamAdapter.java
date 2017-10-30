@@ -84,6 +84,11 @@ public class TeamAdapter extends BaseRecyclerViewAdapter<WaitSupStateBean.Scenes
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<SceneListBean.GroupsBean>() {
                     @Override
+                    public void onComplete() {
+
+                    }
+
+                    @Override
                     protected void onHandleSuccess(SceneListBean.GroupsBean groupsBean) {
                         if (groupsBean == null) {
 
@@ -92,6 +97,7 @@ public class TeamAdapter extends BaseRecyclerViewAdapter<WaitSupStateBean.Scenes
                                     (WaitSupStateBean.ScenesBean.VendingContainerGroupsBean.VendingContainersBean) data;
                             String cntrId = bean1.id + "";
                             String cntrSn = bean1.cntrSn;
+                            bundle.putString("sceneSn", mSceneSn);
                             bundle.putString("cntrId", cntrId);
                             bundle.putString("containerName", cntrSn + "货柜");
                             IntentUtil.openActivity(context, ContainerManageActivity.class, bundle);

@@ -117,9 +117,13 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<WaitSupStateBean>() {
                     @Override
+                    public void onComplete() {
+                        mLrv.refreshComplete(10);
+                    }
+
+                    @Override
                     protected void onHandleSuccess(WaitSupStateBean waitSupStateBean) {
                         updateView(waitSupStateBean);
-                        mLrv.refreshComplete(mPageNum);
                     }
 
                     @Override

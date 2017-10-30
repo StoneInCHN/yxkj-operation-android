@@ -46,6 +46,10 @@ public abstract class BaseObserver<T> implements Observer<BaseEntity<T>> {
     }
 
     @Override
+    public void onComplete() {
+    }
+
+    @Override
     public void onError(Throwable e) {
         LogUtil.e(TAG, "onError:" + e.toString());
         try {
@@ -57,15 +61,11 @@ public abstract class BaseObserver<T> implements Observer<BaseEntity<T>> {
                 ToastUtil.showShort("网络出错了，请检查网络");
             } else {
                 onFailure(e, false);
+                ToastUtil.showShort("服务器发生了一个问题，请稍后再试");
             }
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-    }
-
-    @Override
-    public void onComplete() {
-        LogUtil.d(TAG, "onComplete");
     }
 
     protected abstract void onHandleSuccess(T t);

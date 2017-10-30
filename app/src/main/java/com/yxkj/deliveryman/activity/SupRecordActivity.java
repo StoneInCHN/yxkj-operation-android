@@ -77,6 +77,11 @@ public class SupRecordActivity extends BaseActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<SupRecordBean>() {
                     @Override
+                    public void onComplete() {
+                        mLrvSupRecord.refreshComplete(10);
+                    }
+
+                    @Override
                     protected void onHandleSuccess(SupRecordBean supRecordBean) {
                         adapter.settList(supRecordBean.groups);
                         mLrvSupRecord.refreshComplete(10);

@@ -65,14 +65,13 @@ public class ContainerManageActivity extends BaseActivity {
         return R.layout.activity_container_manage;
     }
 
-    /**
-     * 货柜ID
-     */
+    public String sceneSn;
     public String cntrId;
     public String containerName;
 
     @Override
     public void beforeInitView() {
+        sceneSn = getIntent().getExtras().getString("sceneSn");
         cntrId = getIntent().getExtras().getString("cntrId");
         containerName = getIntent().getExtras().getString("containerName");
     }
@@ -94,8 +93,8 @@ public class ContainerManageActivity extends BaseActivity {
         mToolbar.mIvBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mWaitSupFragment.mRecordsBean.supplementRecords.size() > 0) {
-                    mWaitSupFragment.uploadCompletedGoods(cntrId);
+                if (mWaitSupFragment.getUploadRecordBean().size() > 0) {
+                    showBackConfirmDialog();
                 } else {
                     finish();
                 }
@@ -108,8 +107,8 @@ public class ContainerManageActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (mWaitSupFragment.mRecordsBean.supplementRecords.size() > 0) {
-            mWaitSupFragment.uploadCompletedGoods(cntrId);
+        if (mWaitSupFragment.getUploadRecordBean().size() > 0) {
+            showBackConfirmDialog();
         } else {
             finish();
         }
@@ -123,7 +122,13 @@ public class ContainerManageActivity extends BaseActivity {
         commonYesOrNoDialog.setDialogSureListener(new CommonDialogSureListener() {
             @Override
             public void onSure() {
-
+                mWaitSupFragment.uploadCompletedGoods(sceneSn);
+            }
+        });
+        commonYesOrNoDialog.tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
         commonYesOrNoDialog.show();
@@ -141,7 +146,7 @@ public class ContainerManageActivity extends BaseActivity {
                 showBottomPopupWindow();
                 break;
             case R.id.bt_pause_sup_goods://上传设置为已补货的商品
-                mWaitSupFragment.uploadCompletedGoods(cntrId);
+                mWaitSupFragment.uploadCompletedGoods(sceneSn);
                 break;
         }
     }
@@ -289,7 +294,7 @@ public class ContainerManageActivity extends BaseActivity {
      */
     private void completeSup(File file) {
         HttpApi.getInstance()
-                .uploadSupplementPic(UserInfo.USER_ID, cntrId, file)
+                .uploadSupplementPic(UserInfo.USER_ID, sceneSn, file)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<NullBean>() {

@@ -21,6 +21,7 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
@@ -115,7 +116,7 @@ public interface RetrofitService {
      * 提交补货记录
      */
     @POST("keeper/commitSupplementRecord")
-    Observable<BaseEntity<NullBean>> commitSupplementRecord(@Body Map<String, String> request);
+    Observable<BaseEntity<NullBean>> commitSupplementRecord(@Body RequestBody body);
 
     /**
      * 上传补货照片

@@ -51,10 +51,14 @@ public class RetrofitFactory {
         sInterceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
-                Request.Builder builder = chain.request().newBuilder();
+                Request request = chain.request();
+                Request.Builder builder = request.newBuilder();
                 // 替换为自己的token
                 builder.addHeader("X-Auth-Token", SharePrefreceHelper.getInstance().getString(SharedKey.TOKEN));
                 LogUtil.i(builder.build().tag().toString());
+//                LogUtil.i("请求参数--URL", request.url().toString());
+//                LogUtil.i("请求参数--header", request.headers().toString());
+//                LogUtil.i("请求参数--body", request.body().toString());
                 return chain.proceed(builder.build());
             }
         };

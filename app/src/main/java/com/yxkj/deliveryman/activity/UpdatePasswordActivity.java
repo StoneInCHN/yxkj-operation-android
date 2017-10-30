@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseActivity;
+import com.yxkj.deliveryman.base.BaseEntity;
 import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.bean.response.NullBean;
@@ -137,6 +138,12 @@ public class UpdatePasswordActivity extends BaseActivity {
                     @Override
                     protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
 
+                    }
+
+                    @Override
+                    protected void onHandleSuccess(BaseEntity<NullBean> baseEntity) {
+                        super.onHandleSuccess(baseEntity);
+                        SharePrefreceHelper.getInstance().setString(SharedKey.TOKEN, baseEntity.token);
                     }
                 });
 

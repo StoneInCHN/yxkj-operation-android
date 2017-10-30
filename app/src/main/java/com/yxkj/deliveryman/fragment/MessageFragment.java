@@ -82,12 +82,17 @@ public class MessageFragment extends BaseFragment {
                     @Override
                     protected void onHandleSuccess(MessageBean bean) {
                         mMessageAdapter.settList(bean.groups);
-                        mLrv.refreshComplete(10);
+
                     }
 
                     @Override
                     protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
 
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        mLrv.refreshComplete(10);
                     }
                 });
     }

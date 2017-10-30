@@ -1,6 +1,5 @@
 package com.yxkj.deliveryman.bean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -12,26 +11,37 @@ import java.util.List;
  *  @描述：    提交给服务器的补货记录
  */
 public class CommitSupRecordsBean {
-
-    public List<SupplementRecordsBean> supplementRecords;
-
-    public CommitSupRecordsBean() {
-        supplementRecords = new ArrayList<>();
+    public CommitSupRecordsBean(String sceneSn, String userId, List<SupplementRecordsBean> supplementRecords) {
+        this.sceneSn = sceneSn;
+        this.userId = userId;
+        this.supplementRecords = supplementRecords;
     }
 
+    /**
+     * cntrId : 0
+     * sceneSn : string
+     * supplementRecords : [{"supplementId":0,"supplyCount":0}]
+     * userId : 0
+     */
+
+    public String sceneSn;
+    public String userId;
+    public List<SupplementRecordsBean> supplementRecords;
+
     public static class SupplementRecordsBean {
-        public SupplementRecordsBean(String supplementId, int supplyCount) {
+        public SupplementRecordsBean(int supplementId, int supplyCount) {
             this.supplementId = supplementId;
             this.supplyCount = supplyCount;
         }
 
         /**
-         * supplementId : 0 补货清单id
+         * supplementId : 0
          * supplyCount : 0
          */
 
 
-        public String supplementId;
+
+        public int supplementId;
         public int supplyCount;
     }
 }

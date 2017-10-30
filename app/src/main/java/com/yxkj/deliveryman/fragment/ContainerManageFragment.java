@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.activity.ContainerManageActivity;
 import com.yxkj.deliveryman.adapter.SupGoodsAdapter;
@@ -22,6 +24,7 @@ import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
 import com.yxkj.deliveryman.util.ToastUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -88,8 +91,12 @@ public class ContainerManageFragment extends Fragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<WaitSupContainerGoodsBean>() {
                     @Override
-                    protected void onHandleSuccess(WaitSupContainerGoodsBean waitSupContainerGoodsBean) {
+                    public void onComplete() {
                         mLrv.refreshComplete(10);
+                    }
+
+                    @Override
+                    protected void onHandleSuccess(WaitSupContainerGoodsBean waitSupContainerGoodsBean) {
                         mSupGoodsAdapter.setGroupsBeanList(waitSupContainerGoodsBean.groups);
                     }
 
@@ -101,26 +108,28 @@ public class ContainerManageFragment extends Fragment {
 
     }
 
-    public CommitSupRecordsBean mRecordsBean = new CommitSupRecordsBean();
+    public List<CommitSupRecordsBean.SupplementRecordsBean> mSupRecordsBeanList = new ArrayList<>();
 
     /**
      * 上传已补货的商品
-     *
-     * @param cntrId
      */
-    public void uploadCompletedGoods(String cntrId) {
-        mRecordsBean.supplementRecords.clear();
-        for (WaitSupContainerGoodsBean.GroupsBean bean : mSupGoodsAdapter.mGroupsBeanList) {
-            if (bean.isComplete) {
-                mRecordsBean.supplementRecords.add(new CommitSupRecordsBean.SupplementRecordsBean(bean.id, bean.actualNum));
-            }
-        }
+    public void uploadCompletedGoods(String sceneSn) {
+        Gson gson = new Gson();
+        String recordBean = gson.toJson(getUploadRecordBean(), new TypeToken<List<CommitSupRecordsBean>>() {
+        }.getType());
+
+        CommitSupRecordsBean commitSupRecordsBean = new CommitSupRecordsBean(sceneSn, UserInfo.USER_ID, getUploadRecordBean());
 
         HttpApi.getInstance()
-                .commitSupplementRecord(UserInfo.USER_ID, cntrId, mRecordsBean)
+                .commitSupplementRecord(commitSupRecordsBean)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<NullBean>() {
+                    @Override
+                    public void onComplete() {
+
+                    }
+
                     @Override
                     protected void onHandleSuccess(NullBean nullBean) {
                         ToastUtil.showShort("提交补货记录成功");
@@ -132,5 +141,16 @@ public class ContainerManageFragment extends Fragment {
 
                     }
                 });
+    }
+
+    public List<CommitSupRecordsBean.SupplementRecordsBean> getUploadRecordBean() {
+        mSupRecordsBeanList.clear();
+        for (WaitSupContainerGoodsBean.GroupsBean bean : mSupGoodsAdapter.mGroupsBeanList) {
+            if (bean.isComplete) {
+                mSupRecordsBeanList.add(new CommitSupRecordsBean.SupplementRecordsBean(Integer.parseInt(bean.id), bean.actualNum));
+            }
+        }
+
+        return mSupRecordsBeanList;
     }
 }

@@ -73,6 +73,7 @@ public class SupGoodsAdapter extends RecyclerView.Adapter {
                     @Override
                     public void onSure() {
                         if (popupWindow.isActualNumIllegal()) {
+                            mGroupsBeanList.get(position).isComplete = true;
                             popupWindow.dismiss();
                             viewHolder.tvCompleteSup.setVisibility(View.VISIBLE);
                         } else {

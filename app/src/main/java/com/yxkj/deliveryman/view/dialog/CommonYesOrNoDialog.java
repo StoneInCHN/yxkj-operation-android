@@ -18,7 +18,7 @@ public class CommonYesOrNoDialog extends Dialog {
     /*内容*/
     private TextView tv_content;
     /*取消按钮*/
-    private TextView tvCancel;
+    public TextView tvCancel;
     /*确认按钮*/
     private TextView tvSure;
     /*确认按钮监听*/
