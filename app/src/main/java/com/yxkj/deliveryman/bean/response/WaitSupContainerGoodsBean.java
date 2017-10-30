@@ -23,20 +23,33 @@ public class WaitSupContainerGoodsBean {
          * waitSupplyCount : 2
          */
 
+        public String id;
         public String channelSn;
         public String goodsSn;
         public String goodsName;
         public String goodsPic;
         public int waitSupplyCount;
+        /**
+         * 本地存储
+         */
+        public boolean isComplete;
+
+        /**
+         * 实际补货数量
+         */
+        public int actualNum;
 
         @Override
         public String toString() {
             return "GroupsBean{" +
-                    "channelSn='" + channelSn + '\'' +
+                    "id='" + id + '\'' +
+                    ", channelSn='" + channelSn + '\'' +
                     ", goodsSn='" + goodsSn + '\'' +
                     ", goodsName='" + goodsName + '\'' +
                     ", goodsPic='" + goodsPic + '\'' +
                     ", waitSupplyCount=" + waitSupplyCount +
+                    ", isComplete=" + isComplete +
+                    ", actualNum=" + actualNum +
                     '}';
         }
     }

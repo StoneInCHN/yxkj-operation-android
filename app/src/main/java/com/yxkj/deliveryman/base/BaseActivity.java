@@ -34,6 +34,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
     protected final String TAG = getClass().getSimpleName();
     protected boolean useDefaultTitleBarColor;//状态栏颜色是否使用默认颜色
     protected Context mContext = this;
+    protected Activity mActivity = this;
     private Unbinder unbinder;
 
     @Override

@@ -13,12 +13,15 @@ import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.activity.ContainerManageActivity;
 import com.yxkj.deliveryman.adapter.SupGoodsAdapter;
 import com.yxkj.deliveryman.base.BaseObserver;
+import com.yxkj.deliveryman.bean.CommitSupRecordsBean;
+import com.yxkj.deliveryman.bean.response.NullBean;
 import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.bean.response.WaitSupContainerGoodsBean;
-import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
-import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
+import com.yxkj.deliveryman.util.ToastUtil;
+
+import java.util.ArrayList;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -96,5 +99,38 @@ public class ContainerManageFragment extends Fragment {
                     }
                 });
 
+    }
+
+    private CommitSupRecordsBean mRecordsBean;
+
+    /**
+     * 上传已补货的商品
+     *
+     * @param cntrId
+     */
+    public void uploadCompletedGoods(String cntrId) {
+        mRecordsBean = new CommitSupRecordsBean();
+        for (WaitSupContainerGoodsBean.GroupsBean bean : mSupGoodsAdapter.mGroupsBeanList) {
+            if (bean.isComplete) {
+                mRecordsBean.supplementRecords.add(new CommitSupRecordsBean.SupplementRecordsBean(bean.id, bean.actualNum));
+            }
+        }
+
+        HttpApi.getInstance()
+                .commitSupplementRecord(UserInfo.USER_ID, cntrId, mRecordsBean)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<NullBean>() {
+                    @Override
+                    protected void onHandleSuccess(NullBean nullBean) {
+                        ToastUtil.showShort("提交补货记录成功");
+                        getActivity().finish();
+                    }
+
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+
+                    }
+                });
     }
 }

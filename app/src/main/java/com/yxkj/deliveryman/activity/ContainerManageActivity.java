@@ -1,6 +1,7 @@
 package com.yxkj.deliveryman.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -19,8 +20,10 @@ import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.callback.OnCommon2Listener;
 import com.yxkj.deliveryman.constant.UserInfo;
+import com.yxkj.deliveryman.event.RestartTakePhotoEvent;
 import com.yxkj.deliveryman.fragment.ContainerManageFragment;
 import com.yxkj.deliveryman.http.HttpApi;
+import com.yxkj.deliveryman.permission.Permission;
 import com.yxkj.deliveryman.permission.RxPermissions;
 import com.yxkj.deliveryman.bean.response.NullBean;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
@@ -32,12 +35,17 @@ import com.yxkj.deliveryman.view.popupwindow.BottomTakePhotoAndPicPopupWindow;
 import com.yxkj.deliveryman.view.dialog.CommonYesOrNoDialog;
 import com.yxkj.deliveryman.view.popupwindow.CompleteSupPopWindow;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -51,6 +59,7 @@ public class ContainerManageActivity extends BaseActivity {
     private ContainerSupFragmentViewpagerAdapter mContainerAdapter;
     private CompleteSupPopWindow completeSupPopWindow;
     private RichToolBar mToolbar;
+    private ContainerManageFragment waitSupFragment;
 
     @Override
     public int getContentViewId() {
@@ -83,6 +92,8 @@ public class ContainerManageActivity extends BaseActivity {
     public void initData() {
         initTablayout();
         mToolbar.setTitle(containerName + "管理");
+
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -96,8 +107,8 @@ public class ContainerManageActivity extends BaseActivity {
             case R.id.bt_take_photo_complete:
                 showBottomPopupWindow();
                 break;
-            case R.id.bt_pause_sup_goods:
-
+            case R.id.bt_pause_sup_goods://上传设置为已补货的商品
+                waitSupFragment.uploadCompletedGoods(cntrId);
                 break;
         }
     }
@@ -127,7 +138,7 @@ public class ContainerManageActivity extends BaseActivity {
 
         List<Fragment> fragmentList = new ArrayList<>();
         //等待补货
-        ContainerManageFragment waitSupFragment = new ContainerManageFragment();
+        waitSupFragment = new ContainerManageFragment();
         Bundle bundle = new Bundle();
         bundle.putString("fragment_type", "wait_sup");
         waitSupFragment.setArguments(bundle);
@@ -145,59 +156,60 @@ public class ContainerManageActivity extends BaseActivity {
     }
 
     private void goTakePhoto() {
-        RxPermissions rxPermissions = new RxPermissions(this);
+        RxPermissions rxPermissions = new RxPermissions(mActivity);
         rxPermissions.setLogging(true);
-        Observable.just(rxPermissions)
-                .compose(rxPermissions.ensureEach(Manifest.permission.CAMERA))
-                .subscribe(permission -> {
-                    if (permission.granted) {
-                        //跳转相机拍照
-                        UploadImageUtil.doTakePhoto(this);
-                    } else if (permission.shouldShowRequestPermissionRationale) {
+        Observable.just(rxPermissions).compose(rxPermissions.ensureEach(Manifest.permission.CAMERA)).subscribe(permission -> {
+            if (permission.granted) {
+                /*跳转相机拍照*/
+                UploadImageUtil.doTakePhoto(ContainerManageActivity.this);
+            } else if (permission.shouldShowRequestPermissionRationale) {
 
-                    } else {
-                        //如果用户选择了不再提醒，那么就会一直走这一步
-                        CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog(mContext);
-                        commonYesOrNoDialog.setTv_content("请允许系统使用您的相机");
-                        commonYesOrNoDialog.setBtn_sure("去授权");
-                        commonYesOrNoDialog.setDialogSureListener(() -> {
-                            //引导用户至设置页手动授权
-                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                            Uri uri = Uri.fromParts("package", getApplicationContext().getPackageName(), null);
-                            intent.setData(uri);
-                            startActivity(intent);
-                        });
-                        commonYesOrNoDialog.show();
-                    }
+            } else {
+                //如果用户选择了不再提醒，那么就会一直走这一步
+                CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog(mContext);
+                commonYesOrNoDialog.setTv_content("请允许系统使用您的相机以及存储权限");
+                commonYesOrNoDialog.setBtn_sure("去授权");
+                commonYesOrNoDialog.setDialogSureListener(() -> {
+                    //引导用户至设置页手动授权
+                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri = Uri.fromParts("package", ContainerManageActivity.this.getApplicationContext().getPackageName(), null);
+                    intent.setData(uri);
+                    ContainerManageActivity.this.startActivity(intent);
                 });
+                commonYesOrNoDialog.show();
+            }
+        });
+
+
     }
 
     private void goAlbum() {
         RxPermissions rxPermissions = new RxPermissions(this);
-        Observable.just(rxPermissions)
-                .compose(rxPermissions.ensureEach(Manifest.permission.READ_EXTERNAL_STORAGE))
-                .subscribe(permission -> {
-                    if (permission.granted) {
-                        //跳转相机拍照
-                        UploadImageUtil.doPickPhotoFromGallery(this);
-                    } else if (permission.shouldShowRequestPermissionRationale) {
+        rxPermissions.setLogging(true);
+        Observable.just(rxPermissions).compose(rxPermissions.ensureEach(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+                .subscribe(new Consumer<Permission>() {
+                    @Override
+                    public void accept(Permission permission) throws Exception {
+                        if (permission.granted) {
+                            UploadImageUtil.doPickPhotoFromGallery((Activity) mContext);
+                        } else if (permission.shouldShowRequestPermissionRationale) {
 
-                    } else {
-                        //如果用户选择了不再提醒，那么就会一直走这一步
-                        CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog(mContext);
-                        commonYesOrNoDialog.setTv_content("请允许读取相册");
-                        commonYesOrNoDialog.setBtn_sure("去授权");
-                        commonYesOrNoDialog.setDialogSureListener(() -> {
-                            //引导用户至设置页手动授权
-                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                            Uri uri = Uri.fromParts("package", getApplicationContext().getPackageName(), null);
-                            intent.setData(uri);
-                            startActivity(intent);
-                        });
-                        commonYesOrNoDialog.show();
+                        } else {
+                            //如果用户选择了不再提醒，那么就会一直走这一步
+                            CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog(mContext);
+                            commonYesOrNoDialog.setTv_content("请允许存储权限");
+                            commonYesOrNoDialog.setBtn_sure("去授权");
+                            commonYesOrNoDialog.setDialogSureListener(() -> {
+                                //引导用户至设置页手动授权
+                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                Uri uri = Uri.fromParts("package", getApplicationContext().getPackageName(), null);
+                                intent.setData(uri);
+                                startActivity(intent);
+                            });
+                            commonYesOrNoDialog.show();
+                        }
                     }
                 });
-
 
     }
 
@@ -205,30 +217,33 @@ public class ContainerManageActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         File picResultFile = UploadImageUtil.dealWithUploadImageOnActivityResult(this, requestCode, resultCode, data,
-                (final Bitmap bitmap) -> {
-                    if (bitmap != null) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                completeSupPopWindow = new CompleteSupPopWindow(mContext);
-                                completeSupPopWindow.showAtLocation(btTakePhoto, Gravity.CENTER, 0, 0);
-                                completeSupPopWindow.setBitmaps(bitmap);
+                new UploadImageUtil.OnCompleteListener() {
+                    @Override
+                    public void onComplete(Bitmap bitmap) {
+                        if (bitmap != null) {
+                            ContainerManageActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    completeSupPopWindow = new CompleteSupPopWindow(mContext);
+                                    completeSupPopWindow.showAtLocation(btTakePhoto, Gravity.CENTER, 0, 0);
+                                    completeSupPopWindow.setBitmaps(bitmap);
 
-                                completeSupPopWindow.setCommon2Listener(new OnCommon2Listener<String, File>() {
-                                    @Override
-                                    public void onCommon1(String s) {
-                                        //重新拍照
+                                    completeSupPopWindow.setCommon2Listener(new OnCommon2Listener<String, File>() {
+                                        @Override
+                                        public void onCommon1(String s) {
+                                            //重新拍照
+                                            goTakePhoto();
+                                        }
 
-                                    }
-
-                                    @Override
-                                    public void onCommon2(File file) {
-                                        //上传图片，完成补货
-                                        completeSup(file);
-                                    }
-                                });
-                            }
-                        });
+                                        @Override
+                                        public void onCommon2(File file) {
+                                            //上传图片，完成补货
+                                            completeSup(file);
+                                        }
+                                    });
+                                }
+                            });
+                        }
                     }
                 });
     }
@@ -256,5 +271,19 @@ public class ContainerManageActivity extends BaseActivity {
 
                     }
                 });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void restartTakePhoto(RestartTakePhotoEvent event) {
+        goTakePhoto();
+
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().removeStickyEvent(RestartTakePhotoEvent.class);
+        EventBus.getDefault().unregister(this);
     }
 }

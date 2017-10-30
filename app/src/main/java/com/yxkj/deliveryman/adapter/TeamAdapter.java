@@ -71,12 +71,13 @@ public class TeamAdapter extends BaseRecyclerViewAdapter<WaitSupStateBean.Scenes
             @Override
             public void onClick(View v) {
                 checkOtherSceneIsComplete(mSceneSn, data);
+                dismiss();
             }
         };
         popWindow.showAsDropDown(rvTeamMember);
     }
 
-    private void checkOtherSceneIsComplete(String sceneSn , Object data) {
+    private void checkOtherSceneIsComplete(String sceneSn, Object data) {
         HttpApi.getInstance()
                 .startSupplyGoods(UserInfo.USER_ID, sceneSn)
                 .subscribeOn(Schedulers.io())

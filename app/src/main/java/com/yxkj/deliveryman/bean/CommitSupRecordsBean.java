@@ -16,12 +16,18 @@ public class CommitSupRecordsBean {
     public List<SupplementRecordsBean> supplementRecords;
 
     public static class SupplementRecordsBean {
+        public SupplementRecordsBean(String supplementId, int supplyCount) {
+            this.supplementId = supplementId;
+            this.supplyCount = supplyCount;
+        }
+
         /**
-         * supplementId : 0
+         * supplementId : 0 补货清单id
          * supplyCount : 0
          */
 
-        public int supplementId;
+
+        public String supplementId;
         public int supplyCount;
     }
 }

@@ -6,7 +6,10 @@ import android.widget.ImageView;
 
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseActivity;
+import com.yxkj.deliveryman.event.RestartTakePhotoEvent;
 import com.yxkj.deliveryman.util.ImageLoadUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,9 +51,14 @@ public class ShowBigImageActivity extends BaseActivity {
     @OnClick({R.id.tv_restart_take_photo_show_big_image, R.id.tv_use_image_show_big_image})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            //重拍
             case R.id.tv_restart_take_photo_show_big_image:
+                EventBus.getDefault().postSticky(new RestartTakePhotoEvent());
+                finish();
                 break;
             case R.id.tv_use_image_show_big_image:
+                finish();
+
                 break;
         }
     }
