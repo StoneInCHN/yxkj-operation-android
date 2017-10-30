@@ -29,7 +29,7 @@ import butterknife.OnClick;
 public class RichToolBar extends RelativeLayout {
     private Context mContext;
     @BindView(R.id.iv_back_toolbar)
-    ImageView mIvBack;
+    public ImageView mIvBack;
     @BindView(R.id.tv_title_toolbar)
     TextView mTvTitle;
     @BindView(R.id.tv_right_toolbar)

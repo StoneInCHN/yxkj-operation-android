@@ -18,6 +18,7 @@ import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.adapter.ContainerSupFragmentViewpagerAdapter;
 import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.base.BaseObserver;
+import com.yxkj.deliveryman.callback.CommonDialogSureListener;
 import com.yxkj.deliveryman.callback.OnCommon2Listener;
 import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.event.RestartTakePhotoEvent;
@@ -26,8 +27,6 @@ import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.permission.Permission;
 import com.yxkj.deliveryman.permission.RxPermissions;
 import com.yxkj.deliveryman.bean.response.NullBean;
-import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
-import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.ToastUtil;
 import com.yxkj.deliveryman.util.UploadImageUtil;
 import com.yxkj.deliveryman.view.RichToolBar;
@@ -59,7 +58,7 @@ public class ContainerManageActivity extends BaseActivity {
     private ContainerSupFragmentViewpagerAdapter mContainerAdapter;
     private CompleteSupPopWindow completeSupPopWindow;
     private RichToolBar mToolbar;
-    private ContainerManageFragment waitSupFragment;
+    private ContainerManageFragment mWaitSupFragment;
 
     @Override
     public int getContentViewId() {
@@ -92,8 +91,42 @@ public class ContainerManageActivity extends BaseActivity {
     public void initData() {
         initTablayout();
         mToolbar.setTitle(containerName + "管理");
+        mToolbar.mIvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mWaitSupFragment.mRecordsBean.supplementRecords.size() > 0) {
+                    mWaitSupFragment.uploadCompletedGoods(cntrId);
+                } else {
+                    finish();
+                }
+
+            }
+        });
 
         EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mWaitSupFragment.mRecordsBean.supplementRecords.size() > 0) {
+            mWaitSupFragment.uploadCompletedGoods(cntrId);
+        } else {
+            finish();
+        }
+    }
+
+    private void showBackConfirmDialog() {
+        CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog(mContext);
+        commonYesOrNoDialog.setTv_content("您还未提交补货记录，是否提交");
+        commonYesOrNoDialog.setBtn_cancle("取消");
+        commonYesOrNoDialog.setBtn_sure("提交");
+        commonYesOrNoDialog.setDialogSureListener(new CommonDialogSureListener() {
+            @Override
+            public void onSure() {
+
+            }
+        });
+        commonYesOrNoDialog.show();
     }
 
     @Override
@@ -108,7 +141,7 @@ public class ContainerManageActivity extends BaseActivity {
                 showBottomPopupWindow();
                 break;
             case R.id.bt_pause_sup_goods://上传设置为已补货的商品
-                waitSupFragment.uploadCompletedGoods(cntrId);
+                mWaitSupFragment.uploadCompletedGoods(cntrId);
                 break;
         }
     }
@@ -138,16 +171,16 @@ public class ContainerManageActivity extends BaseActivity {
 
         List<Fragment> fragmentList = new ArrayList<>();
         //等待补货
-        waitSupFragment = new ContainerManageFragment();
+        mWaitSupFragment = new ContainerManageFragment();
         Bundle bundle = new Bundle();
         bundle.putString("fragment_type", "wait_sup");
-        waitSupFragment.setArguments(bundle);
+        mWaitSupFragment.setArguments(bundle);
         //全部商品
         ContainerManageFragment allGoodsFragment = new ContainerManageFragment();
         bundle.putString("fragment_type", "all_goods");
         allGoodsFragment.setArguments(bundle);
 
-        fragmentList.add(waitSupFragment);
+        fragmentList.add(mWaitSupFragment);
         fragmentList.add(allGoodsFragment);
 
         mContainerAdapter = new ContainerSupFragmentViewpagerAdapter(getSupportFragmentManager(), fragmentList, titles);

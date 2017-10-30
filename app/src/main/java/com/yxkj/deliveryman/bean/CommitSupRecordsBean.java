@@ -1,5 +1,6 @@
 package com.yxkj.deliveryman.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -12,8 +13,11 @@ import java.util.List;
  */
 public class CommitSupRecordsBean {
 
-
     public List<SupplementRecordsBean> supplementRecords;
+
+    public CommitSupRecordsBean() {
+        supplementRecords = new ArrayList<>();
+    }
 
     public static class SupplementRecordsBean {
         public SupplementRecordsBean(String supplementId, int supplyCount) {

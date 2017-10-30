@@ -101,7 +101,7 @@ public class ContainerManageFragment extends Fragment {
 
     }
 
-    private CommitSupRecordsBean mRecordsBean;
+    public CommitSupRecordsBean mRecordsBean = new CommitSupRecordsBean();
 
     /**
      * 上传已补货的商品
@@ -109,7 +109,7 @@ public class ContainerManageFragment extends Fragment {
      * @param cntrId
      */
     public void uploadCompletedGoods(String cntrId) {
-        mRecordsBean = new CommitSupRecordsBean();
+        mRecordsBean.supplementRecords.clear();
         for (WaitSupContainerGoodsBean.GroupsBean bean : mSupGoodsAdapter.mGroupsBeanList) {
             if (bean.isComplete) {
                 mRecordsBean.supplementRecords.add(new CommitSupRecordsBean.SupplementRecordsBean(bean.id, bean.actualNum));
