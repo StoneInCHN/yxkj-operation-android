@@ -7,7 +7,7 @@ import java.util.List;
  * 补货记录详情
  */
 
-public class SupRecordDetail {
+public class SupRecordDetailBean {
 
 
     public List<GroupsBean> groups;
@@ -59,7 +59,7 @@ public class SupRecordDetail {
 
     @Override
     public String toString() {
-        return "SupRecordDetail{" +
+        return "SupRecordDetailBean{" +
                 "groups=" + groups +
                 '}';
     }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title_item_record_sup_detail"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/app_bg"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:text="A货柜"
+        android:textSize="@dimen/sp_12"/>
+
+    <com.github.jdsjlzx.recyclerview.LRecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/lrv_item_item_record_sup_detail"
+        android:layout_height="wrap_content"
+        android:background="@color/white"/>
+
+</LinearLayout>

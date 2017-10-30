@@ -12,7 +12,7 @@ import com.yxkj.deliveryman.bean.response.NullBean;
 import com.yxkj.deliveryman.bean.response.PublicKeyBean;
 import com.yxkj.deliveryman.bean.response.SceneListBean;
 import com.yxkj.deliveryman.bean.response.SupRecordBean;
-import com.yxkj.deliveryman.bean.response.SupRecordDetail;
+import com.yxkj.deliveryman.bean.response.SupRecordDetailBean;
 import com.yxkj.deliveryman.bean.response.WaitSupContainerGoodsBean;
 import com.yxkj.deliveryman.bean.response.WaitSupGoodsDetailBean;
 import com.yxkj.deliveryman.bean.response.WaitSupGoodsListBean;
@@ -310,7 +310,7 @@ public class HttpApi {
      * @param userId
      * @return
      */
-    public Observable<BaseEntity<SupRecordDetail>> getSupplementRecordDetails(String userId, String sceneSn) {
+    public Observable<BaseEntity<SupRecordDetailBean>> getSupplementRecordDetails(String userId, String sceneSn) {
         Map<String, String> req = new HashMap<>();
         req.put("userId", userId);
         req.put("sceneSn", sceneSn);

@@ -11,7 +11,7 @@ import com.yxkj.deliveryman.bean.response.NullBean;
 import com.yxkj.deliveryman.bean.response.PublicKeyBean;
 import com.yxkj.deliveryman.bean.response.SceneListBean;
 import com.yxkj.deliveryman.bean.response.SupRecordBean;
-import com.yxkj.deliveryman.bean.response.SupRecordDetail;
+import com.yxkj.deliveryman.bean.response.SupRecordDetailBean;
 import com.yxkj.deliveryman.bean.response.WaitSupContainerGoodsBean;
 import com.yxkj.deliveryman.bean.response.WaitSupGoodsDetailBean;
 import com.yxkj.deliveryman.bean.response.WaitSupGoodsListBean;
@@ -23,13 +23,10 @@ import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
-import retrofit2.http.FieldMap;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.PartMap;
 import retrofit2.http.QueryMap;
 
 /**
@@ -144,7 +141,7 @@ public interface RetrofitService {
      * 查看补货记录详情
      */
     @POST("keeper/getSupplementRecordDetails")
-    Observable<BaseEntity<SupRecordDetail>> getSupplementRecordDetails(@Body Map<String, String> request);
+    Observable<BaseEntity<SupRecordDetailBean>> getSupplementRecordDetails(@Body Map<String, String> request);
 
     /**
      * 查看是否还有未补货完成的优享空间

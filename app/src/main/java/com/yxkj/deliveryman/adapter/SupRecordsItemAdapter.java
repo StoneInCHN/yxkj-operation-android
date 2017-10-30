@@ -57,6 +57,7 @@ public class SupRecordsItemAdapter extends RecyclerView.Adapter {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString("sceneSn", bean.sceneSn);
+                bundle.putString("sceneName", bean.sceneName);
                 IntentUtil.openActivity(mContext, SupRecordDetailActivity.class,bundle);
             }
         });

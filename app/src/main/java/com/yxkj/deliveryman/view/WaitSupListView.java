@@ -16,10 +16,6 @@ import com.yxkj.deliveryman.R;
  */
 
 public class WaitSupListView extends LinearLayout {
-    /*标为未取货*/
-    private TextView tv_not_recieve;
-    /*未取货数量*/
-    private TextView tv_rest;
     /*判断线是否显示*/
     private boolean isShow;
     private float touchDownX;
@@ -41,24 +37,8 @@ public class WaitSupListView extends LinearLayout {
     }
 
     private void init() {
-        View view = View.inflate(getContext(), R.layout.view_wait_sup, null);
-        tv_not_recieve = view.findViewById(R.id.tv_not_recieve);
-        tv_rest = view.findViewById(R.id.tv_rest);
+        View view = View.inflate(getContext(), R.layout.item_wait_sup, null);
         addView(view);
-        setOnLongClickListener(new OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                tv_not_recieve.setVisibility(VISIBLE);
-                tv_not_recieve.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        tv_rest.setVisibility(VISIBLE);
-                        tv_not_recieve.setVisibility(GONE);
-                    }
-                });
-                return false;
-            }
-        });
     }
 
     @Override

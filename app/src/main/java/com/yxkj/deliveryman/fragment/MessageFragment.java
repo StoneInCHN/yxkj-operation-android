@@ -11,11 +11,8 @@ import com.yxkj.deliveryman.adapter.MessageAdapter;
 import com.yxkj.deliveryman.base.BaseFragment;
 import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.bean.response.MessageBean;
-import com.yxkj.deliveryman.bean.response.SupRecordDetail;
 import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.HttpApi;
-import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
-import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
