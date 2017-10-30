@@ -324,6 +324,19 @@ public class HttpApi {
     }
 
     /**
+     * 查看是否还有未补货完成的优享空间
+     *
+     * @param userId
+     * @return
+     */
+    public Observable<BaseEntity<SceneListBean.GroupsBean>> startSupplyGoods(String userId, String sceneSn) {
+        Map<String, String> req = new HashMap<>();
+        req.put("userId", userId);
+        req.put("sceneSn", sceneSn);
+        return RetrofitFactory.getInstance().startSupplyGoods(req);
+    }
+
+    /**
      * 查看消息
      *
      * @param userId

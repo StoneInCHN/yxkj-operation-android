@@ -10,11 +10,19 @@ import android.widget.TextView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.activity.ContainerManageActivity;
 import com.yxkj.deliveryman.activity.ControllerManageActivity;
+import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.base.BaseRecyclerViewAdapter;
 import com.yxkj.deliveryman.base.BaseViewHolder;
+import com.yxkj.deliveryman.bean.response.SceneListBean;
 import com.yxkj.deliveryman.bean.response.WaitSupStateBean;
+import com.yxkj.deliveryman.constant.UserInfo;
+import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.util.IntentUtil;
+import com.yxkj.deliveryman.view.dialog.TextButtonDialog;
 import com.yxkj.deliveryman.view.popupwindow.ContainerSupPopWindow;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 货柜分组
@@ -22,10 +30,12 @@ import com.yxkj.deliveryman.view.popupwindow.ContainerSupPopWindow;
 
 public class TeamAdapter extends BaseRecyclerViewAdapter<WaitSupStateBean.ScenesBean.VendingContainerGroupsBean> {
     private Context mContext;
+    private String mSceneSn;
 
-    public TeamAdapter(Context context) {
+    public TeamAdapter(Context context, String sceneSn) {
         super(context);
         mContext = context;
+        mSceneSn = sceneSn;
     }
 
     @Override
@@ -49,11 +59,34 @@ public class TeamAdapter extends BaseRecyclerViewAdapter<WaitSupStateBean.Scenes
                 if (bean.vendingContainers.get(position).central) {//中控台
                     IntentUtil.openActivity(context, ControllerManageActivity.class);
                 } else {//其他货柜
-                    showPopupWindow(rvTeamMember, data);
+                    checkOtherSceneIsComplete(mSceneSn, rvTeamMember, data);
                 }
-
             }
         });
+    }
+
+    private void checkOtherSceneIsComplete(String sceneSn, RecyclerView rvTeamMember, Object data) {
+        HttpApi.getInstance()
+                .startSupplyGoods(UserInfo.USER_ID, sceneSn)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<SceneListBean.GroupsBean>() {
+                    @Override
+                    protected void onHandleSuccess(SceneListBean.GroupsBean groupsBean) {
+                        if (groupsBean == null) {
+                            showPopupWindow(rvTeamMember, data);
+                        } else {//存在其他未补货完成的优享空间
+                            TextButtonDialog textButtonDialog =
+                                    new TextButtonDialog(mContext, "系统提示", "你尚未完成" + groupsBean.sceneName + "的补货,请完成后再对下一个空间补货", "确定");
+                            textButtonDialog.show();
+                        }
+                    }
+
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+
+                    }
+                });
     }
 
     private void showPopupWindow(RecyclerView rvTeamMember, Object data) {

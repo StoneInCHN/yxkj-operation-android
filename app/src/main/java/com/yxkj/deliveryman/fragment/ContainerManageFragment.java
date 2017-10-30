@@ -13,6 +13,7 @@ import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.activity.ContainerManageActivity;
 import com.yxkj.deliveryman.adapter.SupGoodsAdapter;
 import com.yxkj.deliveryman.base.BaseObserver;
+import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.bean.response.WaitSupContainerGoodsBean;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
@@ -77,10 +78,9 @@ public class ContainerManageFragment extends Fragment {
     private int mPageNum = 1;
 
     private void getWaitSupplyContainerGoodsList() {
-        String userId = SharePrefreceHelper.getInstance().getString(SharedKey.USER_ID);
         ContainerManageActivity activity = (ContainerManageActivity) getActivity();
         HttpApi.getInstance()
-                .getWaitSupplyContainerGoodsList(userId, activity.cntrId, mPageNum + "", "10")
+                .getWaitSupplyContainerGoodsList(UserInfo.USER_ID, activity.cntrId, mPageNum + "", "10")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<WaitSupContainerGoodsBean>() {

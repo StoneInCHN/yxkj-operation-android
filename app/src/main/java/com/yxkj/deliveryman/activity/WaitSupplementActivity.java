@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.yxkj.deliveryman.R;
+import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.event.WaitSupAddressEvent;
 import com.yxkj.deliveryman.adapter.GoodsCategoryFragmentAdapter;
 import com.yxkj.deliveryman.base.BaseActivity;
@@ -149,7 +150,7 @@ public class WaitSupplementActivity extends BaseActivity {
 
     private void getGoodsCategories() {
         HttpApi.getInstance()
-                .getWaitSupplyGoodsCategoryList(SharePrefreceHelper.getInstance().getString(SharedKey.USER_ID))
+                .getWaitSupplyGoodsCategoryList(UserInfo.USER_ID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<GoodsCategoryBean>() {
@@ -209,9 +210,18 @@ public class WaitSupplementActivity extends BaseActivity {
                 showOrDismissAddressPopup();
                 break;
             case R.id.tv_complete_wait_sup:
-                // TODO: 2017/10/25 完成取货
+                doCompleteGot();
                 break;
         }
+    }
+
+    /**
+     * 完成取货
+     */
+    private void doCompleteGot() {
+        finish();
+
+
     }
 
     /**
@@ -251,7 +261,7 @@ public class WaitSupplementActivity extends BaseActivity {
      */
     public void getWaitSupAdressList() {
         HttpApi.getInstance()
-                .getWaitSupplySceneList(SharePrefreceHelper.getInstance().getString(SharedKey.USER_ID))
+                .getWaitSupplySceneList(UserInfo.USER_ID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<SceneListBean>() {

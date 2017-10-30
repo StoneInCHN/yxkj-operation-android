@@ -18,6 +18,7 @@ import com.yxkj.deliveryman.adapter.ContainerSupFragmentViewpagerAdapter;
 import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.callback.OnCommon2Listener;
+import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.fragment.ContainerManageFragment;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.permission.RxPermissions;
@@ -156,7 +157,7 @@ public class ContainerManageActivity extends BaseActivity {
 
                     } else {
                         //如果用户选择了不再提醒，那么就会一直走这一步
-                        CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog();
+                        CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog(mContext);
                         commonYesOrNoDialog.setTv_content("请允许系统使用您的相机");
                         commonYesOrNoDialog.setBtn_sure("去授权");
                         commonYesOrNoDialog.setDialogSureListener(() -> {
@@ -166,6 +167,7 @@ public class ContainerManageActivity extends BaseActivity {
                             intent.setData(uri);
                             startActivity(intent);
                         });
+                        commonYesOrNoDialog.show();
                     }
                 });
     }
@@ -182,7 +184,7 @@ public class ContainerManageActivity extends BaseActivity {
 
                     } else {
                         //如果用户选择了不再提醒，那么就会一直走这一步
-                        CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog();
+                        CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog(mContext);
                         commonYesOrNoDialog.setTv_content("请允许读取相册");
                         commonYesOrNoDialog.setBtn_sure("去授权");
                         commonYesOrNoDialog.setDialogSureListener(() -> {
@@ -192,6 +194,7 @@ public class ContainerManageActivity extends BaseActivity {
                             intent.setData(uri);
                             startActivity(intent);
                         });
+                        commonYesOrNoDialog.show();
                     }
                 });
 
@@ -237,9 +240,8 @@ public class ContainerManageActivity extends BaseActivity {
      * @param file
      */
     private void completeSup(File file) {
-        String userId = SharePrefreceHelper.getInstance().getString(SharedKey.USER_ID);
         HttpApi.getInstance()
-                .uploadSupplementPic(userId, cntrId, file)
+                .uploadSupplementPic(UserInfo.USER_ID, cntrId, file)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<NullBean>() {
@@ -247,7 +249,6 @@ public class ContainerManageActivity extends BaseActivity {
                     protected void onHandleSuccess(NullBean bean) {
                         ToastUtil.showShort("上传成功,该货柜补货完成");
                         finish();
-
                     }
 
                     @Override

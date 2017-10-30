@@ -22,7 +22,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 
     protected Context context;
     //adapte 加载的数据
-    public List<T> tList;
+    public List<T> tList = new ArrayList<T>();
 
     //添加headerView
     private View headerView;

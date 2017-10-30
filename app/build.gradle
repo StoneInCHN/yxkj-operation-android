@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'org.greenrobot.greendao'
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
@@ -50,6 +51,17 @@ dependencies {
     compile 'jp.wasabeef:recyclerview-animators:2.2.3'
     compile 'com.jakewharton:butterknife:8.8.1'
     compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'org.greenrobot:greendao:3.0.1'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+}
+/**
+ * schemaVersion--> 指定数据库schema版本号，迁移等操作会用到;
+ daoPackage --> dao的包名，包名默认是entity所在的包；
+ targetGenDir --> 生成数据库文件的目录;
+ */
+greendao {
+    schemaVersion 1
+    daoPackage 'com.yxkj.deliveryman.gen'
+    targetGenDir 'src/main/java'
 }

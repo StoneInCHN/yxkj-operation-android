@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.adapter.WaitSupScenesAdapter;
 import com.yxkj.deliveryman.base.BaseObserver;
+import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.bean.response.WaitSupGoodsDetailBean;
 import com.yxkj.deliveryman.bean.response.WaitSupGoodsListBean;
@@ -85,9 +86,8 @@ public abstract class WaitSupGoodsInfoPopupWindow extends PopupWindow implements
     }
 
     private void getGoodsInfo() {
-        String userId = SharePrefreceHelper.getInstance().getString(SharedKey.USER_ID);
         HttpApi.getInstance()
-                .getWaitSupplyGoodsDetails(userId, mSupGoodsListBean.goodsSn)
+                .getWaitSupplyGoodsDetails(UserInfo.USER_ID, mSupGoodsListBean.goodsSn)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<WaitSupGoodsDetailBean>() {

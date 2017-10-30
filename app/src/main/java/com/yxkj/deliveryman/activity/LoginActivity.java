@@ -11,6 +11,7 @@ import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.base.BaseEntity;
 import com.yxkj.deliveryman.base.BaseObserver;
+import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.bean.response.LoginBean;
 import com.yxkj.deliveryman.bean.response.PublicKeyBean;
@@ -131,7 +132,7 @@ public class LoginActivity extends BaseActivity {
             e.printStackTrace();
             //ToastUtil.showShort("加密失败");
         }
-        LogUtil.e(TAG,pwdEncryped);
+        LogUtil.e(TAG, pwdEncryped);
         try {
             HttpApi.getInstance()
                     .loginByPwd(phone, pwdEncryped)
@@ -140,6 +141,7 @@ public class LoginActivity extends BaseActivity {
                     .subscribe(new BaseObserver<LoginBean>() {
                         @Override
                         protected void onHandleSuccess(LoginBean loginBean) {
+                            UserInfo.USER_ID = loginBean.id + "";
                             SharePrefreceHelper.getInstance().setString(SharedKey.USER_ID, loginBean.id);
                             SharePrefreceHelper.getInstance().setString(SharedKey.PHONE, phone);
                             IntentUtil.openActivity(mContext, MainActivity.class);

@@ -14,6 +14,7 @@ import com.yxkj.deliveryman.adapter.AddressSupAdapter;
 import com.yxkj.deliveryman.base.BaseFragment;
 import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.callback.MainPageClickListener;
+import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.bean.response.WaitSupStateBean;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
@@ -110,9 +111,8 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
     }
 
     private void getWaitSupplyState() {
-        String id = SharePrefreceHelper.getInstance().getString(SharedKey.USER_ID);
         HttpApi.getInstance()
-                .getWaitSupplyState(id, mPageNum + "", "10")
+                .getWaitSupplyState(UserInfo.USER_ID, mPageNum + "", "10")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<WaitSupStateBean>() {

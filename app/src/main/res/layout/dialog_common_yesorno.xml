@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@color/white"
+              android:background="@drawable/bg_round_white"
               android:gravity="center"
               android:orientation="vertical">
 
@@ -17,14 +17,14 @@
         android:paddingTop="@dimen/dp_14">
 
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/tv_title_dialog_yesorno"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="确认手机号"
             android:textColor="@color/black_text"/>
 
         <TextView
-            android:id="@+id/tv_content"
+            android:id="@+id/tv_content_dialog_yesorno"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_26"
@@ -43,7 +43,7 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/btn_cancle"
+            android:id="@+id/tv_cancel_dialog_yesorno"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -55,7 +55,7 @@
             style="@style/line_vertical_1px"/>
 
         <TextView
-            android:id="@+id/btn_sure"
+            android:id="@+id/tv_sure_dialog_yesorno"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

@@ -27,6 +27,11 @@ public class WaitSupGoodsListBean {
         public String goodsPic;
         public int waitSupplyCount;
 
+        /**
+         * 是否完成取货，这个值不从服务器拿，仅本地使用
+         */
+        public boolean isComplete;
+
         @Override
         public String toString() {
             return "GroupsBean{" +
@@ -34,6 +39,7 @@ public class WaitSupGoodsListBean {
                     ", goodsName='" + goodsName + '\'' +
                     ", goodsPic='" + goodsPic + '\'' +
                     ", waitSupplyCount=" + waitSupplyCount +
+                    ", isComplete=" + isComplete +
                     '}';
         }
     }

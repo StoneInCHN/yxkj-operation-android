@@ -10,6 +10,7 @@ import com.yxkj.deliveryman.base.BaseFragment;
 import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.bean.response.MessageBean;
 import com.yxkj.deliveryman.bean.response.SupRecordDetail;
+import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
@@ -54,9 +55,8 @@ public class MessageFragment extends BaseFragment {
     }
 
     private void getMsgList() {
-        String userId = SharePrefreceHelper.getInstance().getString(SharedKey.USER_ID);
         HttpApi.getInstance()
-                .getMsg(userId)
+                .getMsg(UserInfo.USER_ID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<MessageBean>() {

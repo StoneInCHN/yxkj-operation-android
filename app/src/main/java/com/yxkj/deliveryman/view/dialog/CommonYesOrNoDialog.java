@@ -1,13 +1,8 @@
 package com.yxkj.deliveryman.view.dialog;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Button;
+import android.app.Dialog;
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
@@ -17,39 +12,42 @@ import com.yxkj.deliveryman.callback.CommonDialogSureListener;
  * 通用Dialog，有yes和no两种选项
  */
 
-public class CommonYesOrNoDialog extends DialogFragment {
+public class CommonYesOrNoDialog extends Dialog {
     /*主题*/
     private TextView tv_title;
     /*内容*/
     private TextView tv_content;
     /*取消按钮*/
-    private Button btn_cancle;
+    private TextView tvCancel;
     /*确认按钮*/
-    private Button btn_sure;
+    private TextView tvSure;
     /*确认按钮监听*/
     private CommonDialogSureListener dialogSureListener;
+    private Context mContext;
+
+    public CommonYesOrNoDialog(@NonNull Context context) {
+        super(context);
+        mContext = context;
+        initView();
+    }
 
     public void setDialogSureListener(CommonDialogSureListener dialogSureListener) {
         this.dialogSureListener = dialogSureListener;
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        View view = inflater.inflate(R.layout.dialog_common_yesorno, container);
-        tv_title = view.findViewById(R.id.tv_title);
-        tv_content = view.findViewById(R.id.tv_content);
-        btn_cancle = view.findViewById(R.id.btn_cancle);
-        btn_sure = view.findViewById(R.id.btn_sure);
-        btn_cancle.setOnClickListener(view1 -> dismiss());
-        btn_sure.setOnClickListener(view1 -> {
+    public void initView() {
+        setContentView(R.layout.dialog_common_yesorno);
+        tv_title = findViewById(R.id.tv_title_dialog_yesorno);
+        tv_content = findViewById(R.id.tv_content_dialog_yesorno);
+        tvCancel = findViewById(R.id.tv_cancel_dialog_yesorno);
+        tvSure = findViewById(R.id.tv_sure_dialog_yesorno);
+        tvCancel.setOnClickListener(view1 -> dismiss());
+        tvSure.setOnClickListener(view1 -> {
             dismiss();
             if (dialogSureListener != null) {
                 dialogSureListener.onSure();
             }
         });
-        return view;
     }
 
     public void setTv_title(String tv_title) {
@@ -57,11 +55,11 @@ public class CommonYesOrNoDialog extends DialogFragment {
     }
 
     public void setBtn_cancle(String btn_cancle) {
-        this.btn_cancle.setText(btn_cancle);
+        this.tvCancel.setText(btn_cancle);
     }
 
     public void setBtn_sure(String btn_sure) {
-        this.btn_sure.setText(btn_sure);
+        this.tvSure.setText(btn_sure);
     }
 
     public void setTv_content(String tv_content) {

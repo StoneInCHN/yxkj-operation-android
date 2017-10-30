@@ -143,6 +143,12 @@ public interface RetrofitService {
     Observable<BaseEntity<SupRecordDetail>> getSupplementRecordDetails(@Body Map<String, String> request);
 
     /**
+     * 查看是否还有未补货完成的优享空间
+     */
+    @POST("keeper/startSupplyGoods")
+    Observable<BaseEntity<SceneListBean.GroupsBean>> startSupplyGoods(@Body Map<String, String> request);
+
+    /**
      * 查看消息
      */
     @POST("keeper/getMsg")

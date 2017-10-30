@@ -12,6 +12,7 @@ import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.adapter.WaitSupListAdapter;
 import com.yxkj.deliveryman.base.BaseObserver;
+import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.event.WaitSupAddressEvent;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.bean.response.WaitSupGoodsListBean;
@@ -84,8 +85,8 @@ public class WaitSupGoodsFragment extends Fragment {
     }
 
     private void initRv() {
-        mWaitSupListAdapter = new WaitSupListAdapter(getActivity());
-        RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, mWaitSupListAdapter);
+        mWaitSupListAdapter = new WaitSupListAdapter(getActivity(), mSceneSn);
+        RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, mWaitSupListAdapter, true);
         mLrv.setPullRefreshEnabled(false);
         mLrv.setLoadMoreEnabled(false);
         mLrv.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -103,15 +104,18 @@ public class WaitSupGoodsFragment extends Fragment {
      * 获取待补商品列表
      */
     private void getWaitSupplyGoodsByCategory() {
-        String userId = SharePrefreceHelper.getInstance().getString(SharedKey.USER_ID);
         HttpApi.getInstance().
-                getWaitSupplyGoodsByCategory(userId, mSceneSn, mCateId, mPageNum + "", "10")
+                getWaitSupplyGoodsByCategory(UserInfo.USER_ID, mSceneSn, mCateId, mPageNum + "", "10")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<WaitSupGoodsListBean>() {
                     @Override
                     protected void onHandleSuccess(WaitSupGoodsListBean waitSupGoodsListBean) {
-                        mWaitSupListAdapter.settList(waitSupGoodsListBean.groups);
+                        if (mPageNum == 1) {
+                            mWaitSupListAdapter.mBeanList.clear();
+                        }
+                        mWaitSupListAdapter.mBeanList.addAll(waitSupGoodsListBean.groups);
+                        mWaitSupListAdapter.notifyDataSetChanged();
                     }
 
                     @Override

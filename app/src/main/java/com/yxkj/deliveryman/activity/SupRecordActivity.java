@@ -9,6 +9,7 @@ import com.yxkj.deliveryman.adapter.SupRecordAdapter;
 import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.bean.response.SupRecordBean;
+import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
@@ -60,9 +61,8 @@ public class SupRecordActivity extends BaseActivity {
      * 获取补货记录
      */
     private void getRecordsList() {
-        String userId = SharePrefreceHelper.getInstance().getString(SharedKey.USER_ID);
         HttpApi.getInstance()
-                .getSupplementSumRecord(userId, mPageNum + "", "10")
+                .getSupplementSumRecord(UserInfo.USER_ID, mPageNum + "", "10")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<SupRecordBean>() {

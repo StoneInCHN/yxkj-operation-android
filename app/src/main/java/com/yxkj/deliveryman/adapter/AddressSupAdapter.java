@@ -1,6 +1,9 @@
 package com.yxkj.deliveryman.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.Settings;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,11 +12,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
+import com.yxkj.deliveryman.base.BaseObserver;
+import com.yxkj.deliveryman.bean.response.SceneListBean;
 import com.yxkj.deliveryman.bean.response.WaitSupStateBean;
+import com.yxkj.deliveryman.constant.UserInfo;
+import com.yxkj.deliveryman.http.HttpApi;
+import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
+import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.ToastUtil;
+import com.yxkj.deliveryman.view.dialog.CommonYesOrNoDialog;
+import com.yxkj.deliveryman.view.dialog.TextButtonDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -47,19 +61,52 @@ public class AddressSupAdapter extends RecyclerView.Adapter<AddressSupAdapter.Vi
         holder.tvFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                commitRecords();
+                showConfirmDialog(bean, position);
+
+
             }
         });
         //某楼里面按组分的list
         holder.rvGroups.setLayoutManager(new LinearLayoutManager(mContext));
-        TeamAdapter teamAdapter = new TeamAdapter(mContext);
+        TeamAdapter teamAdapter = new TeamAdapter(mContext, bean.sceneSn);
         holder.rvGroups.setAdapter(teamAdapter);
         teamAdapter.settList(mScenesBeanList.get(position).vendingContainerGroups);
     }
 
-    private void commitRecords() {
-        // TODO: 2017/10/27 待接口
-        ToastUtil.showShort("完成补货");
+    private void showConfirmDialog(WaitSupStateBean.ScenesBean bean, int position) {
+        CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog(mContext);
+        commonYesOrNoDialog.setTv_title("完成补货");
+        commonYesOrNoDialog.setTv_content("是否完成对" + bean.sceneName + "的补货吗？");
+        commonYesOrNoDialog.setBtn_sure("确定");
+        commonYesOrNoDialog.setDialogSureListener(() -> {
+            commitRecords(bean.sceneSn, position);
+        });
+        commonYesOrNoDialog.show();
+    }
+
+    private void commitRecords(String sceneSn, int position) {
+        HttpApi.getInstance()
+                .finishSupplyGoods(UserInfo.USER_ID, sceneSn)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<SceneListBean.GroupsBean>() {
+                    @Override
+                    protected void onHandleSuccess(SceneListBean.GroupsBean groupsBean) {
+                        if (groupsBean == null) {
+                            mScenesBeanList.remove(position);
+                            notifyDataSetChanged();
+                        } else {//还有未补货完成的优享空间
+                            TextButtonDialog textButtonDialog =
+                                    new TextButtonDialog(mContext, "系统提示", "你尚未完成" + groupsBean.sceneName + "的补货,请完成后再对下一个空间补货", "确定");
+                            textButtonDialog.show();
+                        }
+                    }
+
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+
+                    }
+                });
     }
 
     @Override
