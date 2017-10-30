@@ -23,22 +23,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:textColor="@color/black_text"
-            android:text="总待补数：50"/>
+            android:text="总待补数：50"
+            android:textColor="@color/black_text"/>
+
         <TextView
             android:id="@+id/tv_sup_num_item_sup_record"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black_text"
             android:layout_marginLeft="26dp"
-            android:text="总补货数：48"/>
+            android:text="总补货数：48"
+            android:textColor="@color/black_text"/>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_item_sup_record"
+    <com.github.jdsjlzx.recyclerview.LRecyclerView
+        android:id="@+id/lrv_item_sup_record"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"/>
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

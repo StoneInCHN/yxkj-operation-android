@@ -25,5 +25,23 @@ public class MessageBean {
         public int noticeCount;
         public String noticeTime;
         public String content;
+
+        @Override
+        public String toString() {
+            return "GroupsBean{" +
+                    "sceneSn='" + sceneSn + '\'' +
+                    ", type='" + type + '\'' +
+                    ", noticeCount=" + noticeCount +
+                    ", noticeTime='" + noticeTime + '\'' +
+                    ", content='" + content + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "MessageBean{" +
+                "groups=" + groups +
+                '}';
     }
 }

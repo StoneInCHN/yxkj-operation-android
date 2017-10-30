@@ -268,7 +268,7 @@ public class HttpApi {
     public Observable<BaseEntity<NullBean>> uploadSupplementPic(String userId, String cntrId, File file) {
         Map<String, String> req = new HashMap<>();
         req.put("userId", userId);
-        req.put("sceneSn", cntrId);
+        req.put("cntrId", cntrId);
 
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), requestFile);

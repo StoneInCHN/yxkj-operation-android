@@ -16,6 +16,7 @@ import com.yxkj.deliveryman.callback.OnCommon2Listener;
 import com.yxkj.deliveryman.util.BitmapUtil;
 import com.yxkj.deliveryman.util.ImageLoadUtil;
 import com.yxkj.deliveryman.util.IntentUtil;
+import com.yxkj.deliveryman.util.LogUtil;
 
 import java.io.File;
 
@@ -38,16 +39,24 @@ public class CompleteSupPopWindow extends PopupWindow {
 
         String path = mContext.getCacheDir() + "/";
         String picName = System.currentTimeMillis() + ".jpeg";
-        fileResult = BitmapUtil.saveBitmap(path, picName, mBitmap);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                LogUtil.e("时间判断5.1", "" + System.currentTimeMillis());
+                fileResult = BitmapUtil.saveBitmap(path, picName, mBitmap);
+                LogUtil.e("时间判断5.2", "" + System.currentTimeMillis());
+            }
+        }).start();
+
     }
 
 
-    public CompleteSupPopWindow(Context context ) {
+    public CompleteSupPopWindow(Context context) {
         this.mContext = context;
         initView();
     }
 
-    private OnCommon2Listener<String,File> mCommon2Listener;
+    private OnCommon2Listener<String, File> mCommon2Listener;
 
     public void setCommon2Listener(OnCommon2Listener common2Listener) {
         mCommon2Listener = common2Listener;

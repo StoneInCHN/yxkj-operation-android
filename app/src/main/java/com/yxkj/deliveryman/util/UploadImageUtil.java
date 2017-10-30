@@ -103,6 +103,7 @@ public class UploadImageUtil {
 
         switch (requestCode) {
             case Constants.PHOTO_PICKED_WITH_DATA: // 从相册里面返回
+                LogUtil.e("时间判断2", "" + System.currentTimeMillis());
                 if (data != null) {
                     ContentResolver cr = activity.getContentResolver();
                     image_path = ImageUtil.getUriString(data.getData(), cr);
@@ -161,6 +162,7 @@ public class UploadImageUtil {
         new Thread() {
             public void run() {
                 try {
+                    LogUtil.e("时间判断3", "" + System.currentTimeMillis());
                     Bitmap resizeBitmap = ImageUtil.parseToProveBitmap(imgPath);
                     baos = new ByteArrayOutputStream();
                     ExifInterface sourceExif = new ExifInterface(imgPath);
@@ -197,6 +199,7 @@ public class UploadImageUtil {
                             options -= 10;//每次都减少5
                         }
                     }
+                    LogUtil.e("时间判断4", "" + System.currentTimeMillis());
                     if (onCompleteListener != null) {
                         onCompleteListener.onComplete(resizeBitmap);
                     }

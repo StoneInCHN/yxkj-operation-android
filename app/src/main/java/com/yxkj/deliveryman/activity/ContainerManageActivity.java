@@ -27,6 +27,7 @@ import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.permission.Permission;
 import com.yxkj.deliveryman.permission.RxPermissions;
 import com.yxkj.deliveryman.bean.response.NullBean;
+import com.yxkj.deliveryman.util.LogUtil;
 import com.yxkj.deliveryman.util.ToastUtil;
 import com.yxkj.deliveryman.util.UploadImageUtil;
 import com.yxkj.deliveryman.view.RichToolBar;
@@ -57,6 +58,7 @@ public class ContainerManageActivity extends BaseActivity {
     private Button btPauseSup;
     private ContainerSupFragmentViewpagerAdapter mContainerAdapter;
     private CompleteSupPopWindow completeSupPopWindow;
+    ;
     private RichToolBar mToolbar;
     private ContainerManageFragment mWaitSupFragment;
 
@@ -254,6 +256,7 @@ public class ContainerManageActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        LogUtil.e("时间判断1", "" + System.currentTimeMillis());
         File picResultFile = UploadImageUtil.dealWithUploadImageOnActivityResult(this, requestCode, resultCode, data,
                 new UploadImageUtil.OnCompleteListener() {
                     @Override
@@ -263,9 +266,10 @@ public class ContainerManageActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     completeSupPopWindow = new CompleteSupPopWindow(mContext);
+                                    LogUtil.e("时间判断5", "" + System.currentTimeMillis());
                                     completeSupPopWindow.showAtLocation(btTakePhoto, Gravity.CENTER, 0, 0);
                                     completeSupPopWindow.setBitmaps(bitmap);
-
+                                    LogUtil.e("时间判断5.3", "" + System.currentTimeMillis());
                                     completeSupPopWindow.setCommon2Listener(new OnCommon2Listener<String, File>() {
                                         @Override
                                         public void onCommon1(String s) {
@@ -279,6 +283,7 @@ public class ContainerManageActivity extends BaseActivity {
                                             completeSup(file);
                                         }
                                     });
+                                    LogUtil.e("时间判断6", "" + System.currentTimeMillis());
                                 }
                             });
                         }
@@ -293,14 +298,18 @@ public class ContainerManageActivity extends BaseActivity {
      * @param file
      */
     private void completeSup(File file) {
+        if (file == null) {
+            return;
+        }
         HttpApi.getInstance()
-                .uploadSupplementPic(UserInfo.USER_ID, sceneSn, file)
+                .uploadSupplementPic(UserInfo.USER_ID, cntrId, file)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<NullBean>() {
                     @Override
                     protected void onHandleSuccess(NullBean bean) {
                         ToastUtil.showShort("上传成功,该货柜补货完成");
+                        completeSupPopWindow.dismiss();
                         finish();
                     }
 

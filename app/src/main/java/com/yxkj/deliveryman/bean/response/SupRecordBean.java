@@ -7,36 +7,62 @@ import java.util.List;
  * 补货记录
  */
 
-public class SupRecordBean  {
+public class SupRecordBean {
+
 
     public List<GroupsBean> groups;
 
     public static class GroupsBean {
         /**
-         * sceneSn : 001
-         * sceneName : 香年广场T1
-         * waitSuppTotalCount : 30
-         * suppTotalCount : 10
-         * lackCount : 20
-         * suppEndTime : 2017/10/29 01:21:21
+         * date : 2017.29
+         * supplementList : [{"sceneSn":"001","sceneName":"香年广场T1","waitSupplyCount":30,"supplyCount":10,"lackCount":20,"supplyTime":"001"},{"sceneSn":"001","sceneName":"香年广场T1","waitSupplyCount":36,"supplyCount":0,"lackCount":36,"supplyTime":"001"}]
+         * sumSupplyCount : 10
+         * sumWaitSupplyCount : 56
          */
 
-        public String sceneSn;
-        public String sceneName;
-        public int waitSuppTotalCount;
-        public int suppTotalCount;
-        public int lackCount;
-        public String suppEndTime;
+        public String date;
+        public int sumSupplyCount;
+        public int sumWaitSupplyCount;
+        public List<SupplementListBean> supplementList;
+
+        public static class SupplementListBean {
+            /**
+             * sceneSn : 001
+             * sceneName : 香年广场T1
+             * waitSupplyCount : 30
+             * supplyCount : 10
+             * lackCount : 20
+             * supplyTime : 001
+             */
+
+            public String sceneSn;
+            public String sceneName;
+            public int waitSupplyCount;
+            public int supplyCount;
+            public int lackCount;
+            public String supplyTime;
+
+            @Override
+            public String toString() {
+                return "SupplementListBean{" +
+                        "sceneSn='" + sceneSn + '\'' +
+                        ", sceneName='" + sceneName + '\'' +
+                        ", waitSupplyCount=" + waitSupplyCount +
+                        ", supplyCount=" + supplyCount +
+                        ", lackCount=" + lackCount +
+                        ", supplyTime='" + supplyTime + '\'' +
+                        '}';
+            }
+        }
+
 
         @Override
         public String toString() {
             return "GroupsBean{" +
-                    "sceneSn='" + sceneSn + '\'' +
-                    ", sceneName='" + sceneName + '\'' +
-                    ", waitSuppTotalCount=" + waitSuppTotalCount +
-                    ", suppTotalCount=" + suppTotalCount +
-                    ", lackCount=" + lackCount +
-                    ", suppEndTime='" + suppEndTime + '\'' +
+                    "date='" + date + '\'' +
+                    ", sumSupplyCount=" + sumSupplyCount +
+                    ", sumWaitSupplyCount=" + sumWaitSupplyCount +
+                    ", supplementList=" + supplementList +
                     '}';
         }
     }

@@ -83,7 +83,11 @@ public class SupRecordActivity extends BaseActivity {
 
                     @Override
                     protected void onHandleSuccess(SupRecordBean supRecordBean) {
-                        adapter.settList(supRecordBean.groups);
+                        if (mPageNum == 1) {
+                            adapter.mBeanList.clear();
+                        }
+                        adapter.mBeanList.addAll(supRecordBean.groups);
+                        adapter.notifyDataSetChanged();
                         mLrvSupRecord.refreshComplete(10);
                     }
 

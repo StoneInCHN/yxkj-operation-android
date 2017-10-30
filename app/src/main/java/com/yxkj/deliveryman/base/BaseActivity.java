@@ -89,7 +89,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
         AppManager.getInstance().addActivity(this);
 
         //设置状态栏透明
-        setTranslucentStatus();
+        //setTranslucentStatus();
 
         useDefaultTitleBarColor = true;
 
