@@ -1,8 +1,9 @@
 package com.yxkj.deliveryman.activity;
 
-import android.content.SharedPreferences;
 import android.view.View;
 
+import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
+import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.adapter.SupRecordAdapter;
@@ -11,16 +12,10 @@ import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.bean.response.SupRecordBean;
 import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.HttpApi;
-import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
-import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.http.HTTP;
 
 /**
  * 补货记录
@@ -29,7 +24,7 @@ public class SupRecordActivity extends BaseActivity {
     /**
      * 按时间记录的列表
      */
-    private LRecyclerView mRlvSupRecord;
+    private LRecyclerView mLrvSupRecord;
     private SupRecordAdapter adapter;
 
     @Override
@@ -44,13 +39,28 @@ public class SupRecordActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        mRlvSupRecord = findViewByIdNoCast(R.id.lrv_sup_record);
+        mLrvSupRecord = findViewByIdNoCast(R.id.lrv_sup_record);
     }
 
     @Override
     public void initData() {
         adapter = new SupRecordAdapter(this);
-        RecyclerViewSetUtil.setRecyclerView(this, mRlvSupRecord, adapter);
+        RecyclerViewSetUtil.setRecyclerView(this, mLrvSupRecord, adapter);
+
+        mLrvSupRecord.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPageNum = 1;
+                getRecordsList();
+            }
+        });
+        mLrvSupRecord.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                mPageNum++;
+                getRecordsList();
+            }
+        });
 
         getRecordsList();
     }
@@ -69,6 +79,7 @@ public class SupRecordActivity extends BaseActivity {
                     @Override
                     protected void onHandleSuccess(SupRecordBean supRecordBean) {
                         adapter.settList(supRecordBean.groups);
+                        mLrvSupRecord.refreshComplete(10);
                     }
 
                     @Override

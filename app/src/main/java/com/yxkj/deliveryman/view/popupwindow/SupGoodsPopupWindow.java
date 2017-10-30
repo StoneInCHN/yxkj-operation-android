@@ -73,15 +73,15 @@ public class SupGoodsPopupWindow extends PopupWindow {
         //背景色
         setBackgroundDrawable(new BitmapDrawable());
         //不可点击外面取消?
-       // setFocusable(true);
+        // setFocusable(true);
 
     }
 
     private void initData() {
         ImageLoadUtil.loadImage(ivGoodsPic, Constants.BASE_URL + mBean.goodsPic);
         tvGoodsName.setText(mBean.goodsName);
-        tvSerialNum.setText(mBean.goodsSn);
-        tvShouldSupNum.setText(mBean.waitSupplyCount + "");
+        tvSerialNum.setText("商品条码：" + mBean.goodsSn);
+        tvShouldSupNum.setText("总待补数：" + mBean.waitSupplyCount);
 
     }
 

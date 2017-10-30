@@ -59,13 +59,24 @@ public class TeamAdapter extends BaseRecyclerViewAdapter<WaitSupStateBean.Scenes
                 if (bean.vendingContainers.get(position).central) {//中控台
                     IntentUtil.openActivity(context, ControllerManageActivity.class);
                 } else {//其他货柜
-                    checkOtherSceneIsComplete(mSceneSn, rvTeamMember, data);
+                    showPopupWindow(rvTeamMember, data);
                 }
             }
         });
     }
 
-    private void checkOtherSceneIsComplete(String sceneSn, RecyclerView rvTeamMember, Object data) {
+
+    private void showPopupWindow(RecyclerView rvTeamMember, Object data) {
+        ContainerSupPopWindow popWindow = new ContainerSupPopWindow(mContext) {
+            @Override
+            public void onClick(View v) {
+                checkOtherSceneIsComplete(mSceneSn, data);
+            }
+        };
+        popWindow.showAsDropDown(rvTeamMember);
+    }
+
+    private void checkOtherSceneIsComplete(String sceneSn , Object data) {
         HttpApi.getInstance()
                 .startSupplyGoods(UserInfo.USER_ID, sceneSn)
                 .subscribeOn(Schedulers.io())
@@ -74,7 +85,15 @@ public class TeamAdapter extends BaseRecyclerViewAdapter<WaitSupStateBean.Scenes
                     @Override
                     protected void onHandleSuccess(SceneListBean.GroupsBean groupsBean) {
                         if (groupsBean == null) {
-                            showPopupWindow(rvTeamMember, data);
+
+                            Bundle bundle = new Bundle();
+                            WaitSupStateBean.ScenesBean.VendingContainerGroupsBean.VendingContainersBean bean1 =
+                                    (WaitSupStateBean.ScenesBean.VendingContainerGroupsBean.VendingContainersBean) data;
+                            String cntrId = bean1.id + "";
+                            String cntrSn = bean1.cntrSn;
+                            bundle.putString("cntrId", cntrId);
+                            bundle.putString("containerName", cntrSn + "货柜");
+                            IntentUtil.openActivity(context, ContainerManageActivity.class, bundle);
                         } else {//存在其他未补货完成的优享空间
                             TextButtonDialog textButtonDialog =
                                     new TextButtonDialog(mContext, "系统提示", "你尚未完成" + groupsBean.sceneName + "的补货,请完成后再对下一个空间补货", "确定");
@@ -87,23 +106,5 @@ public class TeamAdapter extends BaseRecyclerViewAdapter<WaitSupStateBean.Scenes
 
                     }
                 });
-    }
-
-    private void showPopupWindow(RecyclerView rvTeamMember, Object data) {
-        ContainerSupPopWindow popWindow = new ContainerSupPopWindow(mContext) {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                WaitSupStateBean.ScenesBean.VendingContainerGroupsBean.VendingContainersBean bean1 =
-                        (WaitSupStateBean.ScenesBean.VendingContainerGroupsBean.VendingContainersBean) data;
-                String cntrId = bean1.id + "";
-                String cntrSn = bean1.cntrSn;
-                bundle.putString("cntrId", cntrId);
-                bundle.putString("containerName", cntrSn + "货柜");
-                IntentUtil.openActivity(context, ContainerManageActivity.class, bundle);
-                dismiss();
-            }
-        };
-        popWindow.showAsDropDown(rvTeamMember);
     }
 }

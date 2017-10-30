@@ -3,6 +3,8 @@ package com.yxkj.deliveryman.fragment;
 
 import android.view.View;
 
+import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
+import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.adapter.MessageAdapter;
@@ -42,6 +44,8 @@ public class MessageFragment extends BaseFragment {
         mLrv = findViewByIdNoCast(R.id.lrv_fragment_message);
     }
 
+    private int mPageNum = 1;
+
     @Override
     protected void initData() {
         mMessageAdapter = new MessageAdapter(getActivity());
@@ -51,6 +55,21 @@ public class MessageFragment extends BaseFragment {
 //        mLrv.setLoadingMoreProgressStyle(ProgressStyle.BallSpinFadeLoader);
         //mLrv.setLoadMoreEnabled(false);
 
+        mLrv.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPageNum = 1;
+                getMsgList();
+            }
+        });
+
+        mLrv.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                mPageNum++;
+                getMsgList();
+            }
+        });
         getMsgList();
     }
 
@@ -63,6 +82,7 @@ public class MessageFragment extends BaseFragment {
                     @Override
                     protected void onHandleSuccess(MessageBean bean) {
                         mMessageAdapter.settList(bean.groups);
+                        mLrv.refreshComplete(10);
                     }
 
                     @Override

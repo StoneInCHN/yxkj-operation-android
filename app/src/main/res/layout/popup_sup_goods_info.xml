@@ -83,12 +83,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        android:inputType="number"
                         android:lines="1"
                         android:maxLength="4"
                         android:minWidth="50dp"
                         android:shadowColor="@color/green_text"
-                        android:text="40"
-                        android:inputType="number"
+                        android:text="2"
                         android:textColor="@color/green_text"
                         android:textSize="@dimen/sp_14"/>
 

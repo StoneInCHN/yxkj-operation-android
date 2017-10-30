@@ -17,7 +17,10 @@ import com.yxkj.deliveryman.dao.FetchGoods;
 import com.yxkj.deliveryman.gen.DaoMaster;
 import com.yxkj.deliveryman.gen.DaoSession;
 import com.yxkj.deliveryman.gen.FetchGoodsDao;
+import com.yxkj.deliveryman.util.DisplayUtil;
 import com.yxkj.deliveryman.util.ImageLoadUtil;
+import com.yxkj.deliveryman.util.ToastUtil;
+import com.yxkj.deliveryman.view.popupwindow.CancelPopupWindow;
 import com.yxkj.deliveryman.view.popupwindow.WaitSupGoodsInfoPopupWindow;
 
 import java.util.ArrayList;
@@ -71,16 +74,33 @@ public class WaitSupListAdapter extends RecyclerView.Adapter {
                     public void onClick(View v) {
                         viewHolder.tvTipComplete.setVisibility(View.VISIBLE);
                         bean.isComplete = true;
-                        String id = mSceneSn + bean.goodsSn;
+                        /*String id = mSceneSn + bean.goodsSn;
                         FetchGoods fetchGoods = new FetchGoods(id, true);
                         DaoMaster daoMaster = new DaoMaster(DBManager.getInstance(mContext).getWritableDatabase());
                         DaoSession daoSession = daoMaster.newSession();
                         FetchGoodsDao fetchGoodsDao = daoSession.getFetchGoodsDao();
-                        fetchGoodsDao.insert(fetchGoods);
+                        fetchGoodsDao.insert(fetchGoods);*/
                         dismiss();
                     }
                 };
                 popupWindow.showAtLocation(viewHolder.ivGoodsPic, Gravity.NO_GRAVITY, 0, 0);
+            }
+        });
+
+        viewHolder.llItem.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                CancelPopupWindow cancelPopupWindow = new CancelPopupWindow(mContext) {
+                    @Override
+                    public void onClick(View v) {
+                        viewHolder.tvTipComplete.setVisibility(View.GONE);
+                        bean.isComplete = false;
+                        dismiss();
+                    }
+                };
+
+                cancelPopupWindow.showAsDropDown(viewHolder.llItem, (int) (DisplayUtil.getDensity_Width(mContext) * 0.4), -30);
+                return true;//返回true则不会附加一个短按动作
             }
         });
     }
