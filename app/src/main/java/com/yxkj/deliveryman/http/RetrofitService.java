@@ -2,6 +2,7 @@ package com.yxkj.deliveryman.http;
 
 
 import com.yxkj.deliveryman.base.BaseEntity;
+import com.yxkj.deliveryman.bean.response.AllSupContainerGoodsBean;
 import com.yxkj.deliveryman.bean.response.GetCodeBean;
 import com.yxkj.deliveryman.bean.response.GoodsCategoryBean;
 import com.yxkj.deliveryman.bean.response.LoginBean;
@@ -111,6 +112,12 @@ public interface RetrofitService {
      */
     @POST("keeper/getWaitSupplyContainerGoodsList")
     Observable<BaseEntity<WaitSupContainerGoodsBean>> getWaitSupplyContainerGoodsList(@Body Map<String, String> request);
+
+    /**
+     * 获取货柜全部商品
+     */
+    @POST("keeper/getContainerGoodsList")
+    Observable<BaseEntity<AllSupContainerGoodsBean>> getContainerGoodsList(@Body Map<String, String> request);
 
     /**
      * 提交补货记录

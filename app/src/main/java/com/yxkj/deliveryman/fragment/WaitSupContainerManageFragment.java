@@ -13,9 +13,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.activity.ContainerManageActivity;
-import com.yxkj.deliveryman.adapter.SupGoodsAdapter;
+import com.yxkj.deliveryman.adapter.WaitSupGoodsAdapter;
 import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.bean.CommitSupRecordsBean;
+import com.yxkj.deliveryman.bean.response.AllSupContainerGoodsBean;
 import com.yxkj.deliveryman.bean.response.NullBean;
 import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.HttpApi;
@@ -32,35 +33,21 @@ import io.reactivex.schedulers.Schedulers;
 /*
  *  @项目名：  yxkj-operation-android 
  *  @包名：    com.yxkj.deliveryman.fragment
- *  @文件名:   ContainerManageFragment
+ *  @文件名:   WaitSupContainerManageFragment
  *  @创建者:   hhe
  *  @创建时间:  2017/10/26 16:56
- *  @描述：    货柜管理页面中的商品列表fragment
+ *  @描述：    待补商品货柜管理
  */
-public class ContainerManageFragment extends Fragment {
+public class WaitSupContainerManageFragment extends Fragment {
     private LRecyclerView mLrv;
-    private SupGoodsAdapter mSupGoodsAdapter;
+    private WaitSupGoodsAdapter mWaitSupGoodsAdapter;
 
-    /**
-     * 待补商品
-     */
-    public final String TYPE_WAIT_SUP = "wait_sup";
-    /**
-     * 所有商品
-     */
-    public final String TYPE_ALL_GOODS = "all_goods";
-
-    /**
-     * fragment类型
-     */
-    private String mFragmentType;
     private View rootView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_container_manage, container, false);
-        mFragmentType = getArguments().getString("fragment_type");
+        rootView = inflater.inflate(R.layout.fragment_wait_sup_container_manage, container, false);
         initRv(rootView);
         getWaitSupplyContainerGoodsList();
 
@@ -69,8 +56,8 @@ public class ContainerManageFragment extends Fragment {
 
     private void initRv(View rootView) {
         mLrv = rootView.findViewById(R.id.lrv_fragment_container_manage);
-        mSupGoodsAdapter = new SupGoodsAdapter(getActivity());
-        RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, mSupGoodsAdapter, true);
+        mWaitSupGoodsAdapter = new WaitSupGoodsAdapter(getActivity());
+        RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, mWaitSupGoodsAdapter, true);
         mLrv.setPullRefreshEnabled(false);
         mLrv.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -97,7 +84,7 @@ public class ContainerManageFragment extends Fragment {
 
                     @Override
                     protected void onHandleSuccess(WaitSupContainerGoodsBean waitSupContainerGoodsBean) {
-                        mSupGoodsAdapter.setGroupsBeanList(waitSupContainerGoodsBean.groups);
+                        mWaitSupGoodsAdapter.setGroupsBeanList(waitSupContainerGoodsBean.groups);
                     }
 
                     @Override
@@ -105,7 +92,6 @@ public class ContainerManageFragment extends Fragment {
 
                     }
                 });
-
     }
 
     public List<CommitSupRecordsBean.SupplementRecordsBean> mSupRecordsBeanList = new ArrayList<>();
@@ -114,10 +100,6 @@ public class ContainerManageFragment extends Fragment {
      * 上传已补货的商品
      */
     public void uploadCompletedGoods(String sceneSn) {
-        Gson gson = new Gson();
-        String recordBean = gson.toJson(getUploadRecordBean(), new TypeToken<List<CommitSupRecordsBean>>() {
-        }.getType());
-
         CommitSupRecordsBean commitSupRecordsBean = new CommitSupRecordsBean(sceneSn, UserInfo.USER_ID, getUploadRecordBean());
 
         HttpApi.getInstance()
@@ -145,7 +127,7 @@ public class ContainerManageFragment extends Fragment {
 
     public List<CommitSupRecordsBean.SupplementRecordsBean> getUploadRecordBean() {
         mSupRecordsBeanList.clear();
-        for (WaitSupContainerGoodsBean.GroupsBean bean : mSupGoodsAdapter.mGroupsBeanList) {
+        for (WaitSupContainerGoodsBean.GroupsBean bean : mWaitSupGoodsAdapter.mGroupsBeanList) {
             if (bean.isComplete) {
                 mSupRecordsBeanList.add(new CommitSupRecordsBean.SupplementRecordsBean(Integer.parseInt(bean.id), bean.actualNum));
             }

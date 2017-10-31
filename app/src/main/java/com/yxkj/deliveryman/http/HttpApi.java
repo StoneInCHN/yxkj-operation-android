@@ -3,6 +3,7 @@ package com.yxkj.deliveryman.http;
 import com.google.gson.Gson;
 import com.yxkj.deliveryman.base.BaseEntity;
 import com.yxkj.deliveryman.bean.CommitSupRecordsBean;
+import com.yxkj.deliveryman.bean.response.AllSupContainerGoodsBean;
 import com.yxkj.deliveryman.bean.response.GetCodeBean;
 import com.yxkj.deliveryman.bean.response.GoodsCategoryBean;
 import com.yxkj.deliveryman.bean.response.LoginBean;
@@ -246,6 +247,21 @@ public class HttpApi {
     }
 
     /**
+     * 获取货柜待补商品
+     *
+     * @param userId
+     * @return
+     */
+    public Observable<BaseEntity<AllSupContainerGoodsBean>> getAllSupContainerGoodsList(String userId, String cntrId, String pageNo, String pageSize) {
+        Map<String, String> req = new HashMap<>();
+        req.put("userId", userId);
+        req.put("cntrId", cntrId);
+        req.put("pageNo", pageNo);
+        req.put("pageSize", pageSize);
+        return RetrofitFactory.getInstance().getContainerGoodsList(req);
+    }
+
+    /**
      * 提交补货记录
      *
      * @return
@@ -351,7 +367,7 @@ public class HttpApi {
     public Observable<BaseEntity<MessageDetailBean>> getMsgDetails(String userId, String type) {
         Map<String, String> req = new HashMap<>();
         req.put("userId", userId);
-        req.put("type", type);
+        req.put("messageType", type);
         return RetrofitFactory.getInstance().getMsgDetails(req);
     }
 

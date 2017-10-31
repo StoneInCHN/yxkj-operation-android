@@ -22,7 +22,8 @@ import com.yxkj.deliveryman.callback.CommonDialogSureListener;
 import com.yxkj.deliveryman.callback.OnCommon2Listener;
 import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.event.RestartTakePhotoEvent;
-import com.yxkj.deliveryman.fragment.ContainerManageFragment;
+import com.yxkj.deliveryman.fragment.AllSupContainerManageFragment;
+import com.yxkj.deliveryman.fragment.WaitSupContainerManageFragment;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.permission.Permission;
 import com.yxkj.deliveryman.permission.RxPermissions;
@@ -60,7 +61,7 @@ public class ContainerManageActivity extends BaseActivity {
     private CompleteSupPopWindow completeSupPopWindow;
     ;
     private RichToolBar mToolbar;
-    private ContainerManageFragment mWaitSupFragment;
+    private WaitSupContainerManageFragment mWaitSupFragment;
 
     @Override
     public int getContentViewId() {
@@ -178,14 +179,9 @@ public class ContainerManageActivity extends BaseActivity {
 
         List<Fragment> fragmentList = new ArrayList<>();
         //等待补货
-        mWaitSupFragment = new ContainerManageFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("fragment_type", "wait_sup");
-        mWaitSupFragment.setArguments(bundle);
+        mWaitSupFragment = new WaitSupContainerManageFragment();
         //全部商品
-        ContainerManageFragment allGoodsFragment = new ContainerManageFragment();
-        bundle.putString("fragment_type", "all_goods");
-        allGoodsFragment.setArguments(bundle);
+        AllSupContainerManageFragment allGoodsFragment = new AllSupContainerManageFragment();
 
         fragmentList.add(mWaitSupFragment);
         fragmentList.add(allGoodsFragment);

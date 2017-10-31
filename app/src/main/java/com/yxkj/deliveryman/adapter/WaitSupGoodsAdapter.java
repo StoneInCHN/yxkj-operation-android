@@ -26,17 +26,17 @@ import java.util.List;
 /*
  *  @项目名：  yxkj-operation-android 
  *  @包名：    com.yxkj.deliveryman.adapter
- *  @文件名:   SupGoodsAdapter
+ *  @文件名:   WaitSupGoodsAdapter
  *  @创建者:   hhe
  *  @创建时间:  2017/10/26 17:02
  *  @描述：    真正在补货页面
  */
-public class SupGoodsAdapter extends RecyclerView.Adapter {
+public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
     private Context mContext;
 
     public List<WaitSupContainerGoodsBean.GroupsBean> mGroupsBeanList;
 
-    public SupGoodsAdapter(Context context) {
+    public WaitSupGoodsAdapter(Context context) {
         mContext = context;
         mGroupsBeanList = new ArrayList<>();
     }
