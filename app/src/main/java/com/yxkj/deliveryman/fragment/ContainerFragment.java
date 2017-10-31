@@ -89,7 +89,7 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
         //按大楼分的list
         mAddressSupAdapter = new AddressSupAdapter(getActivity());
         RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, mAddressSupAdapter);
-
+        mLrv.setFooterViewHint("加载中", "没有更多了", "网络出了一点问题");
         mLrv.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {

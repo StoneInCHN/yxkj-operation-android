@@ -10,6 +10,7 @@ import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.adapter.MessageAdapter;
 import com.yxkj.deliveryman.base.BaseFragment;
 import com.yxkj.deliveryman.base.BaseObserver;
+import com.yxkj.deliveryman.base.BaseRecyclerViewAdapter;
 import com.yxkj.deliveryman.bean.response.MessageBean;
 import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.HttpApi;
@@ -78,7 +79,10 @@ public class MessageFragment extends BaseFragment {
                 .subscribe(new BaseObserver<MessageBean>() {
                     @Override
                     protected void onHandleSuccess(MessageBean bean) {
-                        mMessageAdapter.settList(bean.groups);
+                        if (mPageNum == 1) {
+                            mMessageAdapter.mGroupsBeanList.clear();
+                        }
+                        mMessageAdapter.mGroupsBeanList.addAll(bean.groups);
                         mLrv.refreshComplete(10);
                     }
 

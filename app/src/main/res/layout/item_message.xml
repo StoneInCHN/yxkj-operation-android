@@ -5,6 +5,7 @@
               android:layout_height="89dp"
               android:gravity="center"
               android:orientation="vertical"
+              android:id="@+id/ll_item_message"
               android:padding="@dimen/dp_10"
               tools:background="@color/white">
 

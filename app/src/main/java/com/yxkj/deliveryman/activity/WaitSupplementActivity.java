@@ -1,5 +1,6 @@
 package com.yxkj.deliveryman.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -23,6 +24,7 @@ import com.yxkj.deliveryman.bean.response.GoodsCategoryBean;
 import com.yxkj.deliveryman.bean.response.SceneListBean;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
+import com.yxkj.deliveryman.util.IntentUtil;
 import com.yxkj.deliveryman.util.LogUtil;
 import com.yxkj.deliveryman.view.popupwindow.WaitSupAddressPopupWindow;
 
@@ -78,6 +80,7 @@ public class WaitSupplementActivity extends BaseActivity {
 
     }
 
+
     @Override
     public void initData() {
         initScene();
@@ -108,7 +111,12 @@ public class WaitSupplementActivity extends BaseActivity {
 
     private void initScene() {
         mCurrentAdressBean = new SceneListBean.GroupsBean();
-        mCurrentAdressBean.sceneSn = "";
+        Bundle data = getIntent().getExtras();
+        String sceneSn = "";
+        if (data != null) {
+            sceneSn = data.getString("sceneSn", "");
+        }
+        mCurrentAdressBean.sceneSn = sceneSn;
         mCurrentAdressBean.sceneName = "全部商品";
     }
 
@@ -165,7 +173,6 @@ public class WaitSupplementActivity extends BaseActivity {
                         Gson gson = new Gson();
                         String categoryJson = gson.toJson(goodsCategoryBean);
                         LogUtil.i(TAG, "categoryjson--" + categoryJson);
-
 
                         //不相等则存起来
                         if (!tabsRaw.equals(categoryJson)) {
@@ -273,8 +280,19 @@ public class WaitSupplementActivity extends BaseActivity {
                         allSceneBean.sceneSn = "";
                         sceneListBean.groups.add(0, allSceneBean);
 
-                        mCurrentAdressBean = sceneListBean.groups.get(0);
+                        if (TextUtils.isEmpty(mCurrentAdressBean.sceneSn)) {//默认全部
+                            mCurrentAdressBean = sceneListBean.groups.get(0);
+                        } else {//有初始值
+                            List<SceneListBean.GroupsBean> groups = sceneListBean.groups;
+                            for (int i = 0; i < groups.size(); i++) {
+                                SceneListBean.GroupsBean bean = groups.get(i);
+                                if (bean.sceneSn.equals(mCurrentAdressBean.sceneSn))
+                                    mCurrentAdressBean = sceneListBean.groups.get(i);
+                            }
+                        }
+
                         mTvCurrentAdress.setText(mCurrentAdressBean.sceneName);
+
                         mWaitSupAddressPopupWindow.mAddressAdapter.settList(sceneListBean.groups);
                         // mGoodsCategoryFragmentAdapter.setSceneSn(mCurrentAdressBean.sceneSn);
                     }
