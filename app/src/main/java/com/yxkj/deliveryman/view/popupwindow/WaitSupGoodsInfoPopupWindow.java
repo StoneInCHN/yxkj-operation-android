@@ -26,7 +26,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * 待补货物详细信息
+ * 待取货物详细信息
  */
 public abstract class WaitSupGoodsInfoPopupWindow extends PopupWindow implements View.OnClickListener {
 
@@ -71,7 +71,6 @@ public abstract class WaitSupGoodsInfoPopupWindow extends PopupWindow implements
         setContentView(view);
         //背景色
         setBackgroundDrawable(new BitmapDrawable());
-        //不可点击外面取消?
         setFocusable(true);
 
     }

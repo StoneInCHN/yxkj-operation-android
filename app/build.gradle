@@ -62,6 +62,6 @@ dependencies {
  */
 greendao {
     schemaVersion 1
-    daoPackage 'com.yxkj.deliveryman.gen'
+    daoPackage 'com.yxkj.deliveryman.dao.gen'
     targetGenDir 'src/main/java'
 }

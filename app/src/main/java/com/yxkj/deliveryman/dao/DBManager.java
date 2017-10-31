@@ -3,12 +3,7 @@ package com.yxkj.deliveryman.dao;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.yxkj.deliveryman.gen.DaoMaster;
-import com.yxkj.deliveryman.gen.DaoSession;
-
-import org.greenrobot.greendao.AbstractDaoMaster;
-
-import java.util.List;
+import com.yxkj.deliveryman.dao.gen.DaoMaster;
 
 /*
  *  @项目名：  yxkj-operation-android 

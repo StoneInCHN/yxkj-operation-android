@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * 真正补货商品详细信息
+ * 补货商品详细信息
  */
 public class SupGoodsPopupWindow extends PopupWindow {
 
@@ -72,8 +72,8 @@ public class SupGoodsPopupWindow extends PopupWindow {
         setContentView(view);
         //背景色
         setBackgroundDrawable(new BitmapDrawable());
-        //不可点击外面取消?
-        // setFocusable(true);
+        //获取焦点，如果不设置则edittext可能无法弹出键盘
+         setFocusable(true);
 
     }
 
