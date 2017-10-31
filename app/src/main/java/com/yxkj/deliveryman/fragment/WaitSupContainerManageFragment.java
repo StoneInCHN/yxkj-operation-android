@@ -21,6 +21,7 @@ import com.yxkj.deliveryman.activity.ContainerManageActivity;
 import com.yxkj.deliveryman.adapter.WaitSupGoodsAdapter;
 import com.yxkj.deliveryman.application.MyApplication;
 import com.yxkj.deliveryman.dao.DBManager;
+import com.yxkj.deliveryman.dao.WaitSupGoods;
 import com.yxkj.deliveryman.dao.gen.DaoMaster;
 import com.yxkj.deliveryman.dao.gen.DaoSession;
 import com.yxkj.deliveryman.dao.gen.WaitSupGoodsDao;
@@ -160,7 +161,13 @@ public class WaitSupContainerManageFragment extends Fragment {
                     protected void onHandleSuccess(NullBean nullBean) {
                         ToastUtil.showShort("提交补货记录成功");
                         //提交成功后，需要在本地数据库删除本货柜存储的商品
-                        getDao().deleteByKeyInTx(Long.parseLong(cntrId), Long.parseLong(sceneSn));
+                        WaitSupGoodsDao dao = getDao();
+                        List<WaitSupGoods> list = dao.queryBuilder().list();
+                        for (WaitSupGoods goods : list) {
+                            if (goods.getCntrId().equals(cntrId) && goods.getSceneId().equals(sceneSn)) {
+                                dao.delete(goods);
+                            }
+                        }
                         getActivity().finish();
                     }
 

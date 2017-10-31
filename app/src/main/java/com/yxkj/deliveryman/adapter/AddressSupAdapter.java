@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.dao.DBManager;
+import com.yxkj.deliveryman.dao.WaitSupGoods;
 import com.yxkj.deliveryman.dao.gen.DaoMaster;
 import com.yxkj.deliveryman.dao.gen.DaoSession;
 import com.yxkj.deliveryman.dao.gen.WaitSupGoodsDao;
@@ -18,6 +19,7 @@ import com.yxkj.deliveryman.bean.response.SceneListBean;
 import com.yxkj.deliveryman.bean.response.WaitSupStateBean;
 import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.HttpApi;
+import com.yxkj.deliveryman.util.ToastUtil;
 import com.yxkj.deliveryman.view.dialog.CommonYesOrNoDialog;
 import com.yxkj.deliveryman.view.dialog.TextButtonDialog;
 
@@ -91,9 +93,10 @@ public class AddressSupAdapter extends RecyclerView.Adapter<AddressSupAdapter.Vi
                     @Override
                     protected void onHandleSuccess(SceneListBean.GroupsBean groupsBean) {
                         if (groupsBean == null) {
-                            mScenesBeanList.remove(position);
-                            notifyDataSetChanged();
-                            getDao().deleteByKey(Long.parseLong(sceneSn));
+                            ToastUtil.showShort("提交成功");
+                            WaitSupGoodsDao dao = getDao();
+                            List<WaitSupGoods> deleteList = dao.queryBuilder().where(WaitSupGoodsDao.Properties.SceneId.eq(sceneSn)).build().list();
+                            getDao().deleteInTx(deleteList);
 
                         } else {//还有未补货完成的优享空间
                             TextButtonDialog textButtonDialog =
