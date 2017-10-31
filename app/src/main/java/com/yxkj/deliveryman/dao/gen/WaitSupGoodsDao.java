@@ -15,7 +15,7 @@ import com.yxkj.deliveryman.dao.WaitSupGoods;
 /** 
  * DAO for table "WAIT_SUP_GOODS".
 */
-public class WaitSupGoodsDao extends AbstractDao<WaitSupGoods, String> {
+public class WaitSupGoodsDao extends AbstractDao<WaitSupGoods, Long> {
 
     public static final String TABLENAME = "WAIT_SUP_GOODS";
 
@@ -24,8 +24,11 @@ public class WaitSupGoodsDao extends AbstractDao<WaitSupGoods, String> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Id = new Property(0, String.class, "id", true, "ID");
-        public final static Property SupNum = new Property(1, int.class, "supNum", false, "SUP_NUM");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+        public final static Property SceneId = new Property(1, String.class, "sceneId", false, "SCENE_ID");
+        public final static Property CntrId = new Property(2, String.class, "cntrId", false, "CNTR_ID");
+        public final static Property GoodsSn = new Property(3, String.class, "goodsSn", false, "GOODS_SN");
+        public final static Property SupNum = new Property(4, int.class, "supNum", false, "SUP_NUM");
     };
 
 
@@ -41,8 +44,11 @@ public class WaitSupGoodsDao extends AbstractDao<WaitSupGoods, String> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"WAIT_SUP_GOODS\" (" + //
-                "\"ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: id
-                "\"SUP_NUM\" INTEGER NOT NULL );"); // 1: supNum
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
+                "\"SCENE_ID\" TEXT," + // 1: sceneId
+                "\"CNTR_ID\" TEXT," + // 2: cntrId
+                "\"GOODS_SN\" TEXT," + // 3: goodsSn
+                "\"SUP_NUM\" INTEGER NOT NULL );"); // 4: supNum
     }
 
     /** Drops the underlying database table. */
@@ -55,51 +61,88 @@ public class WaitSupGoodsDao extends AbstractDao<WaitSupGoods, String> {
     protected final void bindValues(DatabaseStatement stmt, WaitSupGoods entity) {
         stmt.clearBindings();
  
-        String id = entity.getId();
+        Long id = entity.getId();
         if (id != null) {
-            stmt.bindString(1, id);
+            stmt.bindLong(1, id);
         }
-        stmt.bindLong(2, entity.getSupNum());
+ 
+        String sceneId = entity.getSceneId();
+        if (sceneId != null) {
+            stmt.bindString(2, sceneId);
+        }
+ 
+        String cntrId = entity.getCntrId();
+        if (cntrId != null) {
+            stmt.bindString(3, cntrId);
+        }
+ 
+        String goodsSn = entity.getGoodsSn();
+        if (goodsSn != null) {
+            stmt.bindString(4, goodsSn);
+        }
+        stmt.bindLong(5, entity.getSupNum());
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, WaitSupGoods entity) {
         stmt.clearBindings();
  
-        String id = entity.getId();
+        Long id = entity.getId();
         if (id != null) {
-            stmt.bindString(1, id);
+            stmt.bindLong(1, id);
         }
-        stmt.bindLong(2, entity.getSupNum());
+ 
+        String sceneId = entity.getSceneId();
+        if (sceneId != null) {
+            stmt.bindString(2, sceneId);
+        }
+ 
+        String cntrId = entity.getCntrId();
+        if (cntrId != null) {
+            stmt.bindString(3, cntrId);
+        }
+ 
+        String goodsSn = entity.getGoodsSn();
+        if (goodsSn != null) {
+            stmt.bindString(4, goodsSn);
+        }
+        stmt.bindLong(5, entity.getSupNum());
     }
 
     @Override
-    public String readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0);
+    public Long readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public WaitSupGoods readEntity(Cursor cursor, int offset) {
         WaitSupGoods entity = new WaitSupGoods( //
-            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // id
-            cursor.getInt(offset + 1) // supNum
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // sceneId
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // cntrId
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // goodsSn
+            cursor.getInt(offset + 4) // supNum
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, WaitSupGoods entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
-        entity.setSupNum(cursor.getInt(offset + 1));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setSceneId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setCntrId(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setGoodsSn(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setSupNum(cursor.getInt(offset + 4));
      }
     
     @Override
-    protected final String updateKeyAfterInsert(WaitSupGoods entity, long rowId) {
-        return entity.getId();
+    protected final Long updateKeyAfterInsert(WaitSupGoods entity, long rowId) {
+        entity.setId(rowId);
+        return rowId;
     }
     
     @Override
-    public String getKey(WaitSupGoods entity) {
+    public Long getKey(WaitSupGoods entity) {
         if(entity != null) {
             return entity.getId();
         } else {

@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
+import com.yxkj.deliveryman.dao.DBManager;
+import com.yxkj.deliveryman.dao.gen.DaoMaster;
+import com.yxkj.deliveryman.dao.gen.DaoSession;
+import com.yxkj.deliveryman.dao.gen.WaitSupGoodsDao;
 import com.yxkj.deliveryman.http.BaseObserver;
 import com.yxkj.deliveryman.bean.response.SceneListBean;
 import com.yxkj.deliveryman.bean.response.WaitSupStateBean;
@@ -89,6 +93,8 @@ public class AddressSupAdapter extends RecyclerView.Adapter<AddressSupAdapter.Vi
                         if (groupsBean == null) {
                             mScenesBeanList.remove(position);
                             notifyDataSetChanged();
+                            getDao().deleteByKey(Long.parseLong(sceneSn));
+
                         } else {//还有未补货完成的优享空间
                             TextButtonDialog textButtonDialog =
                                     new TextButtonDialog(mContext, "系统提示", "你尚未完成" + groupsBean.sceneName + "的补货,请完成后再对下一个空间补货", "确定");
@@ -101,6 +107,12 @@ public class AddressSupAdapter extends RecyclerView.Adapter<AddressSupAdapter.Vi
 
                     }
                 });
+    }
+
+    private WaitSupGoodsDao getDao() {
+        DaoMaster daoMaster = new DaoMaster(DBManager.getInstance(mContext).getWritableDatabase());
+        DaoSession daoSession = daoMaster.newSession();
+        return daoSession.getWaitSupGoodsDao();
     }
 
     @Override

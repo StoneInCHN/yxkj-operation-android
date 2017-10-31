@@ -48,14 +48,16 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
     private List<WaitSupGoods> mCompletedBeanList;
 
     private String mCntrId;
+    private String mSceneSn;
     private WaitSupGoodsDao waitSupGoodsDao;
 
-    public WaitSupGoodsAdapter(Context context, String cntrId) {
+    public WaitSupGoodsAdapter(Context context, String cntrId, String sceneSn) {
         mContext = context;
         mCntrId = cntrId;
         mGroupsBeanList = new ArrayList<>();
         mCompletedBeanList = new ArrayList<>();
         waitSupGoodsDao = initDao();
+        mSceneSn = sceneSn;
 
     }
 
@@ -76,8 +78,9 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
         List<WaitSupContainerGoodsBean.GroupsBean> resultList = new ArrayList<>();
         for (WaitSupContainerGoodsBean.GroupsBean bean : groupsBeanList) {
             for (WaitSupGoods goods : mCompletedBeanList) {
-                String comparedId = mCntrId + bean.goodsSn;
-                if (goods.getId().equals(comparedId)) {//此商品已经补货
+                if (goods.getSceneId().equals(mSceneSn)
+                        && goods.getCntrId().equals(mCntrId)
+                        && goods.getGoodsSn().equals(bean.goodsSn)) {//此商品已经补货
                     bean.actualNum = goods.getSupNum();
                     bean.isSupped = true;
                 }
@@ -123,14 +126,14 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
                     @Override
                     public void onCommon1(Integer integer) {
                         if (popupWindow.isActualNumIllegal()) {
-                            bean.actualNum=integer;
+                            bean.actualNum = integer;
                             mGroupsBeanList.get(position).isSupped = true;
                             popupWindow.dismiss();
                             viewHolder.rlShadow.setVisibility(View.VISIBLE);
                             int remainNum = bean.waitSupplyCount - bean.actualNum;
                             viewHolder.tvRemainNumShadow.setText(remainNum + "");
                             // 存储在本地数据库中
-                            saveToDB(bean, integer);
+                            saveToDB(bean.goodsSn, integer);
                         } else {
                             ToastUtil.showShort("实际补货数量不能大于待补数量");
                         }
@@ -146,6 +149,8 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
                 CancelPopupWindow cancelPopupWindow = new CancelPopupWindow(mContext) {
                     @Override
                     public void onClick(View v) {
+                        deleteFromDB(mGroupsBeanList.get(position));
+
                         ToastUtil.showShort("取消完成");
                     }
                 };
@@ -157,15 +162,25 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
     }
 
     /**
+     * 将该item从数据库中删除
+     *
+     * @param groupsBean
+     */
+    private void deleteFromDB(WaitSupContainerGoodsBean.GroupsBean groupsBean) {
+        waitSupGoodsDao.deleteByKeyInTx(Long.parseLong(mSceneSn), Long.parseLong(mCntrId), Long.parseLong(groupsBean.goodsSn));
+    }
+
+    /**
      * 存储在数据库中
      *
-     * @param bean
-     * @param integer 补货的数量
+     * @param supNum 补货的数量
      */
-    private void saveToDB(WaitSupContainerGoodsBean.GroupsBean bean, Integer integer) {
-        //存储ID为cntrId+goodsSn，保证唯一性
-        String id = mCntrId + bean.goodsSn;
-        WaitSupGoods waitSupGoods = new WaitSupGoods(id, integer);
+    private void saveToDB(String goodsSn, Integer supNum) {
+        WaitSupGoods waitSupGoods = new WaitSupGoods();
+        waitSupGoods.setCntrId(mCntrId);
+        waitSupGoods.setSceneId(mSceneSn);
+        waitSupGoods.setGoodsSn(goodsSn);
+        waitSupGoods.setSupNum(supNum);
         waitSupGoodsDao.insertOrReplace(waitSupGoods);
     }
 

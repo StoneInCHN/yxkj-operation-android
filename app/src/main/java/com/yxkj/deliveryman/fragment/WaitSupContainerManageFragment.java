@@ -20,6 +20,10 @@ import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.activity.ContainerManageActivity;
 import com.yxkj.deliveryman.adapter.WaitSupGoodsAdapter;
 import com.yxkj.deliveryman.application.MyApplication;
+import com.yxkj.deliveryman.dao.DBManager;
+import com.yxkj.deliveryman.dao.gen.DaoMaster;
+import com.yxkj.deliveryman.dao.gen.DaoSession;
+import com.yxkj.deliveryman.dao.gen.WaitSupGoodsDao;
 import com.yxkj.deliveryman.http.BaseObserver;
 import com.yxkj.deliveryman.bean.CommitSupRecordsBean;
 import com.yxkj.deliveryman.bean.response.NullBean;
@@ -89,7 +93,7 @@ public class WaitSupContainerManageFragment extends Fragment {
 
     private void initRv(View rootView) {
         mLrv = rootView.findViewById(R.id.lrv_fragment_container_manage);
-        mWaitSupGoodsAdapter = new WaitSupGoodsAdapter(getActivity(),cntrId);
+        mWaitSupGoodsAdapter = new WaitSupGoodsAdapter(getActivity(), cntrId, sceneSn);
         RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, mWaitSupGoodsAdapter, true);
         mLrv.setPullRefreshEnabled(false);
         mLrv.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -135,6 +139,11 @@ public class WaitSupContainerManageFragment extends Fragment {
      * 上传已补货的商品
      */
     public void uploadCompletedGoods(String sceneSn) {
+        List<CommitSupRecordsBean.SupplementRecordsBean> recordsBeanList = getUploadRecordBean();
+        if (recordsBeanList.size() == 0) {
+            ToastUtil.showShort("您还没有进行补货，请先补货后再上传");
+            return;
+        }
         CommitSupRecordsBean commitSupRecordsBean = new CommitSupRecordsBean(sceneSn, UserInfo.USER_ID, getUploadRecordBean());
 
         HttpApi.getInstance()
@@ -150,6 +159,8 @@ public class WaitSupContainerManageFragment extends Fragment {
                     @Override
                     protected void onHandleSuccess(NullBean nullBean) {
                         ToastUtil.showShort("提交补货记录成功");
+                        //提交成功后，需要在本地数据库删除本货柜存储的商品
+                        getDao().deleteByKeyInTx(Long.parseLong(cntrId), Long.parseLong(sceneSn));
                         getActivity().finish();
                     }
 
@@ -158,6 +169,12 @@ public class WaitSupContainerManageFragment extends Fragment {
 
                     }
                 });
+    }
+
+    private WaitSupGoodsDao getDao() {
+        DaoMaster daoMaster = new DaoMaster(DBManager.getInstance(mActivity).getWritableDatabase());
+        DaoSession daoSession = daoMaster.newSession();
+        return daoSession.getWaitSupGoodsDao();
     }
 
     public List<CommitSupRecordsBean.SupplementRecordsBean> getUploadRecordBean() {
