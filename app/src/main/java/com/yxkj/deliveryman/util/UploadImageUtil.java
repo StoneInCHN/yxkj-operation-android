@@ -9,6 +9,7 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.yxkj.deliveryman.constant.Constants;
@@ -46,6 +47,22 @@ public class UploadImageUtil {
     }
 
     /**
+     * 从图库选择
+     */
+    public static void doPickPhotoFromGallery(Fragment fragment) {
+        try {
+            Constants.PHOTO_DIR.mkdirs();
+            mCurrentPhotoFile = new File(Constants.PHOTO_DIR, getPhotoFileName());
+            final Intent intent = getPhotoPickIntent();
+            fragment.startActivityForResult(intent, Constants.PHOTO_PICKED_WITH_DATA);
+        } catch (Exception e) {
+            Log.e("Fans", "not photo find");
+        }
+    }
+
+
+
+    /**
      * 拍照
      */
     public static void doTakePhoto(Activity activity) {
@@ -58,6 +75,23 @@ public class UploadImageUtil {
             mCurrentPhotoFile = new File(Constants.PHOTO_DIR, getPhotoFileName());// 给新照的照片文件命名
             final Intent intent = getTakePickIntent(mCurrentPhotoFile);
             activity.startActivityForResult(intent, Constants.CAMERA_WITH_DATA);
+        } catch (Exception e) {
+            Log.e("Fans", "获取相机失败");
+        }
+    }
+    /**
+     * 拍照
+     */
+    public static void doTakePhoto(Fragment fragment) {
+        if (!SDcardUtils.ExistSDCard()) {
+            Log.e("Fans", "没有SDCard");
+            return;
+        }
+        try {
+            Constants.PHOTO_DIR.mkdirs();// 创建照片的存储目录
+            mCurrentPhotoFile = new File(Constants.PHOTO_DIR, getPhotoFileName());// 给新照的照片文件命名
+            final Intent intent = getTakePickIntent(mCurrentPhotoFile);
+            fragment.startActivityForResult(intent, Constants.CAMERA_WITH_DATA);
         } catch (Exception e) {
             Log.e("Fans", "获取相机失败");
         }
