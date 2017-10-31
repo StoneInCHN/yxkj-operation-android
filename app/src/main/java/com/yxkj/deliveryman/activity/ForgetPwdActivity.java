@@ -121,6 +121,7 @@ public class ForgetPwdActivity extends BaseActivity {
                 .subscribe(new BaseObserver<LoginBean>() {
                     @Override
                     protected void onHandleSuccess(LoginBean loginBean) {
+                        SharePrefreceHelper.getInstance().setString(SharedKey.USER_ID, loginBean.id+"");
                         IntentUtil.openActivity(mContext, MainActivity.class);
                     }
 

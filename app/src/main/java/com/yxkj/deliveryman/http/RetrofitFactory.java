@@ -11,14 +11,18 @@ import com.yxkj.deliveryman.util.LogUtil;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.FormBody;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
+
 
 /**
  * RetrofitFactory
@@ -26,7 +30,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitFactory {
 
-    private static final long TIMEOUT = 30;
+    private static final String TAG = "RetrofitFactory";
+    private static final long TIMEOUT = 15;
 
     public static OkHttpClient.Builder sHttpBuilder;
     public static Interceptor sInterceptor;
@@ -39,9 +44,9 @@ public class RetrofitFactory {
                 .addInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                     @Override
                     public void log(String message) {
-
+                        LogUtil.d(TAG, "HttpLoggingInterceptor| " + message);
                     }
-                }).setLevel(HttpLoggingInterceptor.Level.BASIC))
+                }).setLevel(HttpLoggingInterceptor.Level.BODY))
                 .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(TIMEOUT, TimeUnit.SECONDS)
                 .build();
@@ -55,7 +60,7 @@ public class RetrofitFactory {
                 Request.Builder builder = request.newBuilder();
                 // 替换为自己的token
                 builder.addHeader("X-Auth-Token", SharePrefreceHelper.getInstance().getString(SharedKey.TOKEN));
-                LogUtil.i(builder.build().tag().toString());
+                LogUtil.i(TAG, "builder.tag| " + builder.build().tag().toString());
 //                LogUtil.i("请求参数--URL", request.url().toString());
 //                LogUtil.i("请求参数--header", request.headers().toString());
 //                LogUtil.i("请求参数--body", request.body().toString());
