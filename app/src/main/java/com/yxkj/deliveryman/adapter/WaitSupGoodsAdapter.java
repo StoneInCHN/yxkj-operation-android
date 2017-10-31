@@ -10,9 +10,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
-import com.yxkj.deliveryman.callback.CommonDialogSureListener;
+import com.yxkj.deliveryman.callback.OnCommon1Listener;
 import com.yxkj.deliveryman.constant.Constants;
 import com.yxkj.deliveryman.bean.response.WaitSupContainerGoodsBean;
+import com.yxkj.deliveryman.dao.DBManager;
+import com.yxkj.deliveryman.dao.WaitSupGoods;
+import com.yxkj.deliveryman.dao.gen.DaoMaster;
+import com.yxkj.deliveryman.dao.gen.DaoSession;
+import com.yxkj.deliveryman.dao.gen.WaitSupGoodsDao;
 import com.yxkj.deliveryman.util.DisplayUtil;
 import com.yxkj.deliveryman.util.ImageLoadUtil;
 import com.yxkj.deliveryman.util.ToastUtil;
@@ -33,17 +38,56 @@ import java.util.List;
  */
 public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
     private Context mContext;
-
+    /**
+     * 服务器获取到的数据
+     */
     public List<WaitSupContainerGoodsBean.GroupsBean> mGroupsBeanList;
+    /**
+     * 已经完成（全部or部分）补货的list
+     */
+    private List<WaitSupGoods> mCompletedBeanList;
 
-    public WaitSupGoodsAdapter(Context context) {
+    private String mCntrId;
+    private WaitSupGoodsDao waitSupGoodsDao;
+
+    public WaitSupGoodsAdapter(Context context, String cntrId) {
         mContext = context;
+        mCntrId = cntrId;
         mGroupsBeanList = new ArrayList<>();
+        mCompletedBeanList = new ArrayList<>();
+        waitSupGoodsDao = initDao();
+
     }
 
     public void setGroupsBeanList(List<WaitSupContainerGoodsBean.GroupsBean> groupsBeanList) {
-        mGroupsBeanList.addAll(groupsBeanList);
+        List<WaitSupContainerGoodsBean.GroupsBean> mHandleList = traverseHandleData(groupsBeanList);
+        mGroupsBeanList.addAll(mHandleList);
         notifyDataSetChanged();
+    }
+
+    /**
+     * 在这里遍历去除那些已经补货的item
+     *
+     * @param groupsBeanList
+     */
+    private List<WaitSupContainerGoodsBean.GroupsBean> traverseHandleData(List<WaitSupContainerGoodsBean.GroupsBean> groupsBeanList) {
+        mCompletedBeanList = getComletedDataFromDB();
+
+        List<WaitSupContainerGoodsBean.GroupsBean> resultList = new ArrayList<>();
+        for (WaitSupContainerGoodsBean.GroupsBean bean : groupsBeanList) {
+            for (WaitSupGoods goods : mCompletedBeanList) {
+                String comparedId = mCntrId + bean.goodsSn;
+                if (goods.getId().equals(comparedId)) {//此商品已经补货
+                    bean.actualNum = goods.getSupNum();
+                    bean.isSupped = true;
+                }
+            }
+
+            resultList.add(bean);
+        }
+
+
+        return resultList;
     }
 
     @Override
@@ -64,17 +108,29 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
         viewHolder.tvRemainNum.setText("剩余数量：" + bean.waitSupplyCount);
         viewHolder.tvWaitNum.setText("待补货数：" + bean.waitSupplyCount);
 
+        if (bean.isSupped) {
+            viewHolder.rlShadow.setVisibility(View.VISIBLE);
+            viewHolder.tvRemainNumShadow.setText((bean.waitSupplyCount - bean.actualNum) + "");
+        } else {
+            viewHolder.rlShadow.setVisibility(View.GONE);
+        }
+
         viewHolder.rlItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SupGoodsPopupWindow popupWindow = new SupGoodsPopupWindow(mContext, bean);
-                popupWindow.setOnClickListener(new CommonDialogSureListener() {
+                popupWindow.setOnCommon1Listener(new OnCommon1Listener<Integer>() {
                     @Override
-                    public void onSure() {
+                    public void onCommon1(Integer integer) {
                         if (popupWindow.isActualNumIllegal()) {
-                            mGroupsBeanList.get(position).isComplete = true;
+                            bean.actualNum=integer;
+                            mGroupsBeanList.get(position).isSupped = true;
                             popupWindow.dismiss();
-                            viewHolder.tvCompleteSup.setVisibility(View.VISIBLE);
+                            viewHolder.rlShadow.setVisibility(View.VISIBLE);
+                            int remainNum = bean.waitSupplyCount - bean.actualNum;
+                            viewHolder.tvRemainNumShadow.setText(remainNum + "");
+                            // 存储在本地数据库中
+                            saveToDB(bean, integer);
                         } else {
                             ToastUtil.showShort("实际补货数量不能大于待补数量");
                         }
@@ -100,6 +156,30 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
         });
     }
 
+    /**
+     * 存储在数据库中
+     *
+     * @param bean
+     * @param integer 补货的数量
+     */
+    private void saveToDB(WaitSupContainerGoodsBean.GroupsBean bean, Integer integer) {
+        //存储ID为cntrId+goodsSn，保证唯一性
+        String id = mCntrId + bean.goodsSn;
+        WaitSupGoods waitSupGoods = new WaitSupGoods(id, integer);
+        waitSupGoodsDao.insertOrReplace(waitSupGoods);
+    }
+
+    private WaitSupGoodsDao initDao() {
+        DaoMaster daoMaster = new DaoMaster(DBManager.getInstance(mContext).getWritableDatabase());
+        DaoSession daoSession = daoMaster.newSession();
+        return daoSession.getWaitSupGoodsDao();
+    }
+
+
+    private List<WaitSupGoods> getComletedDataFromDB() {
+        return waitSupGoodsDao.queryBuilder().list();
+    }
+
     @Override
     public int getItemCount() {
         return mGroupsBeanList.size();
@@ -112,7 +192,9 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
         TextView tvRemainNum;
         TextView tvWaitNum;
         TextView tvCompleteSup;
+        TextView tvRemainNumShadow;
         RelativeLayout rlItem;
+        RelativeLayout rlShadow;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -122,7 +204,9 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
             tvRemainNum = itemView.findViewById(R.id.tv_remain_num_item_sup_goods);
             tvWaitNum = itemView.findViewById(R.id.tv_wait_sup_num_item_sup_goods);
             tvCompleteSup = itemView.findViewById(R.id.tv_tip_complete_sup_goods);
+            tvRemainNumShadow = itemView.findViewById(R.id.tv_num_remain_shadow);
             rlItem = itemView.findViewById(R.id.rl_item_sup_goods);
+            rlShadow = itemView.findViewById(R.id.rl_shadow);
         }
     }
 }

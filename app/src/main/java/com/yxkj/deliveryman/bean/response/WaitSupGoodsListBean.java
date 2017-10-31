@@ -39,7 +39,7 @@ public class WaitSupGoodsListBean {
                     ", goodsName='" + goodsName + '\'' +
                     ", goodsPic='" + goodsPic + '\'' +
                     ", waitSupplyCount=" + waitSupplyCount +
-                    ", isComplete=" + isComplete +
+                    ", isSupped=" + isComplete +
                     '}';
         }
     }

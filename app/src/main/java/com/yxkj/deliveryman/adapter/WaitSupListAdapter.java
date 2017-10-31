@@ -12,11 +12,8 @@ import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.bean.response.WaitSupGoodsListBean;
-import com.yxkj.deliveryman.dao.DBManager;
-import com.yxkj.deliveryman.dao.FetchGoods;
 import com.yxkj.deliveryman.util.DisplayUtil;
 import com.yxkj.deliveryman.util.ImageLoadUtil;
-import com.yxkj.deliveryman.util.ToastUtil;
 import com.yxkj.deliveryman.view.popupwindow.CancelPopupWindow;
 import com.yxkj.deliveryman.view.popupwindow.WaitSupGoodsInfoPopupWindow;
 
@@ -55,7 +52,7 @@ public class WaitSupListAdapter extends RecyclerView.Adapter {
         ViewHolder viewHolder = (ViewHolder) holder;
         ImageLoadUtil.loadImage(viewHolder.ivGoodsPic, bean.goodsPic);
         viewHolder.tvGoodsName.setText(bean.goodsName);
-        viewHolder.tvSerialNum.setText(bean.goodsSn);
+        viewHolder.tvSerialNum.setText("商品条码:"+bean.goodsSn);
         viewHolder.tvShouldSupNum.setText(bean.waitSupplyCount + "");
 
         if (bean.isComplete) {

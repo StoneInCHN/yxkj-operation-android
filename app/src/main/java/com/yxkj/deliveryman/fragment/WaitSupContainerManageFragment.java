@@ -89,7 +89,7 @@ public class WaitSupContainerManageFragment extends Fragment {
 
     private void initRv(View rootView) {
         mLrv = rootView.findViewById(R.id.lrv_fragment_container_manage);
-        mWaitSupGoodsAdapter = new WaitSupGoodsAdapter(getActivity());
+        mWaitSupGoodsAdapter = new WaitSupGoodsAdapter(getActivity(),cntrId);
         RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, mWaitSupGoodsAdapter, true);
         mLrv.setPullRefreshEnabled(false);
         mLrv.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -103,6 +103,9 @@ public class WaitSupContainerManageFragment extends Fragment {
 
     private int mPageNum = 1;
 
+    /**
+     * 获取待补商品列表
+     */
     private void getWaitSupplyContainerGoodsList() {
         ContainerManageActivity activity = (ContainerManageActivity) getActivity();
         HttpApi.getInstance()
@@ -160,7 +163,7 @@ public class WaitSupContainerManageFragment extends Fragment {
     public List<CommitSupRecordsBean.SupplementRecordsBean> getUploadRecordBean() {
         mSupRecordsBeanList.clear();
         for (WaitSupContainerGoodsBean.GroupsBean bean : mWaitSupGoodsAdapter.mGroupsBeanList) {
-            if (bean.isComplete) {
+            if (bean.isSupped) {
                 mSupRecordsBeanList.add(new CommitSupRecordsBean.SupplementRecordsBean(Integer.parseInt(bean.id), bean.actualNum));
             }
         }

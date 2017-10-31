@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.callback.CommonDialogSureListener;
+import com.yxkj.deliveryman.callback.OnCommon1Listener;
 import com.yxkj.deliveryman.constant.Constants;
 import com.yxkj.deliveryman.bean.response.WaitSupContainerGoodsBean;
 import com.yxkj.deliveryman.util.ImageLoadUtil;
@@ -50,10 +51,10 @@ public class SupGoodsPopupWindow extends PopupWindow {
         initData();
     }
 
-    private CommonDialogSureListener mOnClickListener;
+    private OnCommon1Listener<Integer> mOnCommon1Listener;
 
-    public void setOnClickListener(CommonDialogSureListener onClickListener) {
-        mOnClickListener = onClickListener;
+    public void setOnCommon1Listener(OnCommon1Listener<Integer> onCommon1Listener) {
+        mOnCommon1Listener = onCommon1Listener;
     }
 
     private void initView() {
@@ -62,7 +63,9 @@ public class SupGoodsPopupWindow extends PopupWindow {
         tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnClickListener.onSure();
+                String actualNumString = etActualSupNum.getText().toString().trim();
+                int actualNum = Integer.parseInt(actualNumString);
+                mOnCommon1Listener.onCommon1(actualNum);
             }
         });
         //手动设置最大宽高
@@ -73,7 +76,7 @@ public class SupGoodsPopupWindow extends PopupWindow {
         //背景色
         setBackgroundDrawable(new BitmapDrawable());
         //获取焦点，如果不设置则edittext可能无法弹出键盘
-         setFocusable(true);
+        setFocusable(true);
 
     }
 

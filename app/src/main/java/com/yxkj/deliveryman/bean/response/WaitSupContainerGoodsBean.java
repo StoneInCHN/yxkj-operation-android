@@ -30,9 +30,9 @@ public class WaitSupContainerGoodsBean {
         public String goodsPic;
         public int waitSupplyCount;
         /**
-         * 本地存储
+         * 补过货（全部或部分），本地存储
          */
-        public boolean isComplete;
+        public boolean isSupped;
 
         /**
          * 实际补货数量
@@ -48,7 +48,7 @@ public class WaitSupContainerGoodsBean {
                     ", goodsName='" + goodsName + '\'' +
                     ", goodsPic='" + goodsPic + '\'' +
                     ", waitSupplyCount=" + waitSupplyCount +
-                    ", isComplete=" + isComplete +
+                    ", isSupped=" + isSupped +
                     ", actualNum=" + actualNum +
                     '}';
         }

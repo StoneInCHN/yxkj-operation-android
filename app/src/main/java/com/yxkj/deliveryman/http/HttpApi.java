@@ -287,7 +287,7 @@ public class HttpApi {
         req.put("cntrId", cntrId);
 
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("suppPic", file.getName(), requestFile);
 
         return RetrofitFactory.getInstance().uploadSupplementPic(req, filePart);
     }

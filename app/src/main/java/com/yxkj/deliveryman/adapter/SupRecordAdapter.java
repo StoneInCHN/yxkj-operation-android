@@ -62,7 +62,7 @@ public class SupRecordAdapter extends RecyclerView.Adapter {
        /* for (int i = 0; i < mBeanList.size(); i++) {
             View v = View.inflate(mContext, R.layout.item_sup_detail, null);
             viewHolder.llItemSupRecord.addView(v);
-            v.setOnClickListener(view -> {
+            v.setOnCommon1Listener(view -> {
                 IntentUtil.openActivity(mContext, ContainerSupRecordActivity.class);
             });
         }*/
