@@ -71,7 +71,7 @@ public class WaitSupContainerManageFragment extends Fragment {
     private Unbinder unbinder;
     private String sceneSn;
     private String cntrId;
-    private Fragment mFragment=this;
+    private Fragment mFragment = this;
 
     @Nullable
     @Override
@@ -111,13 +111,12 @@ public class WaitSupContainerManageFragment extends Fragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<WaitSupContainerGoodsBean>() {
                     @Override
-                    public void onComplete() {
-                        mLrv.refreshComplete(10);
-                    }
-
-                    @Override
                     protected void onHandleSuccess(WaitSupContainerGoodsBean waitSupContainerGoodsBean) {
+                        if (mPageNum == 1) {
+                            mWaitSupGoodsAdapter.mGroupsBeanList.clear();
+                        }
                         mWaitSupGoodsAdapter.setGroupsBeanList(waitSupContainerGoodsBean.groups);
+                        mLrv.refreshComplete(10);
                     }
 
                     @Override

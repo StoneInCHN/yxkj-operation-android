@@ -78,13 +78,12 @@ public class AllSupContainerManageFragment extends Fragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<AllSupContainerGoodsBean>() {
                     @Override
-                    public void onComplete() {
-                        mLrv.refreshComplete(10);
-                    }
-
-                    @Override
                     protected void onHandleSuccess(AllSupContainerGoodsBean allSupContainerGoodsBean) {
+                        if (mPageNum==1){
+                            mAllSupGoodsAdapter.mGroupsBeanList.clear();
+                        }
                         mAllSupGoodsAdapter.setGroupsBeanList(allSupContainerGoodsBean.groups);
+                        mLrv.refreshComplete(10);
                     }
 
                     @Override

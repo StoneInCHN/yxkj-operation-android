@@ -43,7 +43,6 @@ public class AllSupGoodsAdapter extends RecyclerView.Adapter {
     }
 
     public void setGroupsBeanList(List<AllSupContainerGoodsBean.GroupsBean> groupsBeanList) {
-        mGroupsBeanList.clear();
         mGroupsBeanList.addAll(groupsBeanList);
         notifyDataSetChanged();
     }

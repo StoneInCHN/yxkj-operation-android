@@ -42,7 +42,6 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
     }
 
     public void setGroupsBeanList(List<WaitSupContainerGoodsBean.GroupsBean> groupsBeanList) {
-        mGroupsBeanList.clear();
         mGroupsBeanList.addAll(groupsBeanList);
         notifyDataSetChanged();
     }
