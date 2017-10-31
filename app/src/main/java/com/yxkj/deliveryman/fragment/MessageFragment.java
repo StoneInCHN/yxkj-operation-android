@@ -82,6 +82,7 @@ public class MessageFragment extends BaseFragment {
                             mMessageAdapter.mGroupsBeanList.clear();
                         }
                         mMessageAdapter.mGroupsBeanList.addAll(bean.groups);
+                        mMessageAdapter.notifyDataSetChanged();
                         mLrv.refreshComplete(10);
                     }
 

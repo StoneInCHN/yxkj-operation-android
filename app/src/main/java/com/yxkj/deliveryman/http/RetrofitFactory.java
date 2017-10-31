@@ -44,12 +44,13 @@ public class RetrofitFactory {
                 .addInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                     @Override
                     public void log(String message) {
-                        LogUtil.d(TAG, "HttpLoggingInterceptor| " + message);
+                        LogUtil.d(TAG, "网络请求拦截器| " + message);
                     }
                 }).setLevel(HttpLoggingInterceptor.Level.BODY))
                 .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(TIMEOUT, TimeUnit.SECONDS)
                 .build();
+
     }
 
     private static void initInterceptor() {
