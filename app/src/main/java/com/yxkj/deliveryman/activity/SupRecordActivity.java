@@ -8,7 +8,7 @@ import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.adapter.SupRecordAdapter;
 import com.yxkj.deliveryman.base.BaseActivity;
-import com.yxkj.deliveryman.base.BaseObserver;
+import com.yxkj.deliveryman.http.BaseObserver;
 import com.yxkj.deliveryman.bean.response.SupRecordBean;
 import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.HttpApi;

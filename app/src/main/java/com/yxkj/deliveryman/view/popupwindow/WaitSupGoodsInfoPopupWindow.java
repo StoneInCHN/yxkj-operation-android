@@ -13,13 +13,11 @@ import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.adapter.WaitSupScenesAdapter;
-import com.yxkj.deliveryman.base.BaseObserver;
+import com.yxkj.deliveryman.http.BaseObserver;
 import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.bean.response.WaitSupGoodsDetailBean;
 import com.yxkj.deliveryman.bean.response.WaitSupGoodsListBean;
-import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
-import com.yxkj.deliveryman.sharepreference.SharedKey;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

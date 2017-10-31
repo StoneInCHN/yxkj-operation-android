@@ -9,23 +9,14 @@ import android.view.ViewGroup;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.activity.ContainerManageActivity;
 import com.yxkj.deliveryman.adapter.AllSupGoodsAdapter;
-import com.yxkj.deliveryman.base.BaseObserver;
-import com.yxkj.deliveryman.bean.CommitSupRecordsBean;
+import com.yxkj.deliveryman.http.BaseObserver;
 import com.yxkj.deliveryman.bean.response.AllSupContainerGoodsBean;
-import com.yxkj.deliveryman.bean.response.NullBean;
-import com.yxkj.deliveryman.bean.response.WaitSupContainerGoodsBean;
 import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
-import com.yxkj.deliveryman.util.ToastUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;

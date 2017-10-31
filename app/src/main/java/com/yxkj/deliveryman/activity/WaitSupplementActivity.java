@@ -1,6 +1,5 @@
 package com.yxkj.deliveryman.activity;
 
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -17,14 +16,13 @@ import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.event.WaitSupAddressEvent;
 import com.yxkj.deliveryman.adapter.GoodsCategoryFragmentAdapter;
 import com.yxkj.deliveryman.base.BaseActivity;
-import com.yxkj.deliveryman.base.BaseObserver;
+import com.yxkj.deliveryman.http.BaseObserver;
 import com.yxkj.deliveryman.fragment.WaitSupGoodsFragment;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.bean.response.GoodsCategoryBean;
 import com.yxkj.deliveryman.bean.response.SceneListBean;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
-import com.yxkj.deliveryman.util.IntentUtil;
 import com.yxkj.deliveryman.util.LogUtil;
 import com.yxkj.deliveryman.view.popupwindow.WaitSupAddressPopupWindow;
 

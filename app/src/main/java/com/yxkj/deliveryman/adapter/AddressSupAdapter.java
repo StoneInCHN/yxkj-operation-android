@@ -1,9 +1,6 @@
 package com.yxkj.deliveryman.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.provider.Settings;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,14 +9,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
-import com.yxkj.deliveryman.base.BaseObserver;
+import com.yxkj.deliveryman.http.BaseObserver;
 import com.yxkj.deliveryman.bean.response.SceneListBean;
 import com.yxkj.deliveryman.bean.response.WaitSupStateBean;
 import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.HttpApi;
-import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
-import com.yxkj.deliveryman.sharepreference.SharedKey;
-import com.yxkj.deliveryman.util.ToastUtil;
 import com.yxkj.deliveryman.view.dialog.CommonYesOrNoDialog;
 import com.yxkj.deliveryman.view.dialog.TextButtonDialog;
 

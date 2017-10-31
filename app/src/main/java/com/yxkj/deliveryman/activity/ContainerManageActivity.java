@@ -1,53 +1,22 @@
 package com.yxkj.deliveryman.activity;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.adapter.ContainerSupFragmentViewpagerAdapter;
 import com.yxkj.deliveryman.base.BaseActivity;
-import com.yxkj.deliveryman.base.BaseObserver;
 import com.yxkj.deliveryman.callback.CommonDialogSureListener;
-import com.yxkj.deliveryman.callback.OnCommon2Listener;
-import com.yxkj.deliveryman.constant.UserInfo;
-import com.yxkj.deliveryman.event.RestartTakePhotoEvent;
 import com.yxkj.deliveryman.fragment.AllSupContainerManageFragment;
 import com.yxkj.deliveryman.fragment.WaitSupContainerManageFragment;
-import com.yxkj.deliveryman.http.HttpApi;
-import com.yxkj.deliveryman.permission.Permission;
-import com.yxkj.deliveryman.permission.RxPermissions;
-import com.yxkj.deliveryman.bean.response.NullBean;
-import com.yxkj.deliveryman.util.LogUtil;
-import com.yxkj.deliveryman.util.ToastUtil;
-import com.yxkj.deliveryman.util.UploadImageUtil;
 import com.yxkj.deliveryman.view.RichToolBar;
-import com.yxkj.deliveryman.view.popupwindow.BottomTakePhotoAndPicPopupWindow;
 import com.yxkj.deliveryman.view.dialog.CommonYesOrNoDialog;
-import com.yxkj.deliveryman.view.popupwindow.CompleteSupPopWindow;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * 货柜管理

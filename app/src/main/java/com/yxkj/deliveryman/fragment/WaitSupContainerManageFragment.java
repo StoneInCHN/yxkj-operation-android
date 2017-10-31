@@ -20,7 +20,7 @@ import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.activity.ContainerManageActivity;
 import com.yxkj.deliveryman.adapter.WaitSupGoodsAdapter;
 import com.yxkj.deliveryman.application.MyApplication;
-import com.yxkj.deliveryman.base.BaseObserver;
+import com.yxkj.deliveryman.http.BaseObserver;
 import com.yxkj.deliveryman.bean.CommitSupRecordsBean;
 import com.yxkj.deliveryman.bean.response.NullBean;
 import com.yxkj.deliveryman.bean.response.WaitSupContainerGoodsBean;

@@ -1,10 +1,14 @@
-package com.yxkj.deliveryman.base;
+package com.yxkj.deliveryman.http;
 
 import android.accounts.NetworkErrorException;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
+import com.yxkj.deliveryman.activity.LoginActivity;
 import com.yxkj.deliveryman.application.MyApplication;
+import com.yxkj.deliveryman.base.BaseEntity;
+import com.yxkj.deliveryman.util.IntentUtil;
 import com.yxkj.deliveryman.util.LogUtil;
 import com.yxkj.deliveryman.util.ToastUtil;
 
@@ -36,12 +40,21 @@ public abstract class BaseObserver<T> implements Observer<BaseEntity<T>> {
     @Override
     public void onNext(BaseEntity<T> value) {
         LogUtil.i(TAG, "values  " + value.toString());
-        if (value.code == 0000) {
-            T t = value.msg;
-            onHandleSuccess(t);
-            onHandleSuccess(value);
-        } else {
-            onHandleError(value.desc);
+        switch (value.code) {
+            case 0000:
+                T t = value.msg;
+                onHandleSuccess(t);
+                onHandleSuccess(value);
+                break;
+            case 8://过期
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                mContext.startActivity(intent);
+                ToastUtil.showShort("登录已过期，请重新登录");
+                break;
+            default:
+                onHandleError(value.desc);
+                break;
         }
     }
 
