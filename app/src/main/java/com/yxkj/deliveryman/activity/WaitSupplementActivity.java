@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -47,8 +48,6 @@ public class WaitSupplementActivity extends BaseActivity {
     ViewPager mViewPager;
     @BindView(R.id.tv_spinner)
     TextView mTvSpinner;
-    @BindView(R.id.tv_complete_wait_sup)
-    TextView mTvComplete;
     @BindView(R.id.tv_current_address_wait_sup)
     TextView mTvCurrentAdress;
 
@@ -205,7 +204,7 @@ public class WaitSupplementActivity extends BaseActivity {
 
     @Override
     public void setEvent() {
-        setOnClick(mTvSpinner, mTvComplete);
+        setOnClick(mTvSpinner);
     }
 
     @Override
@@ -214,19 +213,11 @@ public class WaitSupplementActivity extends BaseActivity {
             case R.id.tv_spinner:
                 showOrDismissAddressPopup();
                 break;
-            case R.id.tv_complete_wait_sup:
-                doCompleteGot();
-                break;
         }
     }
 
-    /**
-     * 完成取货
-     */
-    private void doCompleteGot() {
-        finish();
-
-
+    @OnClick(R.id.tv_spinner)
+    public void onViewClicked() {
     }
 
     /**

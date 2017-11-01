@@ -60,32 +60,9 @@
     <View
         style="@style/line_horizontal_1px"/>
 
-
-    <RelativeLayout
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_wait_sup"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/vp_wait_sup"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-
-        <TextView
-            android:id="@+id/tv_complete_wait_sup"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/bg_round_grey"
-            android:elevation="3dp"
-            android:gravity="center"
-            android:text="完成\n取货"
-            android:textColor="@color/white"
-            android:textSize="14sp"/>
-
-    </RelativeLayout>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

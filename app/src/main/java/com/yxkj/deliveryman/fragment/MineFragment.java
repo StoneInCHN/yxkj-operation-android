@@ -15,6 +15,7 @@ import com.yxkj.deliveryman.util.IntentUtil;
 public class MineFragment extends BaseFragment {
     /*密码*/
     private TextView tv_pwd;
+    private TextView tvLogout;
 
     @Override
     protected int getResource() {
@@ -29,6 +30,7 @@ public class MineFragment extends BaseFragment {
     @Override
     protected void initView(View rootView) {
         tv_pwd = findViewByIdNoCast(R.id.tv_pwd);
+        tvLogout = findViewByIdNoCast(R.id.tv_logout);
     }
 
     @Override
@@ -38,7 +40,7 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void setEvent() {
-        setOnClick(tv_pwd);
+        setOnClick(tv_pwd, tvLogout);
     }
 
     @Override
@@ -46,6 +48,9 @@ public class MineFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.tv_pwd:
                 IntentUtil.openActivity(getActivity(), UpdatePasswordActivity.class);
+                break;
+            case R.id.tv_logout:
+                IntentUtil.logout(getActivity());
                 break;
         }
     }

@@ -48,4 +48,17 @@
         android:paddingRight="14dp"
         android:text="密码"
         android:textColor="@color/black_text"/>
+
+
+    <TextView
+        android:id="@+id/tv_logout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/normal_item_52dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:layout_marginTop="1dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:text="退出登录"
+        android:textColor="@color/black_text"/>
 </LinearLayout>

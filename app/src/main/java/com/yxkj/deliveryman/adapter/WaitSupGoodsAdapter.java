@@ -151,7 +151,7 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
                     @Override
                     public void onClick(View v) {
                         deleteFromDB(mGroupsBeanList.get(position));
-
+                        viewHolder.rlShadow.setVisibility(View.GONE);
                         ToastUtil.showShort("取消完成");
                     }
                 };
