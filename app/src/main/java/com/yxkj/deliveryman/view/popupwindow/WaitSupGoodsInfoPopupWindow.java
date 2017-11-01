@@ -111,9 +111,13 @@ public class WaitSupGoodsInfoPopupWindow extends PopupWindow {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (TextUtils.isEmpty(s)) {
+                    s = "0";
+                }
                 int inputValue = Integer.parseInt(s.toString());
                 if (inputValue > shouldSumCount) {
-                    etActualSupNum.setText(inputValue);
+                    etActualSupNum.setText(shouldSumCount + "");
+                    etActualSupNum.setSelection(etActualSupNum.getText().toString().length());
                 }
             }
 

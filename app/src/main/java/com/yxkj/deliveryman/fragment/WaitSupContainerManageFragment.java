@@ -217,7 +217,7 @@ public class WaitSupContainerManageFragment extends Fragment {
 
     private void showBottomPopupWindow() {
         BottomTakePhotoAndPicPopupWindow picPopupWindow = new BottomTakePhotoAndPicPopupWindow(getActivity());
-        picPopupWindow.showAtLocation(rootView, Gravity.NO_GRAVITY, 0, 0);
+        picPopupWindow.showAtLocation(rootView, Gravity.BOTTOM, 0, 0);
         picPopupWindow.setOnTakePhotoListener(new BottomTakePhotoAndPicPopupWindow.OnTakePhotoListener() {
             @Override
             public void onTakePhto() {
