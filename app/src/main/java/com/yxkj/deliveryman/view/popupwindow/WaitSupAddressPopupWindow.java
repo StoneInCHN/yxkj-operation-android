@@ -42,6 +42,7 @@ public class WaitSupAddressPopupWindow extends PopupWindow {
         View view = LayoutInflater.from(mContext).inflate(R.layout.view_wait_sup_address, null);
         setContentView(view);
         setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         setBackgroundDrawable(new BitmapDrawable());
         setFocusable(true);
 

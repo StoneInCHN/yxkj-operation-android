@@ -38,6 +38,8 @@ public abstract class ContainerSupPopWindow extends PopupWindow implements View.
 
     private void init() {
         View rootView = View.inflate(context, R.layout.view_sup_dialog, null);
+        setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
         tv_start = rootView.findViewById(R.id.tv_start_sup_dialog);
         tv_cancel = rootView.findViewById(R.id.tv_cancel_sup_dialog);
 

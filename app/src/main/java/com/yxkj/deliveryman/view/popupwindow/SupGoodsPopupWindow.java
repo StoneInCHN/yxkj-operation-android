@@ -59,6 +59,8 @@ public class SupGoodsPopupWindow extends PopupWindow {
 
     private void initView() {
         View view = View.inflate(mContext, R.layout.popup_sup_goods_info, null);
+        setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         unbinder = ButterKnife.bind(this, view);
         tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override

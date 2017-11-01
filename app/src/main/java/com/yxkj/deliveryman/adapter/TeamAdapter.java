@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -74,7 +75,8 @@ public class TeamAdapter extends BaseRecyclerViewAdapter<WaitSupStateBean.Scenes
                 dismiss();
             }
         };
-        popWindow.showAsDropDown(rvTeamMember);
+        popWindow.showAtLocation(rvTeamMember, Gravity.NO_GRAVITY, 0, 0);
+        //popWindow.showAsDropDown(rvTeamMember);
     }
 
     private void checkOtherSceneIsComplete(String sceneSn, Object data) {

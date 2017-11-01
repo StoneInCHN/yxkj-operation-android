@@ -2,6 +2,7 @@ package com.yxkj.deliveryman.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -139,7 +140,7 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
                         }
                     }
                 });
-                popupWindow.showAsDropDown(viewHolder.rlItem);
+                popupWindow.showAtLocation(viewHolder.rlItem, Gravity.NO_GRAVITY, 0, 0);
             }
         });
 
