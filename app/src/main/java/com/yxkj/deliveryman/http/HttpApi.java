@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.yxkj.deliveryman.base.BaseEntity;
 import com.yxkj.deliveryman.bean.CommitSupRecordsBean;
 import com.yxkj.deliveryman.bean.response.AllSupContainerGoodsBean;
+import com.yxkj.deliveryman.bean.response.ControllerVolume;
 import com.yxkj.deliveryman.bean.response.GetCodeBean;
 import com.yxkj.deliveryman.bean.response.GoodsCategoryBean;
 import com.yxkj.deliveryman.bean.response.LoginBean;
@@ -369,6 +370,51 @@ public class HttpApi {
         req.put("userId", userId);
         req.put("messageType", type);
         return RetrofitFactory.getInstance().getMsgDetails(req);
+    }
+
+    /**
+     * 出货测试
+     *
+     * @return
+     */
+    public Observable<BaseEntity<NullBean>> testDeliver(String channelId) {
+        Map<String, String> req = new HashMap<>();
+        req.put("channelId", channelId);
+        return RetrofitFactory.getInstance().testDeliver(req);
+    }
+
+    /**
+     * 调节音量
+     *
+     * @return
+     */
+    public Observable<BaseEntity<NullBean>> updateAudioVolume(String deviceNo, String volume) {
+        Map<String, String> req = new HashMap<>();
+        req.put("deviceNo", deviceNo);
+        req.put("volume", volume);
+        return RetrofitFactory.getInstance().updateAudioVolume(req);
+    }
+
+    /**
+     * 重启设备
+     *
+     * @return
+     */
+    public Observable<BaseEntity<NullBean>> rebootSystem(String deviceNo) {
+        Map<String, String> req = new HashMap<>();
+        req.put("deviceNo", deviceNo);
+        return RetrofitFactory.getInstance().rebootSystem(req);
+    }
+
+    /**
+     * 获取当前设备的音量
+     *
+     * @return
+     */
+    public Observable<BaseEntity<ControllerVolume>> getCurrentVolume(String deviceNo) {
+        Map<String, String> req = new HashMap<>();
+        req.put("deviceNo", deviceNo);
+        return RetrofitFactory.getInstance().getCurrentVolume(req);
     }
 
 

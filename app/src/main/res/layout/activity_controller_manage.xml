@@ -26,18 +26,21 @@
         android:paddingRight="15dp">
 
         <ImageView
+            android:id="@+id/iv_decrease_volume"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:scaleType="centerInside"
             android:src="@mipmap/volume_sub"/>
 
         <com.yxkj.deliveryman.view.VolumeBar
+            android:id="@+id/volume_bar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:default_volume="3"/>
 
         <ImageView
+            android:id="@+id/iv_increase_volume"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:scaleType="centerInside"

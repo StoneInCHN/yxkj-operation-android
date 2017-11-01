@@ -156,7 +156,7 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
     }
 
     private void showCancelPopupWindow(final int position, final ViewHolder viewHolder) {
-        CancelPopupWindow cancelPopupWindow = new CancelPopupWindow(mContext);
+        CancelPopupWindow cancelPopupWindow = new CancelPopupWindow(mContext,"取消完成");
         cancelPopupWindow.setOnCommon1Listener(new OnCommon1Listener() {
             @Override
             public void onCommon1(Object o) {

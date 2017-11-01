@@ -69,7 +69,6 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
                 showPopupWindow();
             }
 
-
         });
     }
 
@@ -115,18 +114,14 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<WaitSupStateBean>() {
                     @Override
-                    public void onComplete() {
+                    protected void onHandleSuccess(WaitSupStateBean waitSupStateBean) {
+                        updateView(waitSupStateBean);
                         mLrv.refreshComplete(10);
                     }
 
                     @Override
-                    protected void onHandleSuccess(WaitSupStateBean waitSupStateBean) {
-                        updateView(waitSupStateBean);
-                    }
-
-                    @Override
                     protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-
+                        mLrv.refreshComplete(10);
                     }
                 });
 

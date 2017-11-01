@@ -3,6 +3,7 @@ package com.yxkj.deliveryman.http;
 
 import com.yxkj.deliveryman.base.BaseEntity;
 import com.yxkj.deliveryman.bean.response.AllSupContainerGoodsBean;
+import com.yxkj.deliveryman.bean.response.ControllerVolume;
 import com.yxkj.deliveryman.bean.response.GetCodeBean;
 import com.yxkj.deliveryman.bean.response.GoodsCategoryBean;
 import com.yxkj.deliveryman.bean.response.LoginBean;
@@ -167,6 +168,30 @@ public interface RetrofitService {
      */
     @POST("keeper/getMsgDetails")
     Observable<BaseEntity<MessageDetailBean>> getMsgDetails(@Body Map<String, String> request);
+
+    /**
+     * 出货测试
+     */
+    @POST("cmd/salesOutTest")
+    Observable<BaseEntity<NullBean>> testDeliver(@Body Map<String, String> request);
+
+    /**
+     * 调节音量
+     */
+    @POST("cmd/updateAudioVolume")
+    Observable<BaseEntity<NullBean>> updateAudioVolume(@Body Map<String, String> request);
+
+    /**
+     * 重启设备
+     */
+    @POST("cmd/rebootSystem")
+    Observable<BaseEntity<NullBean>> rebootSystem(@Body Map<String, String> request);
+
+    /**
+     * 获取当前设备音量
+     */
+    @POST("cmd/getCurrentVolume")
+    Observable<BaseEntity<ControllerVolume>> getCurrentVolume(@Body Map<String, String> request);
 
 
 }

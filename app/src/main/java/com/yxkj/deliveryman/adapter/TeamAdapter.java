@@ -58,7 +58,9 @@ public class TeamAdapter extends BaseRecyclerViewAdapter<WaitSupStateBean.Scenes
             @Override
             public void onItemClick(int position, Object data) {
                 if (bean.vendingContainers.get(position).central) {//中控台
-                    IntentUtil.openActivity(context, ControllerManageActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("deviceNo", bean.vendingContainers.get(position).cntrSn);
+                    IntentUtil.openActivity(context, ControllerManageActivity.class, bundle);
                 } else {//其他货柜
                     showPopupWindow(rvTeamMember, data);
                 }

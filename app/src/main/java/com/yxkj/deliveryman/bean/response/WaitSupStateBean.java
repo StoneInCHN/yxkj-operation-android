@@ -56,6 +56,9 @@ public class WaitSupStateBean {
 
                 public int id;
                 public String vendingContainerName;
+                /**
+                 * 如果是中控，则是其IMEI编号
+                 */
                 public String cntrSn;
                 public boolean central;
                 public int waitSupplyCount;

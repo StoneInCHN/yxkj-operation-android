@@ -56,6 +56,16 @@ public class VolumeBar extends View {
 
     }
 
+    public interface OnBarFlingListener {
+        void onFling(int volume);
+    }
+
+    private OnBarFlingListener mOnBarFlingListener;
+
+    public void setOnBarFlingListener(OnBarFlingListener onBarFlingListener) {
+        mOnBarFlingListener = onBarFlingListener;
+    }
+
     /**
      * 滑动块
      */
@@ -108,6 +118,7 @@ public class VolumeBar extends View {
             mVolumeProgress = 0;
         }
         invalidate();
+
     }
 
     @Override
@@ -148,17 +159,15 @@ public class VolumeBar extends View {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
-
                 updateProgress(getTouchVolume(xTouch));
                 break;
             case MotionEvent.ACTION_UP:
-
+                mOnBarFlingListener.onFling(mVolumeProgress);
                 break;
 
         }
 
         return true;
-
 
     }
 

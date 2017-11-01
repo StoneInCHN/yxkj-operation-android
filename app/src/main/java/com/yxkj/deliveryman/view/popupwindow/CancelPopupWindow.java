@@ -17,18 +17,20 @@ import com.yxkj.deliveryman.callback.OnCommon1Listener;
  *  @文件名:   CancelPopupWindow
  *  @创建者:   hhe
  *  @创建时间:  2017/10/27 15:37
- *  @描述：    是否取消完成弹窗
+ *  @描述：    是否取消完成弹窗/出货测试
  */
 public class CancelPopupWindow extends PopupWindow {
     private Context mContext;
 
-    public CancelPopupWindow(Context context) {
+    private TextView tvCancel;
+
+    public CancelPopupWindow(Context context, String text) {
         super(context);
         mContext = context;
         initView();
-    }
 
-    private TextView tvCancel;
+        tvCancel.setText(text);
+    }
 
     private OnCommon1Listener mOnCommon1Listener;
 

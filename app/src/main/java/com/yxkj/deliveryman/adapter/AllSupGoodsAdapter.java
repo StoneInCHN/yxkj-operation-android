@@ -3,6 +3,7 @@ package com.yxkj.deliveryman.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,9 +12,13 @@ import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.bean.response.AllSupContainerGoodsBean;
+import com.yxkj.deliveryman.bean.response.NullBean;
 import com.yxkj.deliveryman.bean.response.WaitSupContainerGoodsBean;
 import com.yxkj.deliveryman.callback.CommonDialogSureListener;
+import com.yxkj.deliveryman.callback.OnCommon1Listener;
 import com.yxkj.deliveryman.constant.Constants;
+import com.yxkj.deliveryman.http.BaseObserver;
+import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.util.DisplayUtil;
 import com.yxkj.deliveryman.util.ImageLoadUtil;
 import com.yxkj.deliveryman.util.ToastUtil;
@@ -22,6 +27,9 @@ import com.yxkj.deliveryman.view.popupwindow.SupGoodsPopupWindow;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 
 /*
@@ -85,20 +93,53 @@ public class AllSupGoodsAdapter extends RecyclerView.Adapter {
             }
         });
 
-        viewHolder.rlItem.setOnLongClickListener(new View.OnLongClickListener() {
+        /*viewHolder.rlItem.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-               /* CancelPopupWindow cancelPopupWindow = new CancelPopupWindow(mContext) {
-                    @Override
-                    public void onClick(View v) {
-                        ToastUtil.showShort("取消完成");
-                    }
-                };
 
-                cancelPopupWindow.showAsDropDown(viewHolder.rlItem, (int) (DisplayUtil.getDensity_Width(mContext) * 0.4), -30);*/
                 return true;//返回true则不会附加一个短按动作
             }
+        });*/
+
+        viewHolder.rlItem.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                CancelPopupWindow cancelPopupWindow = new CancelPopupWindow(mContext, "出货测试");
+                cancelPopupWindow.setOnCommon1Listener(new OnCommon1Listener() {
+                    @Override
+                    public void onCommon1(Object o) {
+                        testDeliver(bean.id);
+                        cancelPopupWindow.dismiss();
+                    }
+                });
+                cancelPopupWindow.showAsDropDown(viewHolder.rlItem, (int) event.getX(), (int) event.getY() - v.getHeight());
+                //cancelPopupWindow.showAsDropDown(viewHolder.rlItem, (int) (DisplayUtil.getDensity_Width(mContext) * 0.4), -30);
+                return true;
+            }
         });
+    }
+
+    /**
+     * 出货测试
+     *
+     * @param id
+     */
+    private void testDeliver(int id) {
+        HttpApi.getInstance()
+                .testDeliver(id + "")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<NullBean>() {
+                    @Override
+                    protected void onHandleSuccess(NullBean nullBean) {
+
+                    }
+
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+
+                    }
+                });
     }
 
     @Override
