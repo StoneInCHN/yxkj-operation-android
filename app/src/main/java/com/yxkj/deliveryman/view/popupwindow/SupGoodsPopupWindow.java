@@ -2,6 +2,8 @@ package com.yxkj.deliveryman.view.popupwindow;
 
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -53,6 +55,7 @@ public class SupGoodsPopupWindow extends PopupWindow {
 
     private OnCommon1Listener<Integer> mOnCommon1Listener;
 
+
     public void setOnCommon1Listener(OnCommon1Listener<Integer> onCommon1Listener) {
         mOnCommon1Listener = onCommon1Listener;
     }
@@ -83,6 +86,7 @@ public class SupGoodsPopupWindow extends PopupWindow {
     }
 
     private void initData() {
+        etActualSupNum.setText(mBean.waitSupplyCount + "");
         ImageLoadUtil.loadImage(ivGoodsPic, Constants.BASE_URL + mBean.goodsPic);
         tvGoodsName.setText(mBean.goodsName);
         tvSerialNum.setText("商品条码：" + mBean.goodsSn);
