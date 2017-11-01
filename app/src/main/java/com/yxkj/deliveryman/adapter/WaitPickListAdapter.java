@@ -43,7 +43,7 @@ public class WaitPickListAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_wait_sup_goods, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_wait_pick_goods, parent, false);
         return new ViewHolder(view);
     }
 

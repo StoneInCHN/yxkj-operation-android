@@ -78,6 +78,7 @@ public class ControllerManageActivity extends BaseActivity {
                     protected void onHandleSuccess(ControllerVolume controllerVolume) {
                         int volume = Integer.parseInt(controllerVolume.volume);
                         currentVolume = volume / 10;
+                        mVolumeBar.updateVolume(currentVolume);
                     }
 
                     @Override
@@ -147,7 +148,7 @@ public class ControllerManageActivity extends BaseActivity {
                 .subscribe(new BaseObserver<NullBean>() {
                     @Override
                     protected void onHandleSuccess(NullBean nullBean) {
-                        mVolumeBar.updateProgress(currentVolume);
+                        mVolumeBar.updateVolume(currentVolume);
                     }
 
                     @Override

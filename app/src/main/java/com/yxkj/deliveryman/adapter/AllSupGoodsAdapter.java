@@ -3,7 +3,6 @@ package com.yxkj.deliveryman.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -13,8 +12,6 @@ import android.widget.TextView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.bean.response.AllSupContainerGoodsBean;
 import com.yxkj.deliveryman.bean.response.NullBean;
-import com.yxkj.deliveryman.bean.response.WaitSupContainerGoodsBean;
-import com.yxkj.deliveryman.callback.CommonDialogSureListener;
 import com.yxkj.deliveryman.callback.OnCommon1Listener;
 import com.yxkj.deliveryman.constant.Constants;
 import com.yxkj.deliveryman.http.BaseObserver;
@@ -23,7 +20,6 @@ import com.yxkj.deliveryman.util.DisplayUtil;
 import com.yxkj.deliveryman.util.ImageLoadUtil;
 import com.yxkj.deliveryman.util.ToastUtil;
 import com.yxkj.deliveryman.view.popupwindow.CancelPopupWindow;
-import com.yxkj.deliveryman.view.popupwindow.SupGoodsPopupWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +53,7 @@ public class AllSupGoodsAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_sup_goods, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_all_sup_goods, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -93,38 +89,32 @@ public class AllSupGoodsAdapter extends RecyclerView.Adapter {
             }
         });
 
-        /*viewHolder.rlItem.setOnLongClickListener(new View.OnLongClickListener() {
+        viewHolder.rlItem.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-
-                return true;//返回true则不会附加一个短按动作
-            }
-        });*/
-
-        viewHolder.rlItem.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
                 CancelPopupWindow cancelPopupWindow = new CancelPopupWindow(mContext, "出货测试");
                 cancelPopupWindow.setOnCommon1Listener(new OnCommon1Listener() {
                     @Override
                     public void onCommon1(Object o) {
-                        testDeliver(bean.id);
+                        testDeliver(bean.id, viewHolder.tvTestDeliver);
+                        viewHolder.tvTestDeliver.setVisibility(View.VISIBLE);
                         cancelPopupWindow.dismiss();
                     }
                 });
-                cancelPopupWindow.showAsDropDown(viewHolder.rlItem, (int) event.getX(), (int) event.getY() - v.getHeight());
-                //cancelPopupWindow.showAsDropDown(viewHolder.rlItem, (int) (DisplayUtil.getDensity_Width(mContext) * 0.4), -30);
-                return true;
+                cancelPopupWindow.showAsDropDown(viewHolder.rlItem, (int) (DisplayUtil.getDensity_Width(mContext) * 0.4), -30);
+                return true;//返回true则不会附加一个短按动作
             }
         });
+
     }
 
     /**
      * 出货测试
      *
      * @param id
+     * @param tvTestDeliver
      */
-    private void testDeliver(int id) {
+    private void testDeliver(int id, TextView tvTestDeliver) {
         HttpApi.getInstance()
                 .testDeliver(id + "")
                 .subscribeOn(Schedulers.io())
@@ -132,12 +122,14 @@ public class AllSupGoodsAdapter extends RecyclerView.Adapter {
                 .subscribe(new BaseObserver<NullBean>() {
                     @Override
                     protected void onHandleSuccess(NullBean nullBean) {
-
+                        tvTestDeliver.setVisibility(View.GONE);
+                        ToastUtil.showShort("出货完成");
                     }
 
                     @Override
                     protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-
+                        tvTestDeliver.setVisibility(View.GONE);
+                        ToastUtil.showShort("出货完成");
                     }
                 });
     }
@@ -153,7 +145,7 @@ public class AllSupGoodsAdapter extends RecyclerView.Adapter {
         TextView tvContainerName;
         TextView tvRemainNum;
         TextView tvWaitNum;
-        TextView tvCompleteSup;
+        TextView tvTestDeliver;
         RelativeLayout rlItem;
 
         ViewHolder(View itemView) {
@@ -163,7 +155,7 @@ public class AllSupGoodsAdapter extends RecyclerView.Adapter {
             tvContainerName = itemView.findViewById(R.id.tv_container_name_item_sup_goods);
             tvRemainNum = itemView.findViewById(R.id.tv_remain_num_item_sup_goods);
             tvWaitNum = itemView.findViewById(R.id.tv_wait_sup_num_item_sup_goods);
-            tvCompleteSup = itemView.findViewById(R.id.tv_tip_complete_sup_goods);
+            tvTestDeliver = itemView.findViewById(R.id.tv_test_deliver);
             rlItem = itemView.findViewById(R.id.rl_item_sup_goods);
         }
     }

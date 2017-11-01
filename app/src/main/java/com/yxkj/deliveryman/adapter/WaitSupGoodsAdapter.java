@@ -96,7 +96,7 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_sup_goods, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_wait_sup_goods, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }

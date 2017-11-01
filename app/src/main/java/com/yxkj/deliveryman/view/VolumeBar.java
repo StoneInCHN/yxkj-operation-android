@@ -104,12 +104,16 @@ public class VolumeBar extends View {
         setMeasuredDimension(sizeWidth, heightResult);
     }
 
+    public void updateVolume(@IntRange(from = 0, to = 10) int volume) {
+        updateProgress(volume);
+    }
+
     /**
      * 更新进度
      *
      * @param progress
      */
-    public void updateProgress(@IntRange(from = 0, to = 10) int progress) {
+    private void updateProgress(@IntRange(from = 0, to = 10) int progress) {
         mVolumeProgress = progress;
         if (mVolumeProgress > 10) {
             mVolumeProgress = 10;
