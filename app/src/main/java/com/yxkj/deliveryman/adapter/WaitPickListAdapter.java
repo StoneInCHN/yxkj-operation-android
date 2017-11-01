@@ -25,7 +25,7 @@ import java.util.List;
  * 待补清单列表
  */
 
-public class WaitSupListAdapter extends RecyclerView.Adapter {
+public class WaitPickListAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
     public List<WaitSupGoodsListBean.GroupsBean> mBeanList;
@@ -34,7 +34,7 @@ public class WaitSupListAdapter extends RecyclerView.Adapter {
      */
     private String mSceneSn;
 
-    public WaitSupListAdapter(Context context, String sceneSn) {
+    public WaitPickListAdapter(Context context, String sceneSn) {
         mContext = context;
         mBeanList = new ArrayList<>();
         mSceneSn = sceneSn;
@@ -81,20 +81,29 @@ public class WaitSupListAdapter extends RecyclerView.Adapter {
         viewHolder.llItem.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                CancelPopupWindow cancelPopupWindow = new CancelPopupWindow(mContext) {
-                    @Override
-                    public void onClick(View v) {
-                        viewHolder.tvTipComplete.setVisibility(View.GONE);
-                        bean.isComplete = false;
-                        dismiss();
-                    }
-                };
-
-                cancelPopupWindow.showAsDropDown(viewHolder.llItem, (int) (DisplayUtil.getDensity_Width(mContext) * 0.4), -30);
+                if (bean.isComplete) {
+                    showCancelPopupWindow();
+                }
                 return true;//返回true则不会附加一个短按动作
             }
+
+            private void showCancelPopupWindow() {
+                CancelPopupWindow cancelPopupWindow = new CancelPopupWindow(mContext);
+                cancelPopupWindow.setOnCommon1Listener(new OnCommon1Listener() {
+                    @Override
+                    public void onCommon1(Object o) {
+                        viewHolder.tvTipComplete.setVisibility(View.GONE);
+                        bean.isComplete = false;
+                        cancelPopupWindow.dismiss();
+                    }
+                });
+
+                cancelPopupWindow.showAsDropDown(viewHolder.llItem, (int) (DisplayUtil.getDensity_Width(mContext) * 0.4), -30);
+            }
+
         });
     }
+
 
     @Override
     public int getItemCount() {

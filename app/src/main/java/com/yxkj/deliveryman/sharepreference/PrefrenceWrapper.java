@@ -43,6 +43,6 @@ public class PrefrenceWrapper {
     }
 
     public void clear() {
-        mEditor.clear();
+        mEditor.clear().apply();
     }
 }

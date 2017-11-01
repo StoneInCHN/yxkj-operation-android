@@ -147,19 +147,26 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
         viewHolder.rlItem.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                CancelPopupWindow cancelPopupWindow = new CancelPopupWindow(mContext) {
-                    @Override
-                    public void onClick(View v) {
-                        deleteFromDB(mGroupsBeanList.get(position));
-                        viewHolder.rlShadow.setVisibility(View.GONE);
-                        ToastUtil.showShort("取消完成");
-                    }
-                };
-
-                cancelPopupWindow.showAsDropDown(viewHolder.rlItem, (int) (DisplayUtil.getDensity_Width(mContext) * 0.4), -30);
+                if (viewHolder.rlShadow.getVisibility() == View.VISIBLE) {//完成状态
+                    showCancelPopupWindow(position, viewHolder);
+                }
                 return true;//返回true则不会附加一个短按动作
             }
         });
+    }
+
+    private void showCancelPopupWindow(final int position, final ViewHolder viewHolder) {
+        CancelPopupWindow cancelPopupWindow = new CancelPopupWindow(mContext);
+        cancelPopupWindow.setOnCommon1Listener(new OnCommon1Listener() {
+            @Override
+            public void onCommon1(Object o) {
+                deleteFromDB(mGroupsBeanList.get(position));
+                viewHolder.rlShadow.setVisibility(View.GONE);
+                ToastUtil.showShort("取消完成");
+                cancelPopupWindow.dismiss();
+            }
+        });
+        cancelPopupWindow.showAsDropDown(viewHolder.rlItem, (int) (DisplayUtil.getDensity_Width(mContext) * 0.4), -30);
     }
 
     /**

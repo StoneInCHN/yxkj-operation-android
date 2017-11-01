@@ -9,6 +9,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
+import com.yxkj.deliveryman.callback.OnCommon1Listener;
 
 /*
  *  @项目名：  yxkj-operation-android 
@@ -18,7 +19,7 @@ import com.yxkj.deliveryman.R;
  *  @创建时间:  2017/10/27 15:37
  *  @描述：    是否取消完成弹窗
  */
-public abstract class CancelPopupWindow extends PopupWindow implements View.OnClickListener {
+public class CancelPopupWindow extends PopupWindow {
     private Context mContext;
 
     public CancelPopupWindow(Context context) {
@@ -29,6 +30,12 @@ public abstract class CancelPopupWindow extends PopupWindow implements View.OnCl
 
     private TextView tvCancel;
 
+    private OnCommon1Listener mOnCommon1Listener;
+
+    public void setOnCommon1Listener(OnCommon1Listener onCommon1Listener) {
+        mOnCommon1Listener = onCommon1Listener;
+    }
+
     private void initView() {
         View view = LayoutInflater.from(mContext).inflate(R.layout.popup_cancel, null);
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -37,10 +44,14 @@ public abstract class CancelPopupWindow extends PopupWindow implements View.OnCl
         setContentView(view);
         //背景色
         setBackgroundDrawable(new BitmapDrawable());
-        //不可点击外面取消?
         setFocusable(true);
 
         tvCancel = view.findViewById(R.id.tv_cancel_popup_cancel);
-        tvCancel.setOnClickListener(this);
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnCommon1Listener.onCommon1("");
+            }
+        });
     }
 }

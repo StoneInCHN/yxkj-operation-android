@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.yxkj.deliveryman.R;
-import com.yxkj.deliveryman.adapter.WaitSupListAdapter;
+import com.yxkj.deliveryman.adapter.WaitPickListAdapter;
 import com.yxkj.deliveryman.http.BaseObserver;
 import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.event.WaitSupAddressEvent;
@@ -49,7 +49,7 @@ public class WaitSupGoodsFragment extends Fragment {
      * 商品地点
      */
     public String mSceneSn;
-    private WaitSupListAdapter mWaitSupListAdapter;
+    private WaitPickListAdapter mWaitSupListAdapter;
     private Unbinder mUnbinder;
 
     @Override
@@ -83,7 +83,7 @@ public class WaitSupGoodsFragment extends Fragment {
     }
 
     private void initRv() {
-        mWaitSupListAdapter = new WaitSupListAdapter(getActivity(), mSceneSn);
+        mWaitSupListAdapter = new WaitPickListAdapter(getActivity(), mSceneSn);
         RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, mWaitSupListAdapter, true);
         mLrv.setPullRefreshEnabled(false);
         mLrv.setLoadMoreEnabled(false);
