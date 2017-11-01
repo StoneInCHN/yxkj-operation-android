@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.bean.response.WaitSupGoodsListBean;
+import com.yxkj.deliveryman.callback.OnCommon1Listener;
 import com.yxkj.deliveryman.util.DisplayUtil;
 import com.yxkj.deliveryman.util.ImageLoadUtil;
 import com.yxkj.deliveryman.view.popupwindow.CancelPopupWindow;
@@ -52,7 +53,7 @@ public class WaitSupListAdapter extends RecyclerView.Adapter {
         ViewHolder viewHolder = (ViewHolder) holder;
         ImageLoadUtil.loadImage(viewHolder.ivGoodsPic, bean.goodsPic);
         viewHolder.tvGoodsName.setText(bean.goodsName);
-        viewHolder.tvSerialNum.setText("商品条码:"+bean.goodsSn);
+        viewHolder.tvSerialNum.setText("商品条码:" + bean.goodsSn);
         viewHolder.tvShouldSupNum.setText(bean.waitSupplyCount + "");
 
         if (bean.isComplete) {
@@ -63,20 +64,16 @@ public class WaitSupListAdapter extends RecyclerView.Adapter {
         viewHolder.llItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WaitSupGoodsInfoPopupWindow popupWindow = new WaitSupGoodsInfoPopupWindow(mContext, bean) {
+                WaitSupGoodsInfoPopupWindow popupWindow = new WaitSupGoodsInfoPopupWindow(mContext, bean);
+                popupWindow.setOnCommon1Listener(new OnCommon1Listener<Integer>() {
                     @Override
-                    public void onClick(View v) {
+                    public void onCommon1(Integer integer) {
                         viewHolder.tvTipComplete.setVisibility(View.VISIBLE);
                         bean.isComplete = true;
-                        /*String id = mSceneSn + bean.goodsSn;
-                        FetchGoods fetchGoods = new FetchGoods(id, true);
-                        DaoMaster daoMaster = new DaoMaster(DBManager.getInstance(mContext).getWritableDatabase());
-                        DaoSession daoSession = daoMaster.newSession();
-                        FetchGoodsDao fetchGoodsDao = daoSession.getFetchGoodsDao();
-                        fetchGoodsDao.insert(fetchGoods);*/
-                        dismiss();
+                        popupWindow.dismiss();
                     }
-                };
+                });
+
                 popupWindow.showAtLocation(viewHolder.ivGoodsPic, Gravity.NO_GRAVITY, 0, 0);
             }
         });

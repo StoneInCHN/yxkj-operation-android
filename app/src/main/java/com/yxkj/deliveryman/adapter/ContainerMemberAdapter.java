@@ -37,7 +37,11 @@ public class ContainerMemberAdapter extends BaseRecyclerViewAdapter<WaitSupState
             tvName.setBackgroundResource(R.drawable.bg_container_orange);
         } else {
             tvName.setText(bean.cntrSn + "货柜");
-            tvNum.setText(bean.waitSupplyCount + "");
+            if (bean.waitSupplyCount == 0) {
+                tvNum.setVisibility(View.GONE);
+            } else {
+                tvNum.setText(bean.waitSupplyCount + "");
+            }
             tvName.setBackgroundResource(R.drawable.bg_container_green);
         }
 
