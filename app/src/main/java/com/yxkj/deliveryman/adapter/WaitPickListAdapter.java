@@ -56,12 +56,14 @@ public class WaitPickListAdapter extends RecyclerView.Adapter {
         viewHolder.tvSerialNum.setText("商品条码:" + bean.goodsSn);
         viewHolder.tvShouldSupNum.setText(bean.waitSupplyCount + "");
 
+        ///此需求取消
+       /*
         if (bean.isComplete) {
             viewHolder.tvTipComplete.setVisibility(View.VISIBLE);
         } else {
             viewHolder.tvTipComplete.setVisibility(View.GONE);
         }
-        viewHolder.llItem.setOnClickListener(new View.OnClickListener() {
+      viewHolder.llItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 WaitSupGoodsInfoPopupWindow popupWindow = new WaitSupGoodsInfoPopupWindow(mContext, bean);
@@ -101,7 +103,7 @@ public class WaitPickListAdapter extends RecyclerView.Adapter {
                 cancelPopupWindow.showAsDropDown(viewHolder.llItem, (int) (DisplayUtil.getDensity_Width(mContext) * 0.4), -30);
             }
 
-        });
+        });*/
     }
 
 

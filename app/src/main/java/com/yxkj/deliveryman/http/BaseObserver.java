@@ -47,9 +47,7 @@ public abstract class BaseObserver<T> implements Observer<BaseEntity<T>> {
                 onHandleSuccess(value);
                 break;
             case 8://过期
-                Intent intent = new Intent(mContext, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                mContext.startActivity(intent);
+                IntentUtil.logout(mContext);
                 ToastUtil.showShort("登录已过期，请重新登录");
                 break;
             default:
