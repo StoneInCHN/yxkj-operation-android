@@ -114,7 +114,7 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
 
         if (bean.isSupped) {
             viewHolder.rlShadow.setVisibility(View.VISIBLE);
-            viewHolder.tvRemainNumShadow.setText((bean.waitSupplyCount - bean.actualNum) + "");
+            viewHolder.tvRemainNum.setText("剩余数量：" + (bean.waitSupplyCount - bean.actualNum));
         } else {
             viewHolder.rlShadow.setVisibility(View.GONE);
         }
@@ -132,7 +132,7 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
                             popupWindow.dismiss();
                             viewHolder.rlShadow.setVisibility(View.VISIBLE);
                             int remainNum = bean.waitSupplyCount - bean.actualNum;
-                            viewHolder.tvRemainNumShadow.setText(remainNum + "");
+                            viewHolder.tvRemainNum.setText("剩余数量：" + remainNum);
                             // 存储在本地数据库中
                             saveToDB(bean.goodsSn, integer);
                         } else {
@@ -156,7 +156,7 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
     }
 
     private void showCancelPopupWindow(final int position, final ViewHolder viewHolder) {
-        CancelPopupWindow cancelPopupWindow = new CancelPopupWindow(mContext,"取消完成");
+        CancelPopupWindow cancelPopupWindow = new CancelPopupWindow(mContext, "取消完成");
         cancelPopupWindow.setOnCommon1Listener(new OnCommon1Listener() {
             @Override
             public void onCommon1(Object o) {
@@ -215,7 +215,7 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
         TextView tvRemainNum;
         TextView tvWaitNum;
         TextView tvCompleteSup;
-        TextView tvRemainNumShadow;
+        //TextView tvRemainNumShadow;
         RelativeLayout rlItem;
         RelativeLayout rlShadow;
 
@@ -227,7 +227,7 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
             tvRemainNum = itemView.findViewById(R.id.tv_remain_num_item_sup_goods);
             tvWaitNum = itemView.findViewById(R.id.tv_wait_sup_num_item_sup_goods);
             tvCompleteSup = itemView.findViewById(R.id.tv_tip_complete_sup_goods);
-            tvRemainNumShadow = itemView.findViewById(R.id.tv_num_remain_shadow);
+            //tvRemainNumShadow = itemView.findViewById(R.id.tv_num_remain_shadow);
             rlItem = itemView.findViewById(R.id.rl_item_sup_goods);
             rlShadow = itemView.findViewById(R.id.rl_shadow);
         }

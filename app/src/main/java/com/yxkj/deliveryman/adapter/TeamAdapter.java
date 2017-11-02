@@ -20,7 +20,7 @@ import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.util.IntentUtil;
 import com.yxkj.deliveryman.view.dialog.TextButtonDialog;
-import com.yxkj.deliveryman.view.popupwindow.ContainerSupPopWindow;
+import com.yxkj.deliveryman.view.popupwindow.AbstractStartSupPopWindow;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -32,11 +32,13 @@ import io.reactivex.schedulers.Schedulers;
 public class TeamAdapter extends BaseRecyclerViewAdapter<WaitSupStateBean.ScenesBean.VendingContainerGroupsBean> {
     private Context mContext;
     private String mSceneSn;
+    private String mSceneName;
 
-    public TeamAdapter(Context context, String sceneSn) {
+
+    public TeamAdapter(Context context, String sceneSn, String sceneName) {
         super(context);
         mContext = context;
-        mSceneSn = sceneSn;
+        mSceneName = sceneName;
     }
 
     @Override
@@ -57,23 +59,26 @@ public class TeamAdapter extends BaseRecyclerViewAdapter<WaitSupStateBean.Scenes
         containerAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, Object data) {
-                if (bean.vendingContainers.get(position).central) {//中控台
+                WaitSupStateBean.ScenesBean.VendingContainerGroupsBean.VendingContainersBean vendingContainersBean
+                        = bean.vendingContainers.get(position);
+
+                if (vendingContainersBean.central) {//中控台
                     Bundle bundle = new Bundle();
-                    bundle.putString("deviceNo", bean.vendingContainers.get(position).cntrSn);
+                    bundle.putString("deviceNo", vendingContainersBean.cntrSn);
                     IntentUtil.openActivity(context, ControllerManageActivity.class, bundle);
                 } else {//其他货柜
-                    showPopupWindow(rvTeamMember, data);
+                    showPopupWindow(rvTeamMember, vendingContainersBean);
                 }
             }
         });
     }
 
 
-    private void showPopupWindow(RecyclerView rvTeamMember, Object data) {
-        ContainerSupPopWindow popWindow = new ContainerSupPopWindow(mContext) {
+    private void showPopupWindow(RecyclerView rvTeamMember, WaitSupStateBean.ScenesBean.VendingContainerGroupsBean.VendingContainersBean bean) {
+        AbstractStartSupPopWindow popWindow = new AbstractStartSupPopWindow(mContext, mSceneName, bean.vendingContainerName) {
             @Override
             public void onClick(View v) {
-                checkOtherSceneIsComplete(mSceneSn, data);
+                checkOtherSceneIsComplete(mSceneSn, bean);
                 dismiss();
             }
         };
@@ -81,7 +86,7 @@ public class TeamAdapter extends BaseRecyclerViewAdapter<WaitSupStateBean.Scenes
         //popWindow.showAsDropDown(rvTeamMember);
     }
 
-    private void checkOtherSceneIsComplete(String sceneSn, Object data) {
+    private void checkOtherSceneIsComplete(String sceneSn, WaitSupStateBean.ScenesBean.VendingContainerGroupsBean.VendingContainersBean bean1) {
         HttpApi.getInstance()
                 .startSupplyGoods(UserInfo.USER_ID, sceneSn)
                 .subscribeOn(Schedulers.io())
@@ -97,8 +102,6 @@ public class TeamAdapter extends BaseRecyclerViewAdapter<WaitSupStateBean.Scenes
                         if (groupsBean == null) {
 
                             Bundle bundle = new Bundle();
-                            WaitSupStateBean.ScenesBean.VendingContainerGroupsBean.VendingContainersBean bean1 =
-                                    (WaitSupStateBean.ScenesBean.VendingContainerGroupsBean.VendingContainersBean) data;
                             String cntrId = bean1.id + "";
                             String cntrSn = bean1.cntrSn;
                             bundle.putString("sceneSn", mSceneSn);

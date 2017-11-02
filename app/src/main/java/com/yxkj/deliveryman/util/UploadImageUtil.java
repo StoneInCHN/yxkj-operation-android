@@ -194,6 +194,7 @@ public class UploadImageUtil {
         }
         LogUtil.e("图片路径: " + image_path);
         new Thread() {
+            @Override
             public void run() {
                 try {
                     LogUtil.e("时间判断3", "" + System.currentTimeMillis());

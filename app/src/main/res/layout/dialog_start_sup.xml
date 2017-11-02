@@ -15,6 +15,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_title_dialog_start_sup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -24,6 +25,7 @@
             android:textSize="@dimen/sp_15"/>
 
         <TextView
+            android:id="@+id/tv_container_name_dialog_start_sup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

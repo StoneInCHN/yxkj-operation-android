@@ -80,10 +80,10 @@ public class ContainerManageActivity extends BaseActivity {
 
     private void showBackConfirmDialog() {
         CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog(mContext);
-        commonYesOrNoDialog.setTv_content("您还未提交补货记录，是否提交");
+        commonYesOrNoDialog.setTv_content("你尚未完成补货，是否要暂停补货？");
         commonYesOrNoDialog.setTv_title("提示");
         commonYesOrNoDialog.setBtn_cancle("取消");
-        commonYesOrNoDialog.setBtn_sure("提交");
+        commonYesOrNoDialog.setBtn_sure("暂停");
         commonYesOrNoDialog.setDialogSureListener(new CommonDialogSureListener() {
             @Override
             public void onSure() {

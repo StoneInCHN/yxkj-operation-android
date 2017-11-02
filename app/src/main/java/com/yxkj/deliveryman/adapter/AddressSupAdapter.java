@@ -68,7 +68,7 @@ public class AddressSupAdapter extends RecyclerView.Adapter<AddressSupAdapter.Vi
         });
         //某楼里面按组分的list
         holder.rvGroups.setLayoutManager(new LinearLayoutManager(mContext));
-        TeamAdapter teamAdapter = new TeamAdapter(mContext, bean.sceneSn);
+        TeamAdapter teamAdapter = new TeamAdapter(mContext, bean.sceneSn,bean.sceneName);
         holder.rvGroups.setAdapter(teamAdapter);
         teamAdapter.settList(mScenesBeanList.get(position).vendingContainerGroups);
     }

@@ -3,6 +3,7 @@ package com.yxkj.deliveryman.view.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.view.View;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
@@ -52,6 +53,7 @@ public class CommonYesOrNoDialog extends Dialog {
 
     public void setTv_title(String tv_title) {
         this.tv_title.setText(tv_title);
+        this.tv_title.setVisibility(View.VISIBLE);
     }
 
     public void setBtn_cancle(String btn_cancle) {

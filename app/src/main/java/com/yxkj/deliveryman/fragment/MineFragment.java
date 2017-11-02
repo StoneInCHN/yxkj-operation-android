@@ -7,6 +7,9 @@ import android.widget.TextView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.activity.UpdatePasswordActivity;
 import com.yxkj.deliveryman.base.BaseFragment;
+import com.yxkj.deliveryman.constant.UserInfo;
+import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
+import com.yxkj.deliveryman.sharepreference.SharedKey;
 import com.yxkj.deliveryman.util.IntentUtil;
 
 /**
@@ -14,8 +17,9 @@ import com.yxkj.deliveryman.util.IntentUtil;
  */
 public class MineFragment extends BaseFragment {
     /*密码*/
-    private TextView tv_pwd;
-    private TextView tvLogout;
+    private TextView mTvPwd;
+    private TextView mTvLogout;
+    private TextView mTvName;
 
     @Override
     protected int getResource() {
@@ -29,18 +33,20 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initView(View rootView) {
-        tv_pwd = findViewByIdNoCast(R.id.tv_pwd);
-        tvLogout = findViewByIdNoCast(R.id.tv_logout);
+        mTvPwd = findViewByIdNoCast(R.id.tv_pwd);
+        mTvName = findViewByIdNoCast(R.id.tv_user_name_fragment_my);
+        mTvLogout = findViewByIdNoCast(R.id.tv_logout);
     }
 
     @Override
     protected void initData() {
-
+        String userName = SharePrefreceHelper.getInstance().getString(SharedKey.PHONE);
+        mTvName.setText("账户:" + userName);
     }
 
     @Override
     protected void setEvent() {
-        setOnClick(tv_pwd, tvLogout);
+        setOnClick(mTvPwd, mTvLogout);
     }
 
     @Override
@@ -51,6 +57,8 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.tv_logout:
                 IntentUtil.logout(getActivity());
+                break;
+            default:
                 break;
         }
     }

@@ -23,10 +23,10 @@
         <ImageView
             android:layout_width="@dimen/avatar_71dp"
             android:layout_height="@dimen/avatar_71dp"
-            android:src="@mipmap/ic_launcher_round"/>
+            android:src="@mipmap/avatar_default"/>
 
         <TextView
-            android:id="@+id/tv_user"
+            android:id="@+id/tv_user_name_fragment_my"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="14dp"
@@ -39,7 +39,7 @@
     <TextView
         android:id="@+id/tv_pwd"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/normal_item_52dp"
+        android:layout_height="45dp"
         android:layout_marginTop="10dp"
         android:background="@color/white"
         android:drawableRight="@mipmap/arrow_right"
@@ -49,16 +49,15 @@
         android:text="密码"
         android:textColor="@color/black_text"/>
 
-
     <TextView
         android:id="@+id/tv_logout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/normal_item_52dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="12dp"
         android:background="@color/white"
-        android:gravity="center_vertical"
-        android:layout_marginTop="1dp"
+        android:gravity="center"
         android:paddingLeft="14dp"
         android:paddingRight="14dp"
         android:text="退出登录"
-        android:textColor="@color/black_text"/>
+        android:textColor="@color/red_text_light"/>
 </LinearLayout>
