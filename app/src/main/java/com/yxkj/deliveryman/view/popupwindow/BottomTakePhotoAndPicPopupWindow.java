@@ -40,7 +40,7 @@ public class BottomTakePhotoAndPicPopupWindow extends PopupWindow {
     private void init() {
         View view = View.inflate(mContext, R.layout.popup_take_photo, null);
         setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-        setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
         setBackgroundDrawable(new BitmapDrawable());
         setFocusable(true);
         setContentView(view);

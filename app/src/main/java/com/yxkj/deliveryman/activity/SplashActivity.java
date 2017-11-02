@@ -48,6 +48,7 @@ public class SplashActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(token)) {
             IntentUtil.openActivity(mContext, LoginActivity.class);
         } else {
+           // IntentUtil.openActivity(mContext, ContainerManageActivity.class);
             IntentUtil.openActivity(mContext, MainActivity.class);
         }
 

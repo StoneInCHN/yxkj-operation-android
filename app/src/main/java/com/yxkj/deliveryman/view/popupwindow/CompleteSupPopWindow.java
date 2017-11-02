@@ -29,25 +29,11 @@ public class CompleteSupPopWindow extends PopupWindow {
     private ImageView ivGoodsPic;
     private TextView tvRestartTakePhoto;
     private TextView tvCompleteSup;
+    private String filePath;
 
-    private Bitmap mBitmap;
-    private File fileResult;
-
-    public void setBitmaps(Bitmap bitmap) {
-        mBitmap = bitmap;
-        ImageLoadUtil.loadImageWithBitmap(ivGoodsPic, bitmap);
-
-        String path = mContext.getCacheDir() + "/";
-        String picName = System.currentTimeMillis() + ".jpeg";
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                LogUtil.e("时间判断5.1", "" + System.currentTimeMillis());
-                fileResult = BitmapUtil.saveBitmap(path, picName, mBitmap);
-                LogUtil.e("时间判断5.2", "" + System.currentTimeMillis());
-            }
-        }).start();
-
+    public void setPicFilePath(String path) {
+        filePath = path;
+        ImageLoadUtil.loadImageWithNoCache(ivGoodsPic, path);
     }
 
 
@@ -56,7 +42,7 @@ public class CompleteSupPopWindow extends PopupWindow {
         initView();
     }
 
-    private OnCommon2Listener<String, File> mCommon2Listener;
+    private OnCommon2Listener<String, String> mCommon2Listener;
 
     public void setCommon2Listener(OnCommon2Listener common2Listener) {
         mCommon2Listener = common2Listener;
@@ -94,7 +80,7 @@ public class CompleteSupPopWindow extends PopupWindow {
         tvCompleteSup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCommon2Listener.onCommon2(fileResult);
+                mCommon2Listener.onCommon2(filePath);
             }
         });
 
@@ -104,7 +90,7 @@ public class CompleteSupPopWindow extends PopupWindow {
             public void onClick(View v) {
 
                 Bundle bundle = new Bundle();
-                bundle.putString("pic_path", fileResult.getPath());
+                bundle.putString("pic_path", filePath);
                 IntentUtil.openActivity(mContext, ShowBigImageActivity.class, bundle);
             }
         });

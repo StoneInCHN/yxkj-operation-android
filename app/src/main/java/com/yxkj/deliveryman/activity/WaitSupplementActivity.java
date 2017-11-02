@@ -16,8 +16,8 @@ import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.event.WaitSupAddressEvent;
 import com.yxkj.deliveryman.adapter.GoodsCategoryFragmentAdapter;
 import com.yxkj.deliveryman.base.BaseActivity;
+import com.yxkj.deliveryman.fragment.WaitPickGoodsFragment;
 import com.yxkj.deliveryman.http.BaseObserver;
-import com.yxkj.deliveryman.fragment.WaitSupGoodsFragment;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.bean.response.GoodsCategoryBean;
 import com.yxkj.deliveryman.bean.response.SceneListBean;
@@ -122,7 +122,7 @@ public class WaitSupplementActivity extends BaseActivity {
     private List<Fragment> getFragmentList() {
         mFragmentList.clear();
         for (GoodsCategoryBean.GroupsBean bean : mGoodsCategoryList) {
-            WaitSupGoodsFragment fragment = new WaitSupGoodsFragment();
+            WaitPickGoodsFragment fragment = new WaitPickGoodsFragment();
             Bundle bundle = new Bundle();
             bundle.putString("sceneSn", mCurrentAdressBean.sceneSn);
             bundle.putString("cateId", bean.cateId + "");

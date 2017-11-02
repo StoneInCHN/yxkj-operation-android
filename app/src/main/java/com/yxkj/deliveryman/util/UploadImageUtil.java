@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
+import com.yxkj.deliveryman.application.MyApplication;
 import com.yxkj.deliveryman.constant.Constants;
 
 import java.io.ByteArrayOutputStream;
@@ -28,7 +29,7 @@ public class UploadImageUtil {
 
     private static File mCurrentPhotoFile;// 照相机拍照得到的图片
 
-    private static ByteArrayOutputStream baos;
+    private static ByteArrayOutputStream sOutputStream;
 
     private OnCompleteListener onCompleteListener;
 
@@ -38,7 +39,7 @@ public class UploadImageUtil {
     public static void doPickPhotoFromGallery(Activity activity) {
         try {
             Constants.PHOTO_DIR.mkdirs();
-            mCurrentPhotoFile = new File(Constants.PHOTO_DIR, getPhotoFileName());
+            mCurrentPhotoFile = new File(Constants.PHOTO_DIR, getPhotoFileNameByTime());
             final Intent intent = getPhotoPickIntent();
             activity.startActivityForResult(intent, Constants.PHOTO_PICKED_WITH_DATA);
         } catch (Exception e) {
@@ -52,14 +53,13 @@ public class UploadImageUtil {
     public static void doPickPhotoFromGallery(Fragment fragment) {
         try {
             Constants.PHOTO_DIR.mkdirs();
-            mCurrentPhotoFile = new File(Constants.PHOTO_DIR, getPhotoFileName());
+            //   mCurrentPhotoFile = new File(Constants.PHOTO_DIR, getPhotoFileNameByTime());
             final Intent intent = getPhotoPickIntent();
             fragment.startActivityForResult(intent, Constants.PHOTO_PICKED_WITH_DATA);
         } catch (Exception e) {
             Log.e("Fans", "not photo find");
         }
     }
-
 
 
     /**
@@ -72,13 +72,14 @@ public class UploadImageUtil {
         }
         try {
             Constants.PHOTO_DIR.mkdirs();// 创建照片的存储目录
-            mCurrentPhotoFile = new File(Constants.PHOTO_DIR, getPhotoFileName());// 给新照的照片文件命名
+            mCurrentPhotoFile = new File(Constants.PHOTO_DIR, getPhotoFileNameByTime());// 给新照的照片文件命名
             final Intent intent = getTakePickIntent(mCurrentPhotoFile);
             activity.startActivityForResult(intent, Constants.CAMERA_WITH_DATA);
         } catch (Exception e) {
             Log.e("Fans", "获取相机失败");
         }
     }
+
     /**
      * 拍照
      */
@@ -89,7 +90,7 @@ public class UploadImageUtil {
         }
         try {
             Constants.PHOTO_DIR.mkdirs();// 创建照片的存储目录
-            mCurrentPhotoFile = new File(Constants.PHOTO_DIR, getPhotoFileName());// 给新照的照片文件命名
+            mCurrentPhotoFile = new File(Constants.PHOTO_DIR, getPhotoFileNameByTime());// 给新照的照片文件命名
             final Intent intent = getTakePickIntent(mCurrentPhotoFile);
             fragment.startActivityForResult(intent, Constants.CAMERA_WITH_DATA);
         } catch (Exception e) {
@@ -101,7 +102,7 @@ public class UploadImageUtil {
      * 用当前时间给取得的图片命名
      */
     @SuppressLint("SimpleDateFormat")
-    public static String getPhotoFileName() {
+    public static String getPhotoFileNameByTime() {
         Date date = new Date(System.currentTimeMillis());
         SimpleDateFormat dateFormat = new SimpleDateFormat("'IMG'_yyyyMMdd_HHmmss");
         return dateFormat.format(date) + ".jpg";
@@ -129,32 +130,34 @@ public class UploadImageUtil {
      * @param resultCode
      * @param data
      */
-    public static File dealWithUploadImageOnActivityResult(Activity activity, int requestCode, int resultCode, Intent data, OnCompleteListener onCompleteListener) {
-        Log.e("获取图片", "resultCode" + resultCode);
+    public static void dealWithUploadImageOnActivityResult(Activity activity, int requestCode, int resultCode, Intent data, OnCompleteListener onCompleteListener) {
         if (resultCode != Activity.RESULT_OK) {
-            return null;
+            return;
         }
 
         switch (requestCode) {
-            case Constants.PHOTO_PICKED_WITH_DATA: // 从相册里面返回
-                LogUtil.e("时间判断2", "" + System.currentTimeMillis());
+            case Constants.PHOTO_PICKED_WITH_DATA: // 从相册里面返回,返回的是文件路径
+                //LogUtil.e("时间判断2", "" + System.currentTimeMillis());
                 if (data != null) {
                     ContentResolver cr = activity.getContentResolver();
                     image_path = ImageUtil.getUriString(data.getData(), cr);
-//                    cropImageUri(activity, data.getData(), 300, 300, Constants.CROP_BIG_PICTURE);
-
-                    //注：如果不剪切图片的话就把cropImageUri这行代码注视直接调用  savaImage(image_path,onCompleteListener);  return new File(image_path);
-                    savaImage(image_path, onCompleteListener);
+                    // cropImageUri(activity, data.getData(), 300, 300, Constants.CROP_BIG_PICTURE);
+                    // savaAndCompressImage(image_path, onCompleteListener);
                 }
                 break;
-            case Constants.CAMERA_WITH_DATA: // 从相机里面返回
+            case Constants.CAMERA_WITH_DATA: // 从相机里面返回，该路径是拍照前传进去的file
                 image_path = mCurrentPhotoFile.getPath();
-//                cropImageUri(activity, Uri.fromFile(mCurrentPhotoFile), 300, 300, Constants.CROP_BIG_PICTURE);
-                savaImage(image_path, onCompleteListener);
+                // cropImageUri(activity, Uri.fromFile(mCurrentPhotoFile), 300, 300, Constants.CROP_BIG_PICTURE);
+                //savaAndCompressImage(image_path, onCompleteListener);
+                break;
             case Constants.CROP_BIG_PICTURE: //从裁剪大图里面返回
-                savaImage(image_path, onCompleteListener);
+                // savaAndCompressImage(image_path, onCompleteListener);
+                break;
+            default:
+                break;
         }
-        return new File(image_path);
+
+        onCompleteListener.onComplete(image_path);
     }
 
     /**
@@ -187,19 +190,19 @@ public class UploadImageUtil {
      *
      * @param imgPath
      */
-    private static void savaImage(final String imgPath, final OnCompleteListener onCompleteListener) {
+    private static void savaAndCompressImage(final String imgPath, final OnCompleteListener onCompleteListener) {
         if (!StringUtil.isNotEmpty(imgPath)) {
-            Log.e("Fans", "图片路径为空");
+            Log.e("拍照或图库的获取的图片路径:", "图片路径为空");
             return;
         }
-        LogUtil.e("图片路径: " + image_path);
+        //LogUtil.d("拍照或图库的获取的图片路径: " + image_path);
         new Thread() {
             @Override
             public void run() {
                 try {
-                    LogUtil.e("时间判断3", "" + System.currentTimeMillis());
+                   // LogUtil.e("时间判断3", "" + System.currentTimeMillis());
                     Bitmap resizeBitmap = ImageUtil.parseToProveBitmap(imgPath);
-                    baos = new ByteArrayOutputStream();
+                    sOutputStream = new ByteArrayOutputStream();
                     ExifInterface sourceExif = new ExifInterface(imgPath);
                     int result = sourceExif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
                     int rotate = 0;
@@ -226,17 +229,23 @@ public class UploadImageUtil {
                                 resizeBitmap = rotateBitmap;
                             }
                         }
-                        resizeBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                        resizeBitmap.compress(Bitmap.CompressFormat.JPEG, 100, sOutputStream);
                         int options = 100;
-                        while (baos.toByteArray().length > 100 * 1024) { //循环判断如果压缩后图片是否大于100kB,大于继续压缩
-                            baos.reset();//重置baos即清空baos
-                            resizeBitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
+                        while (sOutputStream.toByteArray().length > 100 * 1024) { //循环判断如果压缩后图片是否大于100kB,大于继续压缩
+                            sOutputStream.reset();//重置baos即清空baos
+                            resizeBitmap.compress(Bitmap.CompressFormat.JPEG, options, sOutputStream);//这里压缩options%，把压缩后的数据存放到baos中
                             options -= 10;//每次都减少5
                         }
+                        sOutputStream.close();
                     }
-                    LogUtil.e("时间判断4", "" + System.currentTimeMillis());
+                    //LogUtil.e("时间判断4", "" + System.currentTimeMillis());
+                    String path = MyApplication.getAppContext().getCacheDir() + "/";
+                    String picName = System.currentTimeMillis() + ".jpeg";
+                    //LogUtil.e("时间判断4.1", "" + System.currentTimeMillis());
+                    File resultFile = BitmapUtil.saveBitmap(path, picName, resizeBitmap);
+                   // LogUtil.e("时间判断4.2", "" + System.currentTimeMillis());
                     if (onCompleteListener != null) {
-                        onCompleteListener.onComplete(resizeBitmap);
+                        onCompleteListener.onComplete(resultFile.getPath());
                     }
                 } catch (OutOfMemoryError e) {
                     System.gc();
@@ -251,7 +260,7 @@ public class UploadImageUtil {
     }
 
     public interface OnCompleteListener {
-        void onComplete(Bitmap bitmap);
+        void onComplete(String filePath);
     }
 
 }

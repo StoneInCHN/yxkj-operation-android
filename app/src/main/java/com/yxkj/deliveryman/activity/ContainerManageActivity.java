@@ -39,9 +39,13 @@ public class ContainerManageActivity extends BaseActivity {
 
     @Override
     public void beforeInitView() {
-        sceneSn = getIntent().getExtras().getString("sceneSn");
-        cntrId = getIntent().getExtras().getString("cntrId");
-        containerName = getIntent().getExtras().getString("containerName");
+        try {
+            sceneSn = getIntent().getExtras().getString("sceneSn");
+            cntrId = getIntent().getExtras().getString("cntrId");
+            containerName = getIntent().getExtras().getString("containerName");
+        }catch (NullPointerException e){
+
+        }
     }
 
     @Override

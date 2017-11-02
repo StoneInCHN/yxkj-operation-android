@@ -38,6 +38,7 @@ public class TeamAdapter extends BaseRecyclerViewAdapter<WaitSupStateBean.Scenes
     public TeamAdapter(Context context, String sceneSn, String sceneName) {
         super(context);
         mContext = context;
+        mSceneSn = sceneSn;
         mSceneName = sceneName;
     }
 

@@ -59,7 +59,6 @@ public class RxPermissionsFragment extends Fragment {
             PublishSubject<Permission> subject = mSubjects.get(permissions[i]);
             if (subject == null) {
                 // No subject found
-                Log.e(RxPermissions.TAG, "RxPermissions.onRequestPermissionsResult invoked but didn't find the corresponding permission request.");
                 return;
             }
             mSubjects.remove(permissions[i]);
@@ -97,7 +96,6 @@ public class RxPermissionsFragment extends Fragment {
 
     void log(String message) {
         if (mLogging) {
-            Log.d(RxPermissions.TAG, message);
         }
     }
 

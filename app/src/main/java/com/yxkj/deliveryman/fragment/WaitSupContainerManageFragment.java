@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.activity.ContainerManageActivity;
 import com.yxkj.deliveryman.adapter.WaitSupGoodsAdapter;
@@ -34,7 +35,10 @@ import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.event.RestartTakePhotoEvent;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.permission.Permission;
-import com.yxkj.deliveryman.permission.RxPermissions;
+import com.yxkj.deliveryman.util.BitmapCompressUtil;
+import com.yxkj.deliveryman.util.BitmapUtil;
+import com.yxkj.deliveryman.util.FileUtil;
+import com.yxkj.deliveryman.util.ImageUtil;
 import com.yxkj.deliveryman.util.LogUtil;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
 import com.yxkj.deliveryman.util.ToastUtil;
@@ -234,43 +238,40 @@ public class WaitSupContainerManageFragment extends Fragment {
     }
 
     private void goTakePhoto() {
-        RxPermissions rxPermissions = new RxPermissions(mActivity);
-        rxPermissions.setLogging(true);
-        Observable.just(rxPermissions).compose(rxPermissions.ensureEach(Manifest.permission.CAMERA)).subscribe(permission -> {
-            if (permission.granted) {
-                /*跳转相机拍照*/
-                UploadImageUtil.doTakePhoto(mFragment);
-            } else if (permission.shouldShowRequestPermissionRationale) {
-
-            } else {
-                //如果用户选择了不再提醒，那么就会一直走这一步
-                CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog(mActivity);
-                commonYesOrNoDialog.setTv_content("请允许系统使用您的相机以及存储权限");
-                commonYesOrNoDialog.setBtn_sure("去授权");
-                commonYesOrNoDialog.setDialogSureListener(() -> {
-                    //引导用户至设置页手动授权
-                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                    Uri uri = Uri.fromParts("package", MyApplication.getAppContext().getPackageName(), null);
-                    intent.setData(uri);
-                    startActivity(intent);
+        RxPermissions rxPermissions=new RxPermissions(getActivity());
+        rxPermissions.request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (aBoolean){
+                            UploadImageUtil.doTakePhoto(mFragment);
+                        }else {
+                            //如果用户选择了不再提醒，那么就会一直走这一步
+                            CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog(mActivity);
+                            commonYesOrNoDialog.setTv_content("请允许系统使用您的相机以及存储权限");
+                            commonYesOrNoDialog.setBtn_sure("去授权");
+                            commonYesOrNoDialog.setDialogSureListener(() -> {
+                                //引导用户至设置页手动授权
+                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                Uri uri = Uri.fromParts("package", MyApplication.getAppContext().getPackageName(), null);
+                                intent.setData(uri);
+                                startActivity(intent);
+                            });
+                            commonYesOrNoDialog.show();
+                        }
+                    }
                 });
-                commonYesOrNoDialog.show();
-            }
-        });
     }
 
     private void goAlbum() {
-        RxPermissions rxPermissions = new RxPermissions(mActivity);
-        rxPermissions.setLogging(true);
-        Observable.just(rxPermissions).compose(rxPermissions.ensureEach(Manifest.permission.WRITE_EXTERNAL_STORAGE))
-                .subscribe(new Consumer<Permission>() {
+        RxPermissions rxPermissions=new RxPermissions(getActivity());
+        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(new Consumer<Boolean>() {
                     @Override
-                    public void accept(Permission permission) throws Exception {
-                        if (permission.granted) {
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (aBoolean){
                             UploadImageUtil.doPickPhotoFromGallery(mFragment);
-                        } else if (permission.shouldShowRequestPermissionRationale) {
-
-                        } else {
+                        }else {
                             //如果用户选择了不再提醒，那么就会一直走这一步
                             CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog(mActivity);
                             commonYesOrNoDialog.setTv_content("请允许存储权限");
@@ -286,6 +287,7 @@ public class WaitSupContainerManageFragment extends Fragment {
                         }
                     }
                 });
+
     }
 
     private CompleteSupPopWindow completeSupPopWindow;
@@ -293,37 +295,37 @@ public class WaitSupContainerManageFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        LogUtil.e("时间判断1", "" + System.currentTimeMillis());
+        //LogUtil.e("时间判断1", "" + System.currentTimeMillis());
+
         UploadImageUtil.dealWithUploadImageOnActivityResult(mActivity, requestCode, resultCode, data,
                 new UploadImageUtil.OnCompleteListener() {
                     @Override
-                    public void onComplete(Bitmap bitmap) {
-                        if (bitmap != null) {
-                            mActivity.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    completeSupPopWindow = new CompleteSupPopWindow(mActivity);
-                                    LogUtil.e("时间判断5", "" + System.currentTimeMillis());
-                                    completeSupPopWindow.showAtLocation(rootView, Gravity.CENTER, 0, 0);
-                                    completeSupPopWindow.setBitmaps(bitmap);
-                                    LogUtil.e("时间判断5.3", "" + System.currentTimeMillis());
-                                    completeSupPopWindow.setCommon2Listener(new OnCommon2Listener<String, File>() {
-                                        @Override
-                                        public void onCommon1(String s) {
-                                            //重新拍照
-                                            goTakePhoto();
-                                        }
+                    public void onComplete(String filePath) {
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                completeSupPopWindow = new CompleteSupPopWindow(mActivity);
+                                // LogUtil.e("时间判断5", "" + System.currentTimeMillis());
+                                completeSupPopWindow.showAtLocation(rootView, Gravity.CENTER, 0, 0);
+                                completeSupPopWindow.setPicFilePath(filePath);
+                                // LogUtil.e("时间判断5.3", "" + System.currentTimeMillis());
+                                completeSupPopWindow.setCommon2Listener(new OnCommon2Listener<String, String>() {
+                                    @Override
+                                    public void onCommon1(String s) {
+                                        //重新拍照
+                                        goTakePhoto();
+                                    }
 
-                                        @Override
-                                        public void onCommon2(File file) {
-                                            //上传图片，完成补货
-                                            completeSup(file);
-                                        }
-                                    });
-                                    LogUtil.e("时间判断6", "" + System.currentTimeMillis());
-                                }
-                            });
-                        }
+                                    @Override
+                                    public void onCommon2(String path) {
+                                        //上传图片，完成补货
+                                        String outFilePath = getActivity().getCacheDir() + "/" + System.currentTimeMillis() + ".jpeg";
+                                        completeSup(BitmapCompressUtil.compress(path, outFilePath));
+                                    }
+                                });
+                                // LogUtil.e("时间判断6", "" + System.currentTimeMillis());
+                            }
+                        });
                     }
                 });
 
@@ -338,6 +340,7 @@ public class WaitSupContainerManageFragment extends Fragment {
         if (file == null) {
             return;
         }
+        LogUtil.d("上传补货图片的大小| ", file.length() / 1000 + "KB");
         HttpApi.getInstance()
                 .uploadSupplementPic(UserInfo.USER_ID, cntrId, file)
                 .subscribeOn(Schedulers.io())

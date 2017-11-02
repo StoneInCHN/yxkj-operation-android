@@ -160,6 +160,7 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
         cancelPopupWindow.setOnCommon1Listener(new OnCommon1Listener() {
             @Override
             public void onCommon1(Object o) {
+                mGroupsBeanList.get(position).isSupped = false;
                 deleteFromDB(mGroupsBeanList.get(position));
                 viewHolder.rlShadow.setVisibility(View.GONE);
                 ToastUtil.showShort("取消完成");

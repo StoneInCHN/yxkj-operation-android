@@ -29,7 +29,7 @@ public class BitmapCompressUtil {
      * @param outfile  目标图片路径
      * @return
      */
-    public static void compress(String filePath, String outfile) {
+    public static File compress(String filePath, String outfile) {
         //获取图片大小
         LogUtil.i("compress bitmap start！");
         int[] sizes = BitmapUtil.getBitmapSize(filePath);
@@ -39,11 +39,11 @@ public class BitmapCompressUtil {
         if (sampleSize == 1) {
             LogUtil.i("don't compress bitmap");
 //            FileHelper.copyFile(filePath, outfile);
-            return;
+            return null;
         }
         // 2017/5/3 压缩图片
-        bitmapToFile(compressBitmap(filePath, sampleSize), outfile);
         LogUtil.i("compress bitmap finish！");
+        return bitmapToFile(compressBitmap(filePath, sampleSize), outfile);
     }
 
     /**
@@ -83,7 +83,7 @@ public class BitmapCompressUtil {
      * @param bitmap
      * @param outFile
      */
-    public static void bitmapToFile(Bitmap bitmap, String outFile) {
+    public static File bitmapToFile(Bitmap bitmap, String outFile) {
         File file = new File(outFile);
         BufferedOutputStream bos = null;
         try {
@@ -106,5 +106,6 @@ public class BitmapCompressUtil {
                 }
             }
         }
+        return file;
     }
 }

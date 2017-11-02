@@ -32,12 +32,12 @@ import io.reactivex.schedulers.Schedulers;
 /*
  *  @项目名：  yxkj-operation-android 
  *  @包名：    com.yxkj.deliveryman.frament
- *  @文件名:   WaitSupGoodsFragment
+ *  @文件名:   WaitPickGoodsFragment
  *  @创建者:   hhe
  *  @创建时间:  2017/10/26 10:12
  *  @描述：    待补清单fragment
  */
-public class WaitSupGoodsFragment extends Fragment {
+public class WaitPickGoodsFragment extends Fragment {
 
     @BindView(R.id.lrv_fragment_wait_sup_goods)
     LRecyclerView mLrv;
@@ -61,7 +61,7 @@ public class WaitSupGoodsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_wait_sup_list, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_wait_pick_list, container, false);
         mUnbinder = ButterKnife.bind(this, rootView);
 
         mCateId = getArguments().getString("cateId");
