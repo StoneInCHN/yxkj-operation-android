@@ -176,7 +176,13 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
      * @param groupsBean
      */
     private void deleteFromDB(WaitSupContainerGoodsBean.GroupsBean groupsBean) {
-        waitSupGoodsDao.deleteByKeyInTx(Long.parseLong(mSceneSn), Long.parseLong(mCntrId), Long.parseLong(groupsBean.goodsSn));
+        List<WaitSupGoods> waitDeleteList = waitSupGoodsDao.queryBuilder().where(
+                WaitSupGoodsDao.Properties.SceneId.eq(mSceneSn),
+                WaitSupGoodsDao.Properties.CntrId.eq(mCntrId),
+                WaitSupGoodsDao.Properties.GoodsSn.eq(groupsBean.goodsSn))
+                .build()
+                .list();
+        waitSupGoodsDao.deleteInTx(waitDeleteList);
     }
 
     /**

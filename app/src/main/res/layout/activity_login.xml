@@ -15,18 +15,19 @@
         android:src="@mipmap/bg_login"/>
 
     <LinearLayout
-        android:layout_marginLeft="43dp"
-        android:layout_marginRight="43dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="43dp"
+        android:layout_marginRight="43dp"
         android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/et_phone"
             style="@style/et_normal"
-            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_weight="1"
+            android:layout_width="match_parent"
             android:background="@null"
             android:drawableLeft="@mipmap/phone"
             android:drawablePadding="@dimen/drawablepadding_18dp"
@@ -57,10 +58,10 @@
         android:background="@color/gray_bg"/>
 
     <RelativeLayout
-        android:layout_marginLeft="43dp"
-        android:layout_marginRight="43dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="43dp"
+        android:layout_marginRight="43dp">
 
         <EditText
             android:id="@+id/et_pwd"
@@ -76,10 +77,10 @@
             android:id="@+id/tv_tip_pwd_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@mipmap/warning"
-            android:drawablePadding="2dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:drawableLeft="@mipmap/warning"
+            android:drawablePadding="2dp"
             android:text="非管家账号，请重新输入"
             android:textColor="@color/red_text"
             android:textSize="@dimen/sp_12"
