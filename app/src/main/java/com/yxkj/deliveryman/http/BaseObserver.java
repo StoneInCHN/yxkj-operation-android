@@ -43,7 +43,15 @@ public abstract class BaseObserver<T> implements Observer<BaseEntity<T>> {
         switch (value.code) {
             case 0000:
                 T t = value.msg;
-                onHandleSuccess(t);
+                try {
+                    onHandleSuccess(t);
+                } catch (Exception e) {
+                    try {
+                        onFailure(e, false);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                }
                 onHandleSuccess(value);
                 break;
             case 8://过期

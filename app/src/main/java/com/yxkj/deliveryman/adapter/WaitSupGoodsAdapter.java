@@ -110,7 +110,7 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
         viewHolder.tvGoodsName.setText(bean.goodsName);
         viewHolder.tvContainerName.setText(bean.channelSn);
         viewHolder.tvRemainNum.setText("剩余数量：" + bean.waitSupplyCount);
-        viewHolder.tvWaitNum.setText("待补货数：" + bean.waitSupplyCount);
+        viewHolder.tvWaitNum.setText("待补货数：" + bean.remainCount);
 
         if (bean.isSupped) {
             viewHolder.rlShadow.setVisibility(View.VISIBLE);

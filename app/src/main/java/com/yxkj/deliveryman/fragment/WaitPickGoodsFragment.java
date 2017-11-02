@@ -86,7 +86,6 @@ public class WaitPickGoodsFragment extends Fragment {
         mWaitSupListAdapter = new WaitPickListAdapter(getActivity(), mSceneSn);
         RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, mWaitSupListAdapter, true);
         mLrv.setPullRefreshEnabled(false);
-        mLrv.setLoadMoreEnabled(false);
         mLrv.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -114,11 +113,12 @@ public class WaitPickGoodsFragment extends Fragment {
                         }
                         mWaitSupListAdapter.mBeanList.addAll(waitSupGoodsListBean.groups);
                         mWaitSupListAdapter.notifyDataSetChanged();
+                        mLrv.refreshComplete(10);
                     }
 
                     @Override
                     protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-
+                        mLrv.refreshComplete(10);
                     }
                 });
 

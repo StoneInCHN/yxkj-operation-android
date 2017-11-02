@@ -66,7 +66,7 @@ public class AllSupGoodsAdapter extends RecyclerView.Adapter {
         ImageLoadUtil.loadImage(viewHolder.ivGoodsPic, Constants.BASE_URL + bean.goodsPic);
         viewHolder.tvGoodsName.setText(bean.goodsName);
         viewHolder.tvContainerName.setText(bean.channelSn);
-        viewHolder.tvRemainNum.setText("剩余数量：" + bean.waitSupplyCount);
+        viewHolder.tvRemainNum.setText("剩余数量：" + bean.remainCount);
         viewHolder.tvWaitNum.setText("待补货数：" + bean.waitSupplyCount);
 
         viewHolder.rlItem.setOnClickListener(new View.OnClickListener() {
