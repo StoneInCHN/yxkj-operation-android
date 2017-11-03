@@ -38,7 +38,7 @@ public class WaitSupContainerGoodsBean {
         /**
          * 实际补货数量
          */
-        public int actualNum;
+        public int actualSupNum;
 
     }
 

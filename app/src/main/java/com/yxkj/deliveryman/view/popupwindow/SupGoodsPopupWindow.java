@@ -3,6 +3,7 @@ package com.yxkj.deliveryman.view.popupwindow;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +70,9 @@ public class SupGoodsPopupWindow extends PopupWindow {
             @Override
             public void onClick(View v) {
                 String actualNumString = etActualSupNum.getText().toString().trim();
+                if (TextUtils.isEmpty(actualNumString)) {
+                    actualNumString = etActualSupNum.getHint().toString().trim();
+                }
                 int actualNum = Integer.parseInt(actualNumString);
                 mOnCommon1Listener.onCommon1(actualNum);
             }
@@ -86,25 +90,39 @@ public class SupGoodsPopupWindow extends PopupWindow {
     }
 
     private void initData() {
-        etActualSupNum.setText(mBean.waitSupplyCount + "");
         ImageLoadUtil.loadImage(ivGoodsPic, Constants.BASE_URL + mBean.goodsPic);
         tvGoodsName.setText(mBean.goodsName);
         tvSerialNum.setText("商品条码：" + mBean.goodsSn);
         tvShouldSupNum.setText("总待补数：" + mBean.waitSupplyCount);
 
+
+        etActualSupNum.setHint(mBean.waitSupplyCount + "");
+
+        etActualSupNum.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (TextUtils.isEmpty(s)) {
+                    return;
+                }
+                int sInt = Integer.parseInt(s.toString());
+                if (sInt > mBean.waitSupplyCount) {
+                    etActualSupNum.setText(mBean.remainCount + "");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 
-    /**
-     * 实际补货数量不能大于待补数量
-     *
-     * @return
-     */
-    public boolean isActualNumIllegal() {
-        String actualNumString = etActualSupNum.getText().toString().trim();
-        int actualNum = Integer.parseInt(actualNumString);
-        int waitSupNum = mBean.waitSupplyCount;
-        return actualNum <= waitSupNum;
-    }
 
     @Override
     public void dismiss() {

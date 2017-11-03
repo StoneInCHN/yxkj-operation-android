@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.base.BaseEntity;
+import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.BaseObserver;
 import com.yxkj.deliveryman.callback.CompleteListener;
 import com.yxkj.deliveryman.constant.VerificationCodeType;
@@ -49,6 +50,10 @@ public class ForgetPwdActivity extends BaseActivity {
     /*0->忘密码，1->短信验证码登录*/
     private int mType;
     private String phone;
+    /**
+     * 是否获取过验证码
+     */
+    private boolean hasGetCode;
 
     @Override
     public int getContentViewId() {
@@ -96,6 +101,8 @@ public class ForgetPwdActivity extends BaseActivity {
                     case 1://验证码登录
                         loginByCode();
                         break;
+                    default:
+                        break;
                 }
                 break;
             case R.id.tv_get_code:
@@ -104,10 +111,22 @@ public class ForgetPwdActivity extends BaseActivity {
             case R.id.iv_back_get_code:
                 finish();
                 break;
+            default:
+                break;
         }
     }
 
     private void loginByCode() {
+        if (!hasGetCode) {
+            ToastUtil.showShort("请先获取验证码");
+            return;
+        }
+        phone = mEtPhone.getText().toString();
+        if (TextUtils.isEmpty(phone)) {
+            ToastUtil.showShort("手机号不能为空");
+            return;
+        }
+
         String code = mEtCode.getText().toString();
         if (TextUtils.isEmpty(code)) {
             ToastUtil.showShort("请填写验证码");
@@ -121,7 +140,8 @@ public class ForgetPwdActivity extends BaseActivity {
                 .subscribe(new BaseObserver<LoginBean>() {
                     @Override
                     protected void onHandleSuccess(LoginBean loginBean) {
-                        SharePrefreceHelper.getInstance().setString(SharedKey.USER_ID, loginBean.id+"");
+                        SharePrefreceHelper.getInstance().setString(SharedKey.USER_ID, loginBean.id + "");
+                        SharePrefreceHelper.getInstance().setString(SharedKey.PHONE, phone);
                         IntentUtil.openActivity(mContext, MainActivity.class);
                     }
 
@@ -139,6 +159,15 @@ public class ForgetPwdActivity extends BaseActivity {
     }
 
     private void goToSetNewPwd() {
+        if (!hasGetCode) {
+            ToastUtil.showShort("请先获取验证码");
+            return;
+        }
+        phone = mEtPhone.getText().toString();
+        if (TextUtils.isEmpty(phone)) {
+            ToastUtil.showShort("手机号不能为空");
+            return;
+        }
         String code = mEtCode.getText().toString();
         if (TextUtils.isEmpty(code)) {
             ToastUtil.showShort("请填写验证码");
@@ -196,6 +225,7 @@ public class ForgetPwdActivity extends BaseActivity {
                     protected void onHandleSuccess(GetCodeBean bean) {
                         startTimeCount();
                         mEtCode.setText(bean.code);
+                        hasGetCode = true;
                     }
 
                     @Override

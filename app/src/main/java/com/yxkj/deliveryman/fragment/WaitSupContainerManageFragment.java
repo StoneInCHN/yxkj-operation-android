@@ -3,7 +3,6 @@ package com.yxkj.deliveryman.fragment;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -34,11 +33,7 @@ import com.yxkj.deliveryman.callback.OnCommon2Listener;
 import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.event.RestartTakePhotoEvent;
 import com.yxkj.deliveryman.http.HttpApi;
-import com.yxkj.deliveryman.permission.Permission;
 import com.yxkj.deliveryman.util.BitmapCompressUtil;
-import com.yxkj.deliveryman.util.BitmapUtil;
-import com.yxkj.deliveryman.util.FileUtil;
-import com.yxkj.deliveryman.util.ImageUtil;
 import com.yxkj.deliveryman.util.LogUtil;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
 import com.yxkj.deliveryman.util.ToastUtil;
@@ -58,18 +53,17 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-/*
- *  @项目名：  yxkj-operation-android 
- *  @包名：    com.yxkj.deliveryman.fragment
- *  @文件名:   WaitSupContainerManageFragment
- *  @创建者:   hhe
- *  @创建时间:  2017/10/26 16:56
- *  @描述：    待补商品货柜管理
+/**
+ * @项目名： yxkj-operation-android
+ * @包名： com.yxkj.deliveryman.fragment
+ * @文件名: WaitSupContainerManageFragment
+ * @创建者: hhe
+ * @创建时间: 2017/10/26 16:56
+ * @描述： 待补商品货柜管理
  */
 public class WaitSupContainerManageFragment extends Fragment {
     private LRecyclerView mLrv;
@@ -143,7 +137,7 @@ public class WaitSupContainerManageFragment extends Fragment {
     /**
      * 上传已补货的商品
      */
-    public void uploadCompletedGoods(String sceneSn) {
+    public void uploadCompletedGoods() {
         List<CommitSupRecordsBean.SupplementRecordsBean> recordsBeanList = getUploadRecordBean();
         if (recordsBeanList.size() == 0) {
             ToastUtil.showShort("您还没有进行补货，请先补货后再上传");
@@ -165,14 +159,7 @@ public class WaitSupContainerManageFragment extends Fragment {
                     protected void onHandleSuccess(NullBean nullBean) {
                         ToastUtil.showShort("提交补货记录成功");
                         //提交成功后，需要在本地数据库删除本货柜存储的商品
-                        WaitSupGoodsDao dao = getDao();
-                        List<WaitSupGoods> list = dao.queryBuilder().list();
-                        for (WaitSupGoods goods : list) {
-                            if (goods.getCntrId().equals(cntrId) && goods.getSceneId().equals(sceneSn)) {
-                                dao.delete(goods);
-                            }
-                        }
-                        getActivity().finish();
+                        deleteHasSuppedList();
                     }
 
                     @Override
@@ -180,6 +167,19 @@ public class WaitSupContainerManageFragment extends Fragment {
 
                     }
                 });
+    }
+
+    /**
+     * 删除已经上传的商品
+     */
+    private void deleteHasSuppedList() {
+        WaitSupGoodsDao dao = getDao();
+        List<WaitSupGoods> list = dao.queryBuilder()
+                .where(WaitSupGoodsDao.Properties.CntrId.eq(cntrId), WaitSupGoodsDao.Properties.SceneId.eq(sceneSn))
+                .build()
+                .list();
+        dao.deleteInTx(list);
+        getActivity().finish();
     }
 
     private WaitSupGoodsDao getDao() {
@@ -192,7 +192,7 @@ public class WaitSupContainerManageFragment extends Fragment {
         mSupRecordsBeanList.clear();
         for (WaitSupContainerGoodsBean.GroupsBean bean : mWaitSupGoodsAdapter.mGroupsBeanList) {
             if (bean.isSupped) {
-                mSupRecordsBeanList.add(new CommitSupRecordsBean.SupplementRecordsBean(Integer.parseInt(bean.id), bean.actualNum));
+                mSupRecordsBeanList.add(new CommitSupRecordsBean.SupplementRecordsBean(Integer.parseInt(bean.id), bean.actualSupNum));
             }
         }
 
@@ -214,7 +214,9 @@ public class WaitSupContainerManageFragment extends Fragment {
                 showBottomPopupWindow();
                 break;
             case R.id.bt_pause_sup_goods:
-                uploadCompletedGoods(sceneSn);
+                uploadCompletedGoods();
+                break;
+            default:
                 break;
         }
     }
@@ -238,14 +240,14 @@ public class WaitSupContainerManageFragment extends Fragment {
     }
 
     private void goTakePhoto() {
-        RxPermissions rxPermissions=new RxPermissions(getActivity());
+        RxPermissions rxPermissions = new RxPermissions(getActivity());
         rxPermissions.request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
-                        if (aBoolean){
+                        if (aBoolean) {
                             UploadImageUtil.doTakePhoto(mFragment);
-                        }else {
+                        } else {
                             //如果用户选择了不再提醒，那么就会一直走这一步
                             CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog(mActivity);
                             commonYesOrNoDialog.setTv_content("请允许系统使用您的相机以及存储权限");
@@ -264,14 +266,14 @@ public class WaitSupContainerManageFragment extends Fragment {
     }
 
     private void goAlbum() {
-        RxPermissions rxPermissions=new RxPermissions(getActivity());
+        RxPermissions rxPermissions = new RxPermissions(getActivity());
         rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
-                        if (aBoolean){
+                        if (aBoolean) {
                             UploadImageUtil.doPickPhotoFromGallery(mFragment);
-                        }else {
+                        } else {
                             //如果用户选择了不再提醒，那么就会一直走这一步
                             CommonYesOrNoDialog commonYesOrNoDialog = new CommonYesOrNoDialog(mActivity);
                             commonYesOrNoDialog.setTv_content("请允许存储权限");
@@ -350,6 +352,8 @@ public class WaitSupContainerManageFragment extends Fragment {
                     protected void onHandleSuccess(NullBean bean) {
                         ToastUtil.showShort("上传成功,该货柜补货完成");
                         completeSupPopWindow.dismiss();
+                        //
+                        deleteHasSuppedList();
                         mActivity.finish();
                     }
 

@@ -14,6 +14,7 @@ import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.base.BaseEntity;
 import com.yxkj.deliveryman.constant.Constants;
+import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.BaseObserver;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.bean.response.NullBean;
@@ -128,7 +129,7 @@ public class UpdatePasswordActivity extends BaseActivity {
         }
         String phone = SharePrefreceHelper.getInstance().getString(SharedKey.PHONE);
         HttpApi.getInstance()
-                .updatePwd(phone, oldPwdEncrypted, newPwdEncrypted)
+                .updatePwd(UserInfo.USER_ID, phone, oldPwdEncrypted, newPwdEncrypted)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<NullBean>() {
@@ -179,8 +180,8 @@ public class UpdatePasswordActivity extends BaseActivity {
             public void run() {
                 mTvTipNewPwd.setVisibility(View.GONE);
                 mTvTipNewPwd.setText(errorText);
-               // mEtNewPwd.setText("");
-               // mEtSurePwd.setText("");
+                // mEtNewPwd.setText("");
+                // mEtSurePwd.setText("");
             }
         }, Constants.ERROR_TIP_TIME);
     }

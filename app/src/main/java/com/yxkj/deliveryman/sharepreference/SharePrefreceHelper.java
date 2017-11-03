@@ -17,8 +17,9 @@ public class SharePrefreceHelper extends PrefrenceWrapper {
     }
 
     public static SharePrefreceHelper getInstance() {
-        if (sharePrefreceHelper == null)
+        if (sharePrefreceHelper == null) {
             sharePrefreceHelper = new SharePrefreceHelper(MyApplication.getAppContext());
+        }
         return sharePrefreceHelper;
     }
 

@@ -43,7 +43,7 @@ public class ContainerManageActivity extends BaseActivity {
             sceneSn = getIntent().getExtras().getString("sceneSn");
             cntrId = getIntent().getExtras().getString("cntrId");
             containerName = getIntent().getExtras().getString("containerName");
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
 
         }
     }
@@ -91,7 +91,7 @@ public class ContainerManageActivity extends BaseActivity {
         commonYesOrNoDialog.setDialogSureListener(new CommonDialogSureListener() {
             @Override
             public void onSure() {
-                mWaitSupFragment.uploadCompletedGoods(sceneSn);
+                mWaitSupFragment.uploadCompletedGoods();
             }
         });
         commonYesOrNoDialog.tvCancel.setOnClickListener(new View.OnClickListener() {

@@ -7,7 +7,10 @@ import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseActivity;
+import com.yxkj.deliveryman.base.BaseEntity;
+import com.yxkj.deliveryman.bean.response.LoginBean;
 import com.yxkj.deliveryman.constant.Constants;
+import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.BaseObserver;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.bean.response.NullBean;
@@ -89,14 +92,24 @@ public class SetPwdActivity extends BaseActivity {
                 .resetPwd(phone, pwdEncryed)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<NullBean>() {
+                .subscribe(new BaseObserver<LoginBean>() {
                     @Override
-                    protected void onHandleSuccess(NullBean bean) {
+                    protected void onHandleSuccess(LoginBean bean) {
                         showSuccessDialog();
+                        SharePrefreceHelper.getInstance().setString(SharedKey.PHONE, phone);
+                        SharePrefreceHelper.getInstance().setString(SharedKey.USER_ID, bean.id);
+
                     }
 
                     @Override
                     protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+
+                    }
+
+                    @Override
+                    protected void onHandleSuccess(BaseEntity<LoginBean> baseEntity) {
+                        super.onHandleSuccess(baseEntity);
+                        SharePrefreceHelper.getInstance().setString(SharedKey.TOKEN, baseEntity.token);
 
                     }
                 });
@@ -142,7 +155,7 @@ public class SetPwdActivity extends BaseActivity {
                 mTvTipNewPwd.setVisibility(View.GONE);
                 mTvTipNewPwd.setText(errorText);
                 //mEtPwd1.setText("");
-              //  mEtPwd2.setText("");
+                //  mEtPwd2.setText("");
             }
         }, Constants.ERROR_TIP_TIME);
     }

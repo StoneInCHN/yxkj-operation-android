@@ -92,7 +92,6 @@
                             android:maxLength="4"
                             android:minWidth="50dp"
                             android:shadowColor="@color/green_text"
-                            android:text="2"
                             android:textColor="@color/green_text"
                             android:textSize="@dimen/sp_14"/>
 

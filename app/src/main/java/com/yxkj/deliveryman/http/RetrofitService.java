@@ -70,7 +70,7 @@ public interface RetrofitService {
      * 重置密码
      */
     @POST("keeper/resetPwd")
-    Observable<BaseEntity<NullBean>> resetPwd(@Body Map<String, String> reqest);
+    Observable<BaseEntity<LoginBean>> resetPwd(@Body Map<String, String> reqest);
 
     /**
      * 修改密码

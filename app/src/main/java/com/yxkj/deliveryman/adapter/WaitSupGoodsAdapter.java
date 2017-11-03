@@ -82,7 +82,7 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
                 if (goods.getSceneId().equals(mSceneSn)
                         && goods.getCntrId().equals(mCntrId)
                         && goods.getGoodsSn().equals(bean.goodsSn)) {//此商品已经补货
-                    bean.actualNum = goods.getSupNum();
+                    bean.actualSupNum = goods.getSupNum();
                     bean.isSupped = true;
                 }
             }
@@ -109,12 +109,12 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
         ImageLoadUtil.loadImage(viewHolder.ivGoodsPic, Constants.BASE_URL + bean.goodsPic);
         viewHolder.tvGoodsName.setText(bean.goodsName);
         viewHolder.tvContainerName.setText(bean.channelSn);
-        viewHolder.tvRemainNum.setText("剩余数量：" + bean.waitSupplyCount);
-        viewHolder.tvWaitNum.setText("待补货数：" + bean.remainCount);
+        viewHolder.tvRemainNum.setText("剩余数量：" + bean.remainCount);
+        viewHolder.tvWaitNum.setText("待补货数：" + bean.waitSupplyCount);
 
         if (bean.isSupped) {
             viewHolder.rlShadow.setVisibility(View.VISIBLE);
-            viewHolder.tvRemainNum.setText("剩余数量：" + (bean.waitSupplyCount - bean.actualNum));
+            viewHolder.tvRemainNum.setText("剩余数量：" + (bean.remainCount + bean.actualSupNum));
         } else {
             viewHolder.rlShadow.setVisibility(View.GONE);
         }
@@ -126,18 +126,15 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
                 popupWindow.setOnCommon1Listener(new OnCommon1Listener<Integer>() {
                     @Override
                     public void onCommon1(Integer integer) {
-                        if (popupWindow.isActualNumIllegal()) {
-                            bean.actualNum = integer;
-                            mGroupsBeanList.get(position).isSupped = true;
-                            popupWindow.dismiss();
-                            viewHolder.rlShadow.setVisibility(View.VISIBLE);
-                            int remainNum = bean.waitSupplyCount - bean.actualNum;
-                            viewHolder.tvRemainNum.setText("剩余数量：" + remainNum);
-                            // 存储在本地数据库中
-                            saveToDB(bean.goodsSn, integer);
-                        } else {
-                            ToastUtil.showShort("实际补货数量不能大于待补数量");
-                        }
+                        bean.actualSupNum = integer;
+                        mGroupsBeanList.get(position).isSupped = true;
+                        popupWindow.dismiss();
+                        viewHolder.rlShadow.setVisibility(View.VISIBLE);
+                        int remainNum = bean.remainCount + bean.actualSupNum;
+                        viewHolder.tvRemainNum.setText("剩余数量：" + remainNum);
+                        viewHolder.tvWaitNum.setText("待补货数：" + (bean.waitSupplyCount - bean.actualSupNum));
+                        // 存储在本地数据库中
+                        saveToDB(bean.goodsSn, integer);
                     }
                 });
                 popupWindow.showAtLocation(viewHolder.rlItem, Gravity.NO_GRAVITY, 0, 0);
@@ -148,20 +145,23 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
             @Override
             public boolean onLongClick(View v) {
                 if (viewHolder.rlShadow.getVisibility() == View.VISIBLE) {//完成状态
-                    showCancelPopupWindow(position, viewHolder);
+                    showCancelPopupWindow(position, viewHolder, bean);
                 }
                 return true;//返回true则不会附加一个短按动作
             }
         });
     }
 
-    private void showCancelPopupWindow(final int position, final ViewHolder viewHolder) {
+    private void showCancelPopupWindow(final int position, final ViewHolder viewHolder, WaitSupContainerGoodsBean.GroupsBean bean) {
         CancelPopupWindow cancelPopupWindow = new CancelPopupWindow(mContext, "取消完成");
         cancelPopupWindow.setOnCommon1Listener(new OnCommon1Listener() {
             @Override
             public void onCommon1(Object o) {
                 mGroupsBeanList.get(position).isSupped = false;
                 deleteFromDB(mGroupsBeanList.get(position));
+                //恢复数据
+                viewHolder.tvRemainNum.setText("剩余数量：" + bean.remainCount);
+                viewHolder.tvWaitNum.setText("待补货数：" + bean.waitSupplyCount);
                 viewHolder.rlShadow.setVisibility(View.GONE);
                 ToastUtil.showShort("取消完成");
                 cancelPopupWindow.dismiss();

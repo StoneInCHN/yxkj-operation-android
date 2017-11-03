@@ -23,6 +23,7 @@ import java.util.List;
 
 /**
  * 消息适配器
+ * @author hhe
  */
 
 public class MessageAdapter extends RecyclerView.Adapter {
@@ -51,7 +52,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
         viewHolder.tvDate.setText(bean.noticeTime);
         switch (bean.type) {
             case "LACK":
-                viewHolder.tvTitle.setText(bean.type);
+                viewHolder.tvTitle.setText("补货通知");
                 break;
             default:
                 break;

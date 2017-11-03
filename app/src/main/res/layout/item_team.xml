@@ -6,15 +6,14 @@
               android:background="@drawable/bg_round_white"
               android:orientation="vertical"
               android:paddingBottom="22dp"
-              android:paddingLeft="@dimen/dp_10"
-              android:paddingRight="@dimen/dp_10"
-              android:paddingTop="@dimen/dp_10">
+              android:paddingLeft="@dimen/dp_14"
+              android:paddingRight="@dimen/dp_14"
+              android:paddingTop="@dimen/dp_14">
 
     <TextView
         android:id="@+id/tv_teamnum_item_team"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
         android:text="一组"
         android:textColor="@color/black_text"
         android:textSize="@dimen/sp_14"/>

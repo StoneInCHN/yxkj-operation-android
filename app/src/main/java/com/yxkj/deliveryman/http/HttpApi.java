@@ -138,7 +138,7 @@ public class HttpApi {
      * @param newPwd
      * @return
      */
-    public Observable<BaseEntity<NullBean>> resetPwd(String cellPhoneNum, String newPwd) {
+    public Observable<BaseEntity<LoginBean>> resetPwd(String cellPhoneNum, String newPwd) {
         Map<String, String> req = new HashMap<>();
         req.put("cellPhoneNum", cellPhoneNum);
         req.put("newPwd", newPwd);
@@ -153,8 +153,9 @@ public class HttpApi {
      * @param newPwd
      * @return
      */
-    public Observable<BaseEntity<NullBean>> updatePwd(String cellPhoneNum, String oldPwd, String newPwd) {
+    public Observable<BaseEntity<NullBean>> updatePwd(String userId, String cellPhoneNum, String oldPwd, String newPwd) {
         Map<String, String> req = new HashMap<>();
+        req.put("userId", userId);
         req.put("cellPhoneNum", cellPhoneNum);
         req.put("oldPwd", oldPwd);
         req.put("newPwd", newPwd);
