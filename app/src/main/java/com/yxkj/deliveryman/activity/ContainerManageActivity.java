@@ -91,7 +91,7 @@ public class ContainerManageActivity extends BaseActivity {
         commonYesOrNoDialog.setDialogSureListener(new CommonDialogSureListener() {
             @Override
             public void onSure() {
-                mWaitSupFragment.uploadCompletedGoods();
+                mWaitSupFragment.uploadCompletedGoods(false);
             }
         });
         commonYesOrNoDialog.tvCancel.setOnClickListener(new View.OnClickListener() {

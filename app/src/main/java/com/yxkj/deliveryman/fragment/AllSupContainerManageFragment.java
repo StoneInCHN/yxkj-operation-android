@@ -79,7 +79,7 @@ public class AllSupContainerManageFragment extends Fragment {
 
                     @Override
                     protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-
+                        mLrv.refreshComplete(10);
                     }
                 });
     }

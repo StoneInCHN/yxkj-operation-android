@@ -25,6 +25,7 @@ import com.yxkj.deliveryman.dao.WaitSupGoods;
 import com.yxkj.deliveryman.dao.gen.DaoMaster;
 import com.yxkj.deliveryman.dao.gen.DaoSession;
 import com.yxkj.deliveryman.dao.gen.WaitSupGoodsDao;
+import com.yxkj.deliveryman.event.RefreshContainerEvent;
 import com.yxkj.deliveryman.http.BaseObserver;
 import com.yxkj.deliveryman.bean.CommitSupRecordsBean;
 import com.yxkj.deliveryman.bean.response.NullBean;
@@ -53,9 +54,11 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.http.HTTP;
 
 /**
  * @项目名： yxkj-operation-android
@@ -137,9 +140,9 @@ public class WaitSupContainerManageFragment extends Fragment {
     /**
      * 上传已补货的商品
      */
-    public void uploadCompletedGoods() {
+    public void uploadCompletedGoods(boolean isUploadPic) {
         List<CommitSupRecordsBean.SupplementRecordsBean> recordsBeanList = getUploadRecordBean();
-        if (recordsBeanList.size() == 0) {
+        if (!isUploadPic && recordsBeanList.size() == 0) {
             ToastUtil.showShort("您还没有进行补货，请先补货后再上传");
             return;
         }
@@ -157,9 +160,12 @@ public class WaitSupContainerManageFragment extends Fragment {
 
                     @Override
                     protected void onHandleSuccess(NullBean nullBean) {
-                        ToastUtil.showShort("提交补货记录成功");
+                        ToastUtil.showShort("提交成功");
                         //提交成功后，需要在本地数据库删除本货柜存储的商品
                         deleteHasSuppedList();
+                        EventBus.getDefault().postSticky(new RefreshContainerEvent());
+
+                        mActivity.finish();
                     }
 
                     @Override
@@ -214,7 +220,7 @@ public class WaitSupContainerManageFragment extends Fragment {
                 showBottomPopupWindow();
                 break;
             case R.id.bt_pause_sup_goods:
-                uploadCompletedGoods();
+                uploadCompletedGoods(false);
                 break;
             default:
                 break;
@@ -320,8 +326,8 @@ public class WaitSupContainerManageFragment extends Fragment {
 
                                     @Override
                                     public void onCommon2(String path) {
-                                        //上传图片，完成补货
                                         String outFilePath = getActivity().getCacheDir() + "/" + System.currentTimeMillis() + ".jpeg";
+                                        //上传图片，完成补货
                                         completeSup(BitmapCompressUtil.compress(path, outFilePath));
                                     }
                                 });
@@ -350,11 +356,9 @@ public class WaitSupContainerManageFragment extends Fragment {
                 .subscribe(new BaseObserver<NullBean>() {
                     @Override
                     protected void onHandleSuccess(NullBean bean) {
-                        ToastUtil.showShort("上传成功,该货柜补货完成");
                         completeSupPopWindow.dismiss();
-                        //
-                        deleteHasSuppedList();
-                        mActivity.finish();
+                        //上传补货记录
+                        uploadCompletedGoods(true);
                     }
 
                     @Override

@@ -93,7 +93,7 @@ public class SupRecordActivity extends BaseActivity {
 
                     @Override
                     protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-
+                        mLrvSupRecord.refreshComplete(10);
                     }
                 });
     }

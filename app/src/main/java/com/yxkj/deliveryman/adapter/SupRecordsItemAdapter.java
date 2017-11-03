@@ -49,7 +49,7 @@ public class SupRecordsItemAdapter extends RecyclerView.Adapter {
         viewHolder.tvTime.setText(bean.supplyTime);
         viewHolder.tvOrder.setText(bean.sceneSn);
         viewHolder.tvWaitNum.setText("总待补数:" + bean.waitSupplyCount);
-        viewHolder.tvLackNum.setText("总缺货数:" + bean.lackCount);
+       // viewHolder.tvLackNum.setText("总缺货数:" + bean.lackCount);
         viewHolder.tvTotalSupNUm.setText("总补货数:" + bean.supplyCount);
 
         viewHolder.rlItem.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +74,7 @@ public class SupRecordsItemAdapter extends RecyclerView.Adapter {
         TextView tvTime;
         TextView tvOrder;
         TextView tvWaitNum;
-        TextView tvLackNum;
+        //TextView tvLackNum;
         TextView tvTotalSupNUm;
         RelativeLayout rlItem;
 
@@ -85,8 +85,8 @@ public class SupRecordsItemAdapter extends RecyclerView.Adapter {
             tvTime = itemView.findViewById(R.id.tv_order_item_sup_records);
             tvOrder = itemView.findViewById(R.id.tv_time_item_sup_records);
             tvWaitNum = itemView.findViewById(R.id.tv_wait_sup_num_item_sup_records);
-            tvLackNum = itemView.findViewById(R.id.tv_total_sup_num_item_sup_records);
-            tvTotalSupNUm = itemView.findViewById(R.id.tv_lack_num_item_sup_records);
+            //tvLackNum = itemView.findViewById(R.id.tv_lack_num_item_sup_records);
+            tvTotalSupNUm = itemView.findViewById(R.id.tv_total_sup_num_item_sup_records);
 
         }
     }

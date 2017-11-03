@@ -48,7 +48,7 @@ public class SupRecordAdapter extends RecyclerView.Adapter {
         SupRecordBean.GroupsBean bean = mBeanList.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.tvDate.setText(bean.date);
-        viewHolder.tvTotalSupNum.setText("总待补数：" + bean.sumWaitSupplyCount);
+        viewHolder.tvWaitNum.setText("总待补数：" + bean.sumWaitSupplyCount);
         viewHolder.tvTotalSupNum.setText("总补货数：" + bean.sumSupplyCount);
 
         SupRecordsItemAdapter adapter = new SupRecordsItemAdapter(mContext);

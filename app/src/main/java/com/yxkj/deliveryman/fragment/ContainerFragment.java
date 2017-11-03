@@ -12,6 +12,7 @@ import com.yxkj.deliveryman.activity.SupRecordActivity;
 import com.yxkj.deliveryman.activity.WaitSupplementActivity;
 import com.yxkj.deliveryman.adapter.AddressSupAdapter;
 import com.yxkj.deliveryman.base.BaseFragment;
+import com.yxkj.deliveryman.event.RefreshContainerEvent;
 import com.yxkj.deliveryman.http.BaseObserver;
 import com.yxkj.deliveryman.callback.MainPageClickListener;
 import com.yxkj.deliveryman.constant.UserInfo;
@@ -22,6 +23,10 @@ import com.yxkj.deliveryman.util.IntentUtil;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
 import com.yxkj.deliveryman.view.RichToolBar;
 import com.yxkj.deliveryman.view.popupwindow.MainPagePopupWindow;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +63,14 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
 
     @Override
     protected void beforeInitView() {
+        EventBus.getDefault().register(this);
+    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().removeStickyEvent(RefreshContainerEvent.class);
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -151,13 +163,6 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
     public void onClick(View view) {
     }
 
-    private List<String> getData() {
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            list.add(i + "");
-        }
-        return list;
-    }
 
     @Override
     public void onClickWaitSup() {
@@ -167,5 +172,11 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
     @Override
     public void onClickSupRecord() {
         IntentUtil.openActivity(getActivity(), SupRecordActivity.class);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void refreshContainer(RefreshContainerEvent event) {
+        mPageNum = 1;
+        getWaitSupplyState();
     }
 }

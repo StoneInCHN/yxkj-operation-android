@@ -1,6 +1,6 @@
 package com.yxkj.deliveryman.event;
 
-/*
+/**
  *  @项目名：  yxkj-operation-android 
  *  @包名：    com.yxkj.deliveryman.event
  *  @文件名:   CompleteSupEvent
