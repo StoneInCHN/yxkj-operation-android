@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
@@ -37,6 +38,8 @@ public class CommonYesOrNoDialog extends Dialog {
     }
 
     public void initView() {
+        //去掉title
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_common_yesorno);
         tv_title = findViewById(R.id.tv_title_dialog_yesorno);
         tv_content = findViewById(R.id.tv_content_dialog_yesorno);

@@ -8,6 +8,7 @@ import android.support.annotation.StyleRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
@@ -38,6 +39,7 @@ public class TextShortTimeDialog extends Dialog {
     private TextView mTvContent;
 
     private void initView() {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_text);
         mTvContent = findViewById(R.id.tv_content_dialog_simple_text);
         mTvContent.setText(mContent);

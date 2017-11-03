@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
@@ -35,6 +36,7 @@ public class TextButtonDialog extends Dialog {
     public TextButtonDialog(@NonNull Context context, String title, String content, String confirmText) {
         super(context);
         mContext = context;
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_text_button);
         ButterKnife.bind(this);
         initData(title, content, confirmText);
