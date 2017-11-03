@@ -44,7 +44,14 @@ public class MessageAdapter extends RecyclerView.Adapter {
         MessageBean.GroupsBean bean = mGroupsBeanList.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.tvDate.setText(bean.noticeTime);
-        viewHolder.tvTitle.setText(bean.type);
+        switch (bean.type){
+            case "LACK":
+                viewHolder.tvTitle.setText(bean.type);
+                break;
+            default:
+                break;
+        }
+
         viewHolder.tvContent.setText(bean.content);
 
         viewHolder.llItem.setOnClickListener(new View.OnClickListener() {

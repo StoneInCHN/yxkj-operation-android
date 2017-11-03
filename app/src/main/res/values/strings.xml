@@ -9,5 +9,6 @@
     <string name="reboot">重启</string>
     <string name="pwd_not_same">两次密码输入不一致，请重新输入</string>
     <string name="pwd_least_8">新密码至少8个字符</string>
+    <string name="error_old_pwd">旧密码错误</string>
     <string name="pwd_both_letter_digit">密码必须同时含有数字和字母，请重新输入</string>
 </resources>

@@ -1,10 +1,13 @@
 package com.yxkj.deliveryman.activity;
 
+import android.os.Handler;
+import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseActivity;
+import com.yxkj.deliveryman.constant.Constants;
 import com.yxkj.deliveryman.http.BaseObserver;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.bean.response.NullBean;
@@ -35,6 +38,7 @@ public class SetPwdActivity extends BaseActivity {
     @BindView(R.id.tv_tip_new_pwd)
     TextView mTvTipNewPwd;
     private String phone;
+    private Handler mHandler;
 
 
     @Override
@@ -50,6 +54,7 @@ public class SetPwdActivity extends BaseActivity {
     public void initData() {
         phone = getIntent().getExtras().getString("phone");
         mTvPhone.setText(phone);
+        mHandler = new Handler();
     }
 
     @Override
@@ -62,6 +67,8 @@ public class SetPwdActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.bt_confirm_set_pwd:
                 setNewPwd();
+                break;
+            default:
                 break;
         }
     }
@@ -110,24 +117,34 @@ public class SetPwdActivity extends BaseActivity {
         String surePwd = mEtPwd2.getText().toString();
 
         if (newPwd.length() < 8) {
-            mTvTipNewPwd.setText(R.string.pwd_least_8);
-            mTvTipNewPwd.setVisibility(View.VISIBLE);
+            setTipError(R.string.pwd_least_8);
             return false;
         }
 
         if (!newPwd.equals(surePwd)) {
-            mTvTipNewPwd.setText(R.string.pwd_not_same);
-            mTvTipNewPwd.setVisibility(View.VISIBLE);
+            setTipError(R.string.pwd_not_same);
             return false;
         }
 
         if (!StringUtil.isBothContainLetterAndDigit(newPwd)) {
-            mTvTipNewPwd.setText(R.string.pwd_both_letter_digit);
-            mTvTipNewPwd.setVisibility(View.VISIBLE);
+            setTipError(R.string.pwd_both_letter_digit);
             return false;
         }
 
         return true;
+    }
+
+    private void setTipError(@StringRes int errorText) {
+        mTvTipNewPwd.setVisibility(View.VISIBLE);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mTvTipNewPwd.setVisibility(View.GONE);
+                mTvTipNewPwd.setText(errorText);
+                //mEtPwd1.setText("");
+              //  mEtPwd2.setText("");
+            }
+        }, Constants.ERROR_TIP_TIME);
     }
 
     @OnClick(R.id.iv_back_set_pwd)

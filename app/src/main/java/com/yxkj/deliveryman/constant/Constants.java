@@ -21,4 +21,9 @@ public class Constants {
     public static final int PHOTO_PICKED_WITH_DATA = 3022;
     /* 用跳转剪切*/
     public static final int CROP_BIG_PICTURE = 3024;
+
+    /**
+     * 登录等操作错误提示时间
+     */
+    public static final int ERROR_TIP_TIME = 1500;
 }

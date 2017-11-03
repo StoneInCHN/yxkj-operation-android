@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -94,13 +95,8 @@ public class TeamAdapter extends BaseRecyclerViewAdapter<WaitSupStateBean.Scenes
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<SceneListBean.GroupsBean>() {
                     @Override
-                    public void onComplete() {
-
-                    }
-
-                    @Override
                     protected void onHandleSuccess(SceneListBean.GroupsBean groupsBean) {
-                        if (groupsBean == null) {
+                        if (TextUtils.isEmpty(groupsBean.sceneSn)) {
 
                             Bundle bundle = new Bundle();
                             String cntrId = bean1.id + "";

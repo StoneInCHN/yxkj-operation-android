@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.base.BaseEntity;
+import com.yxkj.deliveryman.constant.Constants;
 import com.yxkj.deliveryman.http.BaseObserver;
 import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.HttpApi;
@@ -39,8 +40,10 @@ public class LoginActivity extends BaseActivity {
 
     @BindView(R.id.et_phone)
     EditText mEtPhone;
-    @BindView(R.id.tv_tip_account_error)
-    TextView mTvTip;
+    @BindView(R.id.tv_tip_account_error_login)
+    TextView mTvTipAccountError;
+    @BindView(R.id.tv_tip_pwd_error)
+    TextView mTvTipPwdError;
     @BindView(R.id.et_pwd)
     EditText mEtPwd;
 
@@ -108,6 +111,8 @@ public class LoginActivity extends BaseActivity {
             case R.id.bt_confirm:
                 login();
                 break;
+            default:
+                break;
         }
     }
 
@@ -145,6 +150,36 @@ public class LoginActivity extends BaseActivity {
                             SharePrefreceHelper.getInstance().setString(SharedKey.USER_ID, loginBean.id);
                             SharePrefreceHelper.getInstance().setString(SharedKey.PHONE, phone);
                             IntentUtil.openActivity(mContext, MainActivity.class);
+                        }
+
+                        @Override
+                        protected void onHandleError(BaseEntity<LoginBean> baseEntity) {
+                            switch (baseEntity.code) {
+                                case 1001://账号错误
+                                    mTvTipAccountError.setVisibility(View.VISIBLE);
+                                    mTvTipAccountError.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            mTvTipAccountError.setVisibility(View.GONE);
+                                          //  mEtPhone.setText("");
+                                        }
+                                    }, Constants.ERROR_TIP_TIME);
+                                    break;
+                                case 1002://密码错误
+                                    mTvTipPwdError.setVisibility(View.VISIBLE);
+                                    mTvTipPwdError.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            mTvTipPwdError.setVisibility(View.GONE);
+                                        //    mEtPwd.setText("");
+                                        }
+                                    }, Constants.ERROR_TIP_TIME);
+                                    break;
+                                default:
+                                    ToastUtil.showShort(baseEntity.desc);
+                                    break;
+
+                            }
                         }
 
                         @Override

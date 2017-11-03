@@ -1,6 +1,8 @@
 package com.yxkj.deliveryman.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.base.BaseEntity;
+import com.yxkj.deliveryman.constant.Constants;
 import com.yxkj.deliveryman.http.BaseObserver;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.bean.response.NullBean;
@@ -34,6 +37,8 @@ public class UpdatePasswordActivity extends BaseActivity {
     TextView mTvForgetPwdUpdate;
     @BindView(R.id.tv_tip_new_pwd)
     TextView mTvTipNewPwd;
+    @BindView(R.id.tv_tip_old_pwd)
+    TextView mTvTipOldPwd;
     @BindView(R.id.et_old_pwd_update)
     EditText mEtOldPwd;
     @BindView(R.id.et_new_pwd_update)
@@ -42,8 +47,7 @@ public class UpdatePasswordActivity extends BaseActivity {
     EditText mEtSurePwd;
     @BindView(R.id.bt_confirm_update)
     Button mBtConfirm;
-    @BindView(R.id.iv_eye_update_pwd)
-    ImageView ivEye;
+    private Handler mHandler;
 
     @Override
     public int getContentViewId() {
@@ -57,7 +61,7 @@ public class UpdatePasswordActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
+        mHandler = new Handler();
     }
 
     @Override
@@ -82,6 +86,8 @@ public class UpdatePasswordActivity extends BaseActivity {
             case R.id.bt_confirm_update:
                 updatePassword();
                 break;
+            default:
+                break;
         }
     }
 
@@ -97,20 +103,17 @@ public class UpdatePasswordActivity extends BaseActivity {
         }
         //至少8个字符
         if (newPwd.length() < 8) {
-            mTvTipNewPwd.setText(R.string.pwd_least_8);
-            mTvTipNewPwd.setVisibility(View.VISIBLE);
+            setNewPwdTipError(R.string.pwd_least_8);
             return;
         }
         //新旧密码不一致
         if (!newPwd.equals(surePwd)) {
-            mTvTipNewPwd.setText(R.string.pwd_not_same);
-            mTvTipNewPwd.setVisibility(View.VISIBLE);
+            setNewPwdTipError(R.string.pwd_not_same);
             return;
         }
         //必须同时包含字母和数字
         if (!StringUtil.isBothContainLetterAndDigit(newPwd)) {
-            mTvTipNewPwd.setText(R.string.pwd_both_letter_digit);
-            mTvTipNewPwd.setVisibility(View.VISIBLE);
+            setNewPwdTipError(R.string.pwd_both_letter_digit);
             return;
         }
 
@@ -141,6 +144,26 @@ public class UpdatePasswordActivity extends BaseActivity {
                     }
 
                     @Override
+                    protected void onHandleError(BaseEntity<NullBean> baseEntity) {
+                        switch (baseEntity.code) {
+                            case 1002://旧密码错误
+                                mTvTipOldPwd.setVisibility(View.VISIBLE);
+                                mHandler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mTvTipOldPwd.setVisibility(View.GONE);
+                                        //mEtOldPwd.setText("");
+                                    }
+                                }, Constants.ERROR_TIP_TIME);
+                                break;
+                            default:
+                                ToastUtil.showShort(baseEntity.desc);
+                                break;
+                        }
+
+                    }
+
+                    @Override
                     protected void onHandleSuccess(BaseEntity<NullBean> baseEntity) {
                         super.onHandleSuccess(baseEntity);
                         SharePrefreceHelper.getInstance().setString(SharedKey.TOKEN, baseEntity.token);
@@ -148,6 +171,20 @@ public class UpdatePasswordActivity extends BaseActivity {
                 });
 
     }
+
+    private void setNewPwdTipError(@StringRes int errorText) {
+        mTvTipNewPwd.setVisibility(View.VISIBLE);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mTvTipNewPwd.setVisibility(View.GONE);
+                mTvTipNewPwd.setText(errorText);
+               // mEtNewPwd.setText("");
+               // mEtSurePwd.setText("");
+            }
+        }, Constants.ERROR_TIP_TIME);
+    }
+
 
     @Override
     public void onClick(View v) {

@@ -59,7 +59,7 @@ public abstract class BaseObserver<T> implements Observer<BaseEntity<T>> {
                 ToastUtil.showShort("登录已过期，请重新登录");
                 break;
             default:
-                onHandleError(value.desc);
+                onHandleError(value);
                 break;
         }
     }
@@ -95,7 +95,7 @@ public abstract class BaseObserver<T> implements Observer<BaseEntity<T>> {
 
     protected abstract void onFailure(Throwable e, boolean isNetWorkError) throws Exception;
 
-    protected void onHandleError(String msg) {
-        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+    protected void onHandleError(BaseEntity<T> baseEntity) {
+        Toast.makeText(mContext, baseEntity.desc, Toast.LENGTH_SHORT).show();
     }
 }
