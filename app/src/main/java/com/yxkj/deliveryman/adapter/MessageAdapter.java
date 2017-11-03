@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
+import com.yxkj.deliveryman.activity.MessageDetailActivity;
 import com.yxkj.deliveryman.activity.WaitSupplementActivity;
 import com.yxkj.deliveryman.base.BaseRecyclerViewAdapter;
 import com.yxkj.deliveryman.base.BaseViewHolder;
@@ -43,8 +44,12 @@ public class MessageAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MessageBean.GroupsBean bean = mGroupsBeanList.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
+        if (bean.noticeCount != 0) {
+            viewHolder.tvUnreadNum.setVisibility(View.VISIBLE);
+            viewHolder.tvUnreadNum.setText(bean.noticeCount + "");
+        }
         viewHolder.tvDate.setText(bean.noticeTime);
-        switch (bean.type){
+        switch (bean.type) {
             case "LACK":
                 viewHolder.tvTitle.setText(bean.type);
                 break;
@@ -58,8 +63,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("sceneSn", bean.sceneSn);
-                IntentUtil.openActivity(mContext, WaitSupplementActivity.class, bundle);
+                bundle.putString("type", bean.type);
+                IntentUtil.openActivity(mContext, MessageDetailActivity.class, bundle);
             }
         });
     }
@@ -75,6 +80,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
         TextView tvTitle;
         TextView tvContent;
         LinearLayout llItem;
+        TextView tvUnreadNum;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -82,6 +88,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
             ivType = itemView.findViewById(R.id.iv_type_item_message);
             tvDate = itemView.findViewById(R.id.tv_date_item_message);
             tvTitle = itemView.findViewById(R.id.tv_title_item_message);
+            tvUnreadNum = itemView.findViewById(R.id.tv_num_unread_item_message);
             tvContent = itemView.findViewById(R.id.tv_content_item_message);
         }
     }

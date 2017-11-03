@@ -40,6 +40,8 @@
         </activity>
         <activity android:name=".activity.SupRecordDetailActivity">
         </activity>
+        <activity android:name=".activity.MessageDetailActivity">
+        </activity>
     </application>
 
 </manifest>

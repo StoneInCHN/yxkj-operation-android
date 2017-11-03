@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.yxkj.deliveryman.activity.MessageDetailActivity">
+
+    <com.yxkj.deliveryman.view.RichToolBar
+        android:id="@+id/tb_message_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:left_back_visible="true"
+        app:title_text="补货通知"/>
+
+    <com.github.jdsjlzx.recyclerview.LRecyclerView
+        android:id="@+id/lrv_message_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_bg"/>
+
+</LinearLayout>

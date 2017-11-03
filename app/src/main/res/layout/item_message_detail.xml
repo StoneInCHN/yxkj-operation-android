@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
-              android:id="@+id/ll_item_message"
+              android:id="@+id/ll_item_message_detail"
               android:layout_width="match_parent"
               android:layout_height="89dp"
               android:gravity="center"
@@ -10,7 +10,7 @@
               android:background="@color/white">
 
     <TextView
-        android:id="@+id/tv_date_item_message"
+        android:id="@+id/tv_date_item_message_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
@@ -23,28 +23,14 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:layout_width="36dp"
-            android:layout_height="36dp">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/iv_type_item_message"
-                android:layout_width="33dp"
-                android:layout_height="33dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
+                android:id="@+id/iv_type_item_message_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@mipmap/inform"/>
-
-            <TextView
-                android:id="@+id/tv_num_unread_item_message"
-                android:layout_width="15dp"
-                android:visibility="gone"
-                android:layout_height="15dp"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/bg_circle_red"
-                android:gravity="center"
-                android:text="1"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_10"/>
 
 
         </RelativeLayout>
@@ -57,7 +43,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/tv_title_item_message"
+                android:id="@+id/tv_title_item_message_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -65,7 +51,7 @@
                 android:textColor="@color/black_text"/>
 
             <TextView
-                android:id="@+id/tv_content_item_message"
+                android:id="@+id/tv_content_item_message_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

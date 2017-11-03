@@ -368,7 +368,7 @@ public class HttpApi {
     public Observable<BaseEntity<MessageDetailBean>> getMsgDetails(String userId, String type) {
         Map<String, String> req = new HashMap<>();
         req.put("userId", userId);
-        req.put("messageType", type);
+        req.put("msgType", type);
         return RetrofitFactory.getInstance().getMsgDetails(req);
     }
 
