@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!--系统在备份时，需要备份的文件-->
+    <exclude
+        domain="sharedpref"
+        path="share_operation_info.xml"/>
+</full-backup-content>
