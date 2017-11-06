@@ -21,6 +21,7 @@ import com.yxkj.deliveryman.bean.response.WaitSupStateBean;
 import com.yxkj.deliveryman.util.DisplayUtil;
 import com.yxkj.deliveryman.util.IntentUtil;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
+import com.yxkj.deliveryman.view.NetErrorView;
 import com.yxkj.deliveryman.view.RichToolBar;
 import com.yxkj.deliveryman.view.popupwindow.MainPagePopupWindow;
 
@@ -47,6 +48,8 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
     LRecyclerView mLrv;
     @BindView(R.id.rtb_fragment_container)
     RichToolBar mToolBar;
+    @BindView(R.id.nev_fragment_container)
+    NetErrorView mNetErrorView;
 
     /**
      * 页码
@@ -115,6 +118,13 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
             }
         });
 
+        mNetErrorView.setOnRetryListener(new NetErrorView.OnRetryListener() {
+            @Override
+            public void onRetry() {
+                getWaitSupplyState();
+            }
+        });
+
         getWaitSupplyState();
 
     }
@@ -128,12 +138,14 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
                     @Override
                     protected void onHandleSuccess(WaitSupStateBean waitSupStateBean) {
                         updateView(waitSupStateBean);
+                        mNetErrorView.dismiss();
                         mLrv.refreshComplete(10);
                     }
 
                     @Override
                     protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
                         mLrv.refreshComplete(10);
+                        mNetErrorView.show();
                     }
                 });
 

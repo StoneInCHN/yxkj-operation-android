@@ -3,6 +3,7 @@ package com.yxkj.deliveryman.http;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.yxkj.deliveryman.BuildConfig;
 import com.yxkj.deliveryman.constant.Constants;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
@@ -11,6 +12,7 @@ import com.yxkj.deliveryman.util.LogUtil;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.disposables.CompositeDisposable;
 import okhttp3.FormBody;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -39,15 +41,22 @@ public class RetrofitFactory {
 
     public static void initHttpClient() {
         sHttpBuilder = new OkHttpClient.Builder();
+        //初始化interceptor
         initInterceptor();
-        sHttpClient = sHttpBuilder.addInterceptor(sInterceptor)
-                .addInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-                    @Override
-                    public void log(String message) {
-                        LogUtil.d(TAG, "网络请求拦截器| " + message);
-                    }
-                }).setLevel(HttpLoggingInterceptor.Level.BODY))
-                .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+        sHttpBuilder.addInterceptor(sInterceptor);
+        //添加网络拦截日志打印
+        if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+                @Override
+                public void log(String message) {
+                    LogUtil.d(TAG, "网络请求拦截器| " + message);
+                }
+            });
+            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            sHttpBuilder.addInterceptor(httpLoggingInterceptor);
+        }
+
+        sHttpClient = sHttpBuilder.connectTimeout(TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(TIMEOUT, TimeUnit.SECONDS)
                 .build();
 

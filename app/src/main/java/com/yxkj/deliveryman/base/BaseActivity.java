@@ -82,8 +82,9 @@ public abstract class BaseActivity extends RxAppCompatActivity implements View.O
      */
     private void initBase() {
         //如果存在actionBar，就隐藏(也可以通过主题AppTheme.NoActionBar隐藏)
-        if (getSupportActionBar() != null)
+        if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
+        }
 
         //将新建的activity添加到stack里进行管理
         AppManager.getInstance().addActivity(this);

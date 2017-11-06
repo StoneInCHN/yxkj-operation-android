@@ -17,12 +17,23 @@
         app:right_img_src="@mipmap/add"
         app:title_text="货柜(189)"/>
 
-    <com.github.jdsjlzx.recyclerview.LRecyclerView
-        android:id="@+id/lrv_fragment_container"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginTop="12dp"/>
+        android:layout_height="match_parent">
+
+        <com.github.jdsjlzx.recyclerview.LRecyclerView
+            android:id="@+id/lrv_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="12dp"/>
+
+        <com.yxkj.deliveryman.view.NetErrorView
+            android:id="@+id/nev_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
 
 </LinearLayout>

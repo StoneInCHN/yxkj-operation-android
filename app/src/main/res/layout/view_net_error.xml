@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/ll_view_net_error"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/app_bg"
+              android:clickable="true"
+              android:gravity="center"
+              android:orientation="vertical"
+              android:visibility="gone"
+              tools:visibility="visible">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/network_error"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="网络不给力哦…"/>
+
+
+    <TextView
+        android:id="@+id/tv_retry_view_net_error"
+        android:layout_width="200dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_round_solid_white"
+        android:gravity="center"
+        android:text="重试"
+        android:textColor="@color/green_text"
+        android:textSize="@dimen/sp_14"/>
+
+</LinearLayout>
