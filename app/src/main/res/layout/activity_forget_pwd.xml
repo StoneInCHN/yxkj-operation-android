@@ -54,7 +54,6 @@
                 android:layout_height="@dimen/et_height_60dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:text="18144398117"
                 android:drawableLeft="@mipmap/phone"
                 android:drawablePadding="@dimen/drawablepadding_18dp"
                 android:hint="请输入手机号"

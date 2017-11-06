@@ -18,6 +18,7 @@ import com.yxkj.deliveryman.bean.response.LoginBean;
 import com.yxkj.deliveryman.bean.response.PublicKeyBean;
 import com.yxkj.deliveryman.sharepreference.SharePrefreceHelper;
 import com.yxkj.deliveryman.sharepreference.SharedKey;
+import com.yxkj.deliveryman.util.EditTextUtil;
 import com.yxkj.deliveryman.util.IntentUtil;
 import com.yxkj.deliveryman.util.LogUtil;
 import com.yxkj.deliveryman.util.RsaUtil;
@@ -57,12 +58,17 @@ public class LoginActivity extends BaseActivity {
         tv_forget_pwd = findViewByIdNoCast(R.id.tv_forget_pwd);
         tv_login_msg = findViewByIdNoCast(R.id.tv_login_msg);
         btn_login = findViewByIdNoCast(R.id.bt_confirm);
+
     }
 
     private String publicKeyString;
 
     @Override
     public void initData() {
+        String phone = SharePrefreceHelper.getInstance().getString(SharedKey.PHONE);
+        mEtPhone.setText(phone);
+        EditTextUtil.setEditTextSelectionEnd(mEtPhone);
+
         publicKeyString = SharePrefreceHelper.getInstance().getString(SharedKey.RSA_PUBLIC_KEY);
         LogUtil.i(TAG, "密钥" + publicKeyString);
         if (TextUtils.isEmpty(publicKeyString)) {
@@ -146,7 +152,7 @@ public class LoginActivity extends BaseActivity {
                     .subscribe(new BaseObserver<LoginBean>() {
                         @Override
                         protected void onHandleSuccess(LoginBean loginBean) {
-                            UserInfo.USER_ID = loginBean.id+"";
+                            UserInfo.USER_ID = loginBean.id + "";
                             SharePrefreceHelper.getInstance().setString(SharedKey.USER_ID, loginBean.id);
                             SharePrefreceHelper.getInstance().setString(SharedKey.PHONE, phone);
                             IntentUtil.openActivity(mContext, MainActivity.class);
@@ -161,7 +167,7 @@ public class LoginActivity extends BaseActivity {
                                         @Override
                                         public void run() {
                                             mTvTipAccountError.setVisibility(View.GONE);
-                                          //  mEtPhone.setText("");
+                                            //  mEtPhone.setText("");
                                         }
                                     }, Constants.ERROR_TIP_TIME);
                                     break;
@@ -171,7 +177,7 @@ public class LoginActivity extends BaseActivity {
                                         @Override
                                         public void run() {
                                             mTvTipPwdError.setVisibility(View.GONE);
-                                        //    mEtPwd.setText("");
+                                            //    mEtPwd.setText("");
                                         }
                                     }, Constants.ERROR_TIP_TIME);
                                     break;

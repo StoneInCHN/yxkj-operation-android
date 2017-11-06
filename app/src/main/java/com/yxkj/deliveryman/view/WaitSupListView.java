@@ -62,7 +62,7 @@ public class WaitSupListView extends LinearLayout {
                 long upTime = System.currentTimeMillis();
                 if (Math.abs(moveX) < TouchSlop && upTime - downTime < 1000) {
                     // TODO: 2017/10/26 待处理
-//                    WaitSupGoodsInfoPopupWindow popupWindow = new WaitSupGoodsInfoPopupWindow(getContext(), (WaitSupGoodsListBean) data);
+//                    WaitPickGoodsInfoPopupWindow popupWindow = new WaitPickGoodsInfoPopupWindow(getContext(), (WaitSupGoodsListBean) data);
 //                    popupWindow.showAtLocation(this, Gravity.NO_GRAVITY, 0, 0);
                 }
                 break;

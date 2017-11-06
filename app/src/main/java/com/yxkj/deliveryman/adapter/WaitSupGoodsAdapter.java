@@ -23,7 +23,7 @@ import com.yxkj.deliveryman.util.DisplayUtil;
 import com.yxkj.deliveryman.util.ImageLoadUtil;
 import com.yxkj.deliveryman.util.ToastUtil;
 import com.yxkj.deliveryman.view.popupwindow.CancelPopupWindow;
-import com.yxkj.deliveryman.view.popupwindow.SupGoodsPopupWindow;
+import com.yxkj.deliveryman.view.popupwindow.WaitSupGoodsPopupWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,7 +122,7 @@ public class WaitSupGoodsAdapter extends RecyclerView.Adapter {
         viewHolder.rlItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SupGoodsPopupWindow popupWindow = new SupGoodsPopupWindow(mContext, bean);
+                WaitSupGoodsPopupWindow popupWindow = new WaitSupGoodsPopupWindow(mContext, bean);
                 popupWindow.setOnCommon1Listener(new OnCommon1Listener<Integer>() {
                     @Override
                     public void onCommon1(Integer integer) {

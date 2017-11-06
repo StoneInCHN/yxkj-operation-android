@@ -12,11 +12,7 @@ import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.bean.response.WaitSupGoodsListBean;
-import com.yxkj.deliveryman.callback.OnCommon1Listener;
-import com.yxkj.deliveryman.util.DisplayUtil;
 import com.yxkj.deliveryman.util.ImageLoadUtil;
-import com.yxkj.deliveryman.view.popupwindow.CancelPopupWindow;
-import com.yxkj.deliveryman.view.popupwindow.WaitSupGoodsInfoPopupWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +62,7 @@ public class WaitPickListAdapter extends RecyclerView.Adapter {
       viewHolder.llItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WaitSupGoodsInfoPopupWindow popupWindow = new WaitSupGoodsInfoPopupWindow(mContext, bean);
+                WaitPickGoodsInfoPopupWindow popupWindow = new WaitPickGoodsInfoPopupWindow(mContext, bean);
                 popupWindow.setOnCommon1Listener(new OnCommon1Listener<Integer>() {
                     @Override
                     public void onCommon1(Integer integer) {

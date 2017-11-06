@@ -13,10 +13,10 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.yxkj.deliveryman.R;
-import com.yxkj.deliveryman.callback.CommonDialogSureListener;
 import com.yxkj.deliveryman.callback.OnCommon1Listener;
 import com.yxkj.deliveryman.constant.Constants;
 import com.yxkj.deliveryman.bean.response.WaitSupContainerGoodsBean;
+import com.yxkj.deliveryman.util.EditTextUtil;
 import com.yxkj.deliveryman.util.ImageLoadUtil;
 
 import butterknife.BindView;
@@ -25,8 +25,10 @@ import butterknife.Unbinder;
 
 /**
  * 补货商品详细信息
+ *
+ * @author hhe
  */
-public class SupGoodsPopupWindow extends PopupWindow {
+public class WaitSupGoodsPopupWindow extends PopupWindow {
 
     private Context mContext;
     @BindView(R.id.iv_goods_sup_info)
@@ -46,7 +48,7 @@ public class SupGoodsPopupWindow extends PopupWindow {
 
     private WaitSupContainerGoodsBean.GroupsBean mBean;
 
-    public SupGoodsPopupWindow(Context context, WaitSupContainerGoodsBean.GroupsBean groupsBean) {
+    public WaitSupGoodsPopupWindow(Context context, WaitSupContainerGoodsBean.GroupsBean groupsBean) {
         super(context);
         mContext = context;
         mBean = groupsBean;
@@ -62,7 +64,7 @@ public class SupGoodsPopupWindow extends PopupWindow {
     }
 
     private void initView() {
-        View view = View.inflate(mContext, R.layout.popup_sup_goods_info, null);
+        View view = View.inflate(mContext, R.layout.wait_sup_goods_popup_info, null);
         setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         unbinder = ButterKnife.bind(this, view);
@@ -111,7 +113,8 @@ public class SupGoodsPopupWindow extends PopupWindow {
                 }
                 int sInt = Integer.parseInt(s.toString());
                 if (sInt > mBean.waitSupplyCount) {
-                    etActualSupNum.setText(mBean.remainCount + "");
+                    etActualSupNum.setText(mBean.waitSupplyCount + "");
+                    EditTextUtil.setEditTextSelectionEnd(etActualSupNum);
                 }
             }
 

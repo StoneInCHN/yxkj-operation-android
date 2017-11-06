@@ -22,6 +22,7 @@ import com.yxkj.deliveryman.constant.UserInfo;
 import com.yxkj.deliveryman.http.HttpApi;
 import com.yxkj.deliveryman.bean.response.WaitSupGoodsDetailBean;
 import com.yxkj.deliveryman.bean.response.WaitSupGoodsListBean;
+import com.yxkj.deliveryman.util.EditTextUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +33,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * 待取货物详细信息
  */
-public class WaitSupGoodsInfoPopupWindow extends PopupWindow {
+public class WaitPickGoodsInfoPopupWindow extends PopupWindow {
 
     private Context mContext;
     @BindView(R.id.iv_goods_sup_info)
@@ -55,7 +56,7 @@ public class WaitSupGoodsInfoPopupWindow extends PopupWindow {
 
     private WaitSupGoodsListBean.GroupsBean mSupGoodsListBean;
 
-    public WaitSupGoodsInfoPopupWindow(Context context, WaitSupGoodsListBean.GroupsBean groupsBean) {
+    public WaitPickGoodsInfoPopupWindow(Context context, WaitSupGoodsListBean.GroupsBean groupsBean) {
         super(context);
         mContext = context;
         mSupGoodsListBean = groupsBean;
@@ -72,7 +73,7 @@ public class WaitSupGoodsInfoPopupWindow extends PopupWindow {
     }
 
     private void initView() {
-        View view = View.inflate(mContext, R.layout.popup_wait_sup_goods_info, null);
+        View view = View.inflate(mContext, R.layout.popup_wait_pick_goods_info, null);
         unbinder = ButterKnife.bind(this, view);
 
         //手动设置最大宽高
@@ -117,7 +118,7 @@ public class WaitSupGoodsInfoPopupWindow extends PopupWindow {
                 int inputValue = Integer.parseInt(s.toString());
                 if (inputValue > shouldSumCount) {
                     etActualSupNum.setText(shouldSumCount + "");
-                    etActualSupNum.setSelection(etActualSupNum.getText().toString().length());
+                    EditTextUtil.setEditTextSelectionEnd(etActualSupNum);
                 }
             }
 

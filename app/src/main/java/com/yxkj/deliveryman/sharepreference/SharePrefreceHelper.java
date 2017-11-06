@@ -34,6 +34,14 @@ public class SharePrefreceHelper extends PrefrenceWrapper {
 
     public boolean getFirstBoolean(boolean defaultValue) {
         return getBoolean("is_first_start", defaultValue);
+
+    }
+
+    @Override
+    public void clear() {
+        String phone = getString(SharedKey.PHONE, "");
+        super.clear();
+        setString(SharedKey.PHONE, phone);
     }
 
 }

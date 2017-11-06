@@ -72,7 +72,7 @@ public class AllSupGoodsAdapter extends RecyclerView.Adapter {
         viewHolder.rlItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              /*  SupGoodsPopupWindow popupWindow = new SupGoodsPopupWindow(mContext, bean);
+              /*  WaitSupGoodsPopupWindow popupWindow = new WaitSupGoodsPopupWindow(mContext, bean);
                 popupWindow.setOnCommon1Listener(new CommonDialogSureListener() {
                     @Override
                     public void onSure() {
