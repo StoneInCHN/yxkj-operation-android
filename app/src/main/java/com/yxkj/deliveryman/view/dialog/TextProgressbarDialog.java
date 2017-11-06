@@ -8,7 +8,7 @@ import android.view.Window;
 import com.yxkj.deliveryman.R;
 
 
-/*
+/**
  *  @项目名：  yxkj-operation-android 
  *  @包名：    com.yxkj.deliveryman.view.dialog
  *  @文件名:   TextProgressbarDialog

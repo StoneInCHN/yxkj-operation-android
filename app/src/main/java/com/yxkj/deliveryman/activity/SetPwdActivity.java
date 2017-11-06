@@ -95,6 +95,7 @@ public class SetPwdActivity extends BaseActivity {
                 .subscribe(new BaseObserver<LoginBean>() {
                     @Override
                     protected void onHandleSuccess(LoginBean bean) {
+                        UserInfo.USER_ID = bean.id+"";
                         showSuccessDialog();
                         SharePrefreceHelper.getInstance().setString(SharedKey.PHONE, phone);
                         SharePrefreceHelper.getInstance().setString(SharedKey.USER_ID, bean.id);

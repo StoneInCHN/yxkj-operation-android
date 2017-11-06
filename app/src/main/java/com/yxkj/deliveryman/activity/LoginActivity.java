@@ -146,6 +146,7 @@ public class LoginActivity extends BaseActivity {
                     .subscribe(new BaseObserver<LoginBean>() {
                         @Override
                         protected void onHandleSuccess(LoginBean loginBean) {
+                            UserInfo.USER_ID = loginBean.id+"";
                             SharePrefreceHelper.getInstance().setString(SharedKey.USER_ID, loginBean.id);
                             SharePrefreceHelper.getInstance().setString(SharedKey.PHONE, phone);
                             IntentUtil.openActivity(mContext, MainActivity.class);

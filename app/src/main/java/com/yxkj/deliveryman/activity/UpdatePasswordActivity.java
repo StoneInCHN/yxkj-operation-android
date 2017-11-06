@@ -164,11 +164,6 @@ public class UpdatePasswordActivity extends BaseActivity {
 
                     }
 
-                    @Override
-                    protected void onHandleSuccess(BaseEntity<NullBean> baseEntity) {
-                        super.onHandleSuccess(baseEntity);
-                        SharePrefreceHelper.getInstance().setString(SharedKey.TOKEN, baseEntity.token);
-                    }
                 });
 
     }
