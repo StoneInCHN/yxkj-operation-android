@@ -1,6 +1,7 @@
 package com.yxkj.deliveryman.http;
 
 import android.accounts.NetworkErrorException;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
@@ -11,6 +12,7 @@ import com.yxkj.deliveryman.base.BaseEntity;
 import com.yxkj.deliveryman.util.IntentUtil;
 import com.yxkj.deliveryman.util.LogUtil;
 import com.yxkj.deliveryman.util.ToastUtil;
+import com.yxkj.deliveryman.view.dialog.CustomProgressDialog;
 
 import java.net.ConnectException;
 import java.net.UnknownHostException;
@@ -34,7 +36,6 @@ public abstract class BaseObserver<T> implements Observer<BaseEntity<T>> {
 
     @Override
     public void onSubscribe(Disposable d) {
-
     }
 
     @Override
@@ -98,4 +99,6 @@ public abstract class BaseObserver<T> implements Observer<BaseEntity<T>> {
     protected void onHandleError(BaseEntity<T> baseEntity) {
         Toast.makeText(mContext, baseEntity.desc, Toast.LENGTH_SHORT).show();
     }
+
+
 }

@@ -12,6 +12,7 @@ import com.yxkj.deliveryman.activity.SupRecordActivity;
 import com.yxkj.deliveryman.activity.WaitSupplementActivity;
 import com.yxkj.deliveryman.adapter.AddressSupAdapter;
 import com.yxkj.deliveryman.base.BaseFragment;
+import com.yxkj.deliveryman.bean.response.NullBean;
 import com.yxkj.deliveryman.event.RefreshContainerEvent;
 import com.yxkj.deliveryman.http.BaseObserver;
 import com.yxkj.deliveryman.callback.MainPageClickListener;
@@ -23,6 +24,7 @@ import com.yxkj.deliveryman.util.IntentUtil;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
 import com.yxkj.deliveryman.view.NetErrorView;
 import com.yxkj.deliveryman.view.RichToolBar;
+import com.yxkj.deliveryman.view.dialog.CustomProgressDialog;
 import com.yxkj.deliveryman.view.popupwindow.MainPagePopupWindow;
 
 import org.greenrobot.eventbus.EventBus;
@@ -35,6 +37,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -143,9 +146,20 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
                     }
 
                     @Override
+                    public void onSubscribe(Disposable d) {
+                        super.onSubscribe(d);
+                        // CustomProgressDialog.getInstance(getActivity()).show();
+                    }
+
+                    @Override
                     protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
                         mLrv.refreshComplete(10);
                         mNetErrorView.show();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        //  CustomProgressDialog.getInstance(getActivity()).dismiss();
                     }
                 });
 

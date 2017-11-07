@@ -52,13 +52,14 @@ public class SupRecordDetailActivity extends BaseActivity {
         mSupRecordDetailAdapter = new SupRecordDetailAdapter(mContext);
         RecyclerViewSetUtil.setRecyclerView(mContext, mLrv, mSupRecordDetailAdapter);
 
-        mLrv.setOnLoadMoreListener(new OnLoadMoreListener() {
+      /*  mLrv.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 mPageNum++;
                 getDataList();
             }
-        });
+        });*/
+        mLrv.setLoadMoreEnabled(false);
 
         mLrv.setOnRefreshListener(new OnRefreshListener() {
             @Override

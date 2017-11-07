@@ -55,6 +55,7 @@ public class RetrofitFactory {
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             sHttpBuilder.addInterceptor(httpLoggingInterceptor);
         }
+        ///sHttpBuilder.retryOnConnectionFailure(true);
 
         sHttpClient = sHttpBuilder.connectTimeout(TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(TIMEOUT, TimeUnit.SECONDS)
@@ -70,10 +71,6 @@ public class RetrofitFactory {
                 Request.Builder builder = request.newBuilder();
                 // 替换为自己的token
                 builder.addHeader("X-Auth-Token", SharePrefreceHelper.getInstance().getString(SharedKey.TOKEN));
-                LogUtil.i(TAG, "builder.tag| " + builder.build().tag().toString());
-//                LogUtil.i("请求参数--URL", request.url().toString());
-//                LogUtil.i("请求参数--header", request.headers().toString());
-//                LogUtil.i("请求参数--body", request.body().toString());
                 return chain.proceed(builder.build());
             }
         };
