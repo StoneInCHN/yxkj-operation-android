@@ -23,17 +23,19 @@
             android:orientation="vertical">
 
             <ImageView
+                android:padding="15dp"
                 android:id="@+id/iv_goods_sup_info"
                 android:layout_width="243dp"
                 android:layout_height="243dp"
                 android:layout_marginTop="25dp"
-                android:background="@drawable/bg_stroke_gray_round"
+                android:background="@drawable/bg_stroke_dash_gray_round"
                 android:src="@mipmap/inform"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="44dp"
+                android:layout_marginBottom="15dp"
                 android:layout_marginRight="44dp"
                 android:orientation="vertical">
 

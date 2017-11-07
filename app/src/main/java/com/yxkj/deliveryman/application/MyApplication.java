@@ -26,7 +26,7 @@ public class MyApplication extends Application {
         super.onCreate();
         myApplication = this;
 
-        initJpush();
+        //initJpush();
 
     }
 

@@ -69,7 +69,7 @@ public class CustomProgressDialog {
     /**
      * 最少显示时间
      */
-    private final long MIN_SHOW_TIME = 500;
+    private final long MIN_SHOW_TIME = 300;
 
     public void dismiss() {
         long nowTime = System.currentTimeMillis();

@@ -36,12 +36,12 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 /**
- *  项目名：  yxkj-controller-app
- *  包名：    com.yxkj.controller.http
- *  文件名:   HttpApi
- *  创建者:   hhe
- *  创建时间:  2017/10/11 9:53
- *  描述：    网络请求集合
+ * 项目名：  yxkj-controller-app
+ * 包名：    com.yxkj.controller.http
+ * 文件名:   HttpApi
+ * 创建者:   hhe
+ * 创建时间:  2017/10/11 9:53
+ * 描述：    网络请求集合
  */
 public class HttpApi {
     private static HttpApi instance = new HttpApi();
@@ -74,6 +74,7 @@ public class HttpApi {
      */
     public static <T> void toSubscribe(Observable<T> observable, Observer<T> observer) {
         observable.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }

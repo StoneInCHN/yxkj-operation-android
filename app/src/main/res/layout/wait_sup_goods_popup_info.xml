@@ -12,8 +12,9 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="293dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minWidth="268dp"
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
@@ -22,12 +23,14 @@
             android:gravity="center"
             android:orientation="vertical">
 
+
             <ImageView
                 android:id="@+id/iv_goods_sup_info"
                 android:layout_width="243dp"
                 android:layout_height="243dp"
                 android:layout_marginTop="25dp"
-                android:background="@drawable/bg_stroke_gray_round"
+                android:background="@drawable/bg_stroke_dash_gray_round"
+                android:padding="15dp"
                 android:src="@mipmap/inform"/>
 
             <LinearLayout
@@ -60,6 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
+                    android:layout_marginBottom="28dp"
                     android:orientation="horizontal">
 
                     <TextView

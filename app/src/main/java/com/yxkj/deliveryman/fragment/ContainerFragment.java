@@ -146,12 +146,6 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
                     }
 
                     @Override
-                    public void onSubscribe(Disposable d) {
-                        super.onSubscribe(d);
-                        // CustomProgressDialog.getInstance(getActivity()).show();
-                    }
-
-                    @Override
                     protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
                         mLrv.refreshComplete(10);
                         mNetErrorView.show();
@@ -159,7 +153,6 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
 
                     @Override
                     public void onComplete() {
-                        //  CustomProgressDialog.getInstance(getActivity()).dismiss();
                     }
                 });
 

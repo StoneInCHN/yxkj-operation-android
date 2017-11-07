@@ -18,4 +18,5 @@
     <dimen name="sp_10">10sp</dimen>
     <dimen name="sp_11">11sp</dimen>
     <dimen name="drawable_padding_2dp">3dp</dimen>
+    <dimen name="sp_13">13sp</dimen>
 </resources>

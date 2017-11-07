@@ -92,7 +92,7 @@ public class AddressSupAdapter extends RecyclerView.Adapter<AddressSupAdapter.Vi
                 .subscribe(new BaseObserver<SceneListBean.GroupsBean>() {
                     @Override
                     protected void onHandleSuccess(SceneListBean.GroupsBean groupsBean) {
-                        if (groupsBean == null) {
+                        if (groupsBean.sceneSn == null) {
                             ToastUtil.showShort("提交成功");
                             WaitSupGoodsDao dao = getDao();
                             List<WaitSupGoods> deleteList = dao.queryBuilder().where(WaitSupGoodsDao.Properties.SceneId.eq(sceneSn)).build().list();

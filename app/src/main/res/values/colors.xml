@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#FF4081</color>
-    <color name="colorPrimaryDark">#FF4081</color>
+    <color name="colorPrimaryDark">#c4c1c1</color>
     <color name="colorAccent">#30C7AC</color>
     <color name="gray_text">#FF858585</color>
     <!--不可修改的文字-->
@@ -9,6 +9,7 @@
     <!--一级黑体-->
     <color name="black_text">#333333</color>
     <color name="red_text">#BB2C2B</color>
+    <color name="red_bg_round">#EC2F3D</color>
     <color name="red_text_light">#F52336</color>
     <color name="gray_edittext_hint">#999999</color>
     <color name="green_text">#30C7AC</color>

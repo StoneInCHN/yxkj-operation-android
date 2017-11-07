@@ -30,7 +30,9 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="22dp"
-            android:text="对A货柜进行补货"/>
+            android:text="对A货柜进行补货"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/sp_14"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -38,14 +40,16 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="10dp"
-            android:text="补货时，货柜将暂停服务"/>
+            android:text="补货时，货柜将暂停服务"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/sp_14"/>
 
         <View
             style="@style/line_horizontal_1px"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="42dp"
             android:orientation="horizontal">
 
             <TextView
@@ -54,7 +58,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="取消"/>
+                android:text="取消"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/sp_15"/>
 
             <View
                 style="@style/line_vertical_1px"/>
@@ -65,7 +71,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="开始补货"/>
+                android:text="开始补货"
+                android:textColor="@color/black_text"
+                android:textSize="@dimen/sp_15"/>
 
         </LinearLayout>
 

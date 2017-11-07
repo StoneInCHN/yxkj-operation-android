@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_item_sup_goods"
     android:layout_width="match_parent"
-    android:layout_height="95dp">
+    android:layout_height="95dp"
+    android:layout_marginBottom="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,18 +49,33 @@
                 android:text="A01"
                 android:textColor="@color/black_text"
                 android:textSize="@dimen/sp_14"/>
-
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginRight="10dp"
                 android:gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/tv_remain_num_item_sup_goods"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="剩余数量：10"
+                    android:text="剩余数量："
+                    android:textColor="@color/black_text"
+                    android:textSize="@dimen/sp_12"/>
+                <TextView
+                    android:id="@+id/tv_remain_num_item_sup_goods"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="10"
+                    android:textColor="@color/green_text"
+                    android:textSize="@dimen/sp_14"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="待补货数："
                     android:textColor="@color/black_text"
                     android:textSize="@dimen/sp_12"/>
 
@@ -68,12 +84,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="待补货数：20"
-                    android:textColor="@color/black_text"
-                    android:textSize="@dimen/sp_12"/>
+                    android:text="20"
+                    android:textColor="@color/orange_text"
+                    android:textSize="@dimen/sp_14"/>
 
 
-            </RelativeLayout>
+            </LinearLayout>
 
         </LinearLayout>
 

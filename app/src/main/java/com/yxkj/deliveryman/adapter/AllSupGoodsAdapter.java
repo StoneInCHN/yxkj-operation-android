@@ -28,7 +28,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 
-/*
+/**
  *  @项目名：  yxkj-operation-android 
  *  @包名：    com.yxkj.deliveryman.adapter
  *  @文件名:   WaitSupGoodsAdapter
@@ -66,8 +66,8 @@ public class AllSupGoodsAdapter extends RecyclerView.Adapter {
         ImageLoadUtil.loadImage(viewHolder.ivGoodsPic, Constants.BASE_URL + bean.goodsPic);
         viewHolder.tvGoodsName.setText(bean.goodsName);
         viewHolder.tvContainerName.setText(bean.channelSn);
-        viewHolder.tvRemainNum.setText("剩余数量：" + bean.remainCount);
-        viewHolder.tvWaitNum.setText("待补货数：" + bean.waitSupplyCount);
+        viewHolder.tvRemainNum.setText("" + bean.remainCount);
+        viewHolder.tvWaitNum.setText("" + bean.waitSupplyCount);
 
         viewHolder.rlItem.setOnClickListener(new View.OnClickListener() {
             @Override

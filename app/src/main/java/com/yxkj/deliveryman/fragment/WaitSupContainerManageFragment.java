@@ -61,12 +61,12 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.http.HTTP;
 
 /**
- * @项目名： yxkj-operation-android
- * @包名： com.yxkj.deliveryman.fragment
- * @文件名: WaitSupContainerManageFragment
- * @创建者: hhe
- * @创建时间: 2017/10/26 16:56
- * @描述： 待补商品货柜管理
+ * 项目名： yxkj-operation-android
+ * 包名： com.yxkj.deliveryman.fragment
+ * 文件名: WaitSupContainerManageFragment
+ * 创建者: hhe
+ * 创建时间: 2017/10/26 16:56
+ * 描述： 待补商品货柜管理
  */
 public class WaitSupContainerManageFragment extends Fragment {
     private LRecyclerView mLrv;

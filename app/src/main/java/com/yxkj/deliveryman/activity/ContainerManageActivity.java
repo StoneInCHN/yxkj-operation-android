@@ -12,6 +12,7 @@ import com.yxkj.deliveryman.base.BaseActivity;
 import com.yxkj.deliveryman.callback.CommonDialogSureListener;
 import com.yxkj.deliveryman.fragment.AllSupContainerManageFragment;
 import com.yxkj.deliveryman.fragment.WaitSupContainerManageFragment;
+import com.yxkj.deliveryman.util.TabLayoutUtil;
 import com.yxkj.deliveryman.view.RichToolBar;
 import com.yxkj.deliveryman.view.dialog.CommonYesOrNoDialog;
 
@@ -129,6 +130,8 @@ public class ContainerManageActivity extends BaseActivity {
         mContainerAdapter = new ContainerSupFragmentViewpagerAdapter(getSupportFragmentManager(), fragmentList, titles);
         mViewPager.setAdapter(mContainerAdapter);
         mTablayout.setupWithViewPager(mViewPager);
+
+        TabLayoutUtil.setIndicator(mTablayout);
     }
 
     @Override
