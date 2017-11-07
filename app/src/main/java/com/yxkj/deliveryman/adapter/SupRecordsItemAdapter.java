@@ -47,10 +47,10 @@ public class SupRecordsItemAdapter extends RecyclerView.Adapter {
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.tvName.setText(bean.sceneName);
         viewHolder.tvTime.setText(bean.supplyTime);
-        viewHolder.tvOrder.setText(bean.sceneSn);
-        viewHolder.tvWaitNum.setText("总待补数:" + bean.waitSupplyCount);
-       // viewHolder.tvLackNum.setText("总缺货数:" + bean.lackCount);
-        viewHolder.tvTotalSupNUm.setText("总补货数:" + bean.supplyCount);
+        viewHolder.tvOrder.setText(String.format(("编号（%s）"), bean.sceneSn));
+        viewHolder.tvWaitNum.setText("" + bean.waitSupplyCount);
+        // viewHolder.tvLackNum.setText("总缺货数:" + bean.lackCount);
+        viewHolder.tvTotalSupNUm.setText("" + bean.supplyCount);
 
         viewHolder.rlItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +58,7 @@ public class SupRecordsItemAdapter extends RecyclerView.Adapter {
                 Bundle bundle = new Bundle();
                 bundle.putString("sceneSn", bean.sceneSn);
                 bundle.putString("sceneName", bean.sceneName);
-                IntentUtil.openActivity(mContext, SupRecordDetailActivity.class,bundle);
+                IntentUtil.openActivity(mContext, SupRecordDetailActivity.class, bundle);
             }
         });
 
@@ -82,8 +82,8 @@ public class SupRecordsItemAdapter extends RecyclerView.Adapter {
             super(itemView);
             rlItem = itemView.findViewById(R.id.rl_item_sup_record);
             tvName = itemView.findViewById(R.id.tv_name_item_sup_records);
-            tvTime = itemView.findViewById(R.id.tv_order_item_sup_records);
-            tvOrder = itemView.findViewById(R.id.tv_time_item_sup_records);
+            tvTime = itemView.findViewById(R.id.tv_time_item_sup_records);
+            tvOrder = itemView.findViewById(R.id.tv_order_item_sup_records);
             tvWaitNum = itemView.findViewById(R.id.tv_wait_sup_num_item_sup_records);
             //tvLackNum = itemView.findViewById(R.id.tv_lack_num_item_sup_records);
             tvTotalSupNUm = itemView.findViewById(R.id.tv_total_sup_num_item_sup_records);

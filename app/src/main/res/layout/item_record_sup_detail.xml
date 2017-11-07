@@ -15,8 +15,8 @@
         android:textSize="@dimen/sp_12"/>
 
     <com.github.jdsjlzx.recyclerview.LRecyclerView
-        android:layout_width="match_parent"
         android:id="@+id/lrv_item_item_record_sup_detail"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"/>
 

@@ -225,7 +225,6 @@ public class ForgetPwdActivity extends BaseActivity {
                     @Override
                     protected void onHandleSuccess(GetCodeBean bean) {
                         startTimeCount();
-                        mEtCode.setText(bean.code);
                         hasGetCode = true;
                     }
 

@@ -13,7 +13,7 @@
         android:id="@+id/tab_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
         android:src="@mipmap/warning"/>
 
     <TextView
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/sp_10"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="6dp"
         android:text="首页"
         android:textColor="@color/black_text"/>
 

@@ -2,6 +2,10 @@ package com.yxkj.deliveryman.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +20,7 @@ import com.yxkj.deliveryman.base.BaseViewHolder;
 import com.yxkj.deliveryman.bean.response.SupRecordBean;
 import com.yxkj.deliveryman.util.DateUtil;
 import com.yxkj.deliveryman.util.IntentUtil;
+import com.yxkj.deliveryman.util.LogUtil;
 import com.yxkj.deliveryman.util.RecyclerViewSetUtil;
 
 import java.util.ArrayList;
@@ -47,7 +52,22 @@ public class SupRecordAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         SupRecordBean.GroupsBean bean = mBeanList.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.tvDate.setText(bean.date);
+
+        //“.”的位置
+        int dotIndex = bean.date.indexOf(".");
+        if (dotIndex != -1) {
+            SpannableString spannableString = new SpannableString(bean.date);
+            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(mContext.getResources().getColor(R.color.black_text));
+            RelativeSizeSpan relativeSizeSpan = new RelativeSizeSpan(1.4f);
+            spannableString.setSpan(foregroundColorSpan, dotIndex + 1, bean.date.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            spannableString.setSpan(relativeSizeSpan, dotIndex + 1, bean.date.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            viewHolder.tvDate.setText(spannableString);
+        } else {
+            viewHolder.tvDate.setText(bean.date);
+
+        }
+
+
         viewHolder.tvWaitNum.setText("总待补数：" + bean.sumWaitSupplyCount);
         viewHolder.tvTotalSupNum.setText("总补货数：" + bean.sumSupplyCount);
 

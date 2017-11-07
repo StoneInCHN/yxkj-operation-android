@@ -46,7 +46,7 @@ public class SupRecordActivity extends BaseActivity {
     public void initData() {
         adapter = new SupRecordAdapter(this);
         RecyclerViewSetUtil.setRecyclerView(this, mLrvSupRecord, adapter);
-
+        mLrvSupRecord.setNestedScrollingEnabled(false);
         mLrvSupRecord.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {

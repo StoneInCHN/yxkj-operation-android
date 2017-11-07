@@ -48,8 +48,8 @@ public class SupRecordDetailItemAdapter extends RecyclerView.Adapter {
         ImageLoadUtil.loadImage(viewHolder.ivGoodsPic, Constants.BASE_URL + bean.goodsPic);
         viewHolder.tvGoodsName.setText(bean.goodsName);
         viewHolder.tvSerialNum.setText(bean.channelSn);
-        viewHolder.tvShouldSupNum.setText("应补数量:" + bean.waitSupplyCount);
-        viewHolder.tvSuppedNum.setText("补货数量:" + bean.supplyCount);
+        viewHolder.tvShouldSupNum.setText("" + bean.waitSupplyCount);
+        viewHolder.tvSuppedNum.setText("" + bean.supplyCount);
 
 
     }

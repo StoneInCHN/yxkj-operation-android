@@ -9,16 +9,18 @@
     tools:context="com.yxkj.deliveryman.activity.SupRecordDetailActivity">
 
     <com.yxkj.deliveryman.view.RichToolBar
-        android:layout_width="match_parent"
-        app:left_back_visible="true"
         android:id="@+id/tb_sup_detail"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:left_back_visible="true"
         app:title_text="香年广场"/>
 
     <com.github.jdsjlzx.recyclerview.LRecyclerView
         android:id="@+id/lrv_sup_detail"
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants"/>
 
 
 </LinearLayout>
