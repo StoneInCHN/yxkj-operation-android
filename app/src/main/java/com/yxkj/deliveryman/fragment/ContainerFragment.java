@@ -3,10 +3,13 @@ package com.yxkj.deliveryman.fragment;
 
 import android.view.Gravity;
 import android.view.View;
+import android.widget.TextView;
 
+import com.github.jdsjlzx.interfaces.ILoadMoreFooter;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
+import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import com.yxkj.deliveryman.R;
 import com.yxkj.deliveryman.activity.SupRecordActivity;
 import com.yxkj.deliveryman.activity.WaitSupplementActivity;
@@ -104,7 +107,6 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
         //按大楼分的list
         mAddressSupAdapter = new AddressSupAdapter(getActivity());
         RecyclerViewSetUtil.setRecyclerView(getActivity(), mLrv, mAddressSupAdapter);
-        mLrv.setFooterViewHint("加载中", "没有更多了", "网络出了一点问题");
         mLrv.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -140,9 +142,14 @@ public class ContainerFragment extends BaseFragment implements MainPageClickList
                 .subscribe(new BaseObserver<WaitSupStateBean>() {
                     @Override
                     protected void onHandleSuccess(WaitSupStateBean waitSupStateBean) {
-                        updateView(waitSupStateBean);
+                        if (waitSupStateBean.scenes.size() == 0) {
+                            mLrv.setNoMore(true);
+                        } else {
+                            updateView(waitSupStateBean);
+                            mLrv.refreshComplete(10);
+                        }
+
                         mNetErrorView.dismiss();
-                        mLrv.refreshComplete(10);
                     }
 
                     @Override

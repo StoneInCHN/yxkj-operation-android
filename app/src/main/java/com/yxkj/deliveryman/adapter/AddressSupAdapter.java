@@ -57,7 +57,7 @@ public class AddressSupAdapter extends RecyclerView.Adapter<AddressSupAdapter.Vi
     public void onBindViewHolder(ViewHolder holder, int position) {
         WaitSupStateBean.ScenesBean bean = mScenesBeanList.get(position);
         holder.tvAddress.setText(bean.sceneName);
-        holder.tvNum.setText(bean.sceneSn);
+        holder.tvNum.setText("编号" + bean.sceneSn);
         holder.tvFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +68,7 @@ public class AddressSupAdapter extends RecyclerView.Adapter<AddressSupAdapter.Vi
         });
         //某楼里面按组分的list
         holder.rvGroups.setLayoutManager(new LinearLayoutManager(mContext));
-        TeamAdapter teamAdapter = new TeamAdapter(mContext, bean.sceneSn,bean.sceneName);
+        TeamAdapter teamAdapter = new TeamAdapter(mContext, bean.sceneSn, bean.sceneName);
         holder.rvGroups.setAdapter(teamAdapter);
         teamAdapter.settList(mScenesBeanList.get(position).vendingContainerGroups);
     }

@@ -111,9 +111,14 @@ public class WaitPickGoodsFragment extends Fragment {
                         if (mPageNum == 1) {
                             mWaitSupListAdapter.mBeanList.clear();
                         }
-                        mWaitSupListAdapter.mBeanList.addAll(waitSupGoodsListBean.groups);
-                        mWaitSupListAdapter.notifyDataSetChanged();
-                        mLrv.refreshComplete(10);
+                        if (waitSupGoodsListBean.groups.size() == 0) {
+                            mLrv.setNoMore(true);
+                        } else {
+                            mWaitSupListAdapter.mBeanList.addAll(waitSupGoodsListBean.groups);
+                            mWaitSupListAdapter.notifyDataSetChanged();
+                            mLrv.refreshComplete(10);
+
+                        }
                     }
 
                     @Override

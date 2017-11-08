@@ -124,8 +124,13 @@ public class WaitSupContainerManageFragment extends Fragment {
                         if (mPageNum == 1) {
                             mWaitSupGoodsAdapter.mGroupsBeanList.clear();
                         }
-                        mWaitSupGoodsAdapter.setGroupsBeanList(waitSupContainerGoodsBean.groups);
-                        mLrv.refreshComplete(10);
+                        if (waitSupContainerGoodsBean.groups.size() == 0) {
+                            mLrv.setNoMore(true);
+                        } else {
+                            mWaitSupGoodsAdapter.setGroupsBeanList(waitSupContainerGoodsBean.groups);
+                            mLrv.refreshComplete(10);
+                        }
+
                     }
 
                     @Override

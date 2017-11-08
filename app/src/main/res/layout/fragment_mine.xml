@@ -42,9 +42,11 @@
         android:layout_height="45dp"
         android:layout_marginTop="10dp"
         android:background="@color/white"
+        android:drawableLeft="@mipmap/pwd_colorful"
         android:drawableRight="@mipmap/arrow_right"
         android:gravity="center_vertical"
         android:paddingLeft="14dp"
+        android:drawablePadding="16dp"
         android:paddingRight="14dp"
         android:text="密码"
         android:textColor="@color/black_text"/>

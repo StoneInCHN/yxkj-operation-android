@@ -81,9 +81,14 @@ public class MessageFragment extends BaseFragment {
                         if (mPageNum == 1) {
                             mMessageAdapter.mGroupsBeanList.clear();
                         }
-                        mMessageAdapter.mGroupsBeanList.addAll(bean.groups);
-                        mMessageAdapter.notifyDataSetChanged();
-                        mLrv.refreshComplete(10);
+                        if (bean.groups.size()==0){
+                            mLrv.setNoMore(true);
+                        }else {
+                            mMessageAdapter.mGroupsBeanList.addAll(bean.groups);
+                            mMessageAdapter.notifyDataSetChanged();
+                            mLrv.refreshComplete(10);
+
+                        }
                     }
 
                     @Override

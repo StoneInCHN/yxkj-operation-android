@@ -76,9 +76,14 @@ public class SupRecordDetailActivity extends BaseActivity {
                         if (mPageNum == 1) {
                             mSupRecordDetailAdapter.mGroupsBeanList.clear();
                         }
-                        mSupRecordDetailAdapter.mGroupsBeanList.addAll(supRecordDetailBean.groups);
-                        mSupRecordDetailAdapter.notifyDataSetChanged();
-                        mLrv.refreshComplete(10);
+                        if (supRecordDetailBean.groups.size() == 0) {
+                            mLrv.setNoMore(true);
+                        } else {
+                            mSupRecordDetailAdapter.mGroupsBeanList.addAll(supRecordDetailBean.groups);
+                            mSupRecordDetailAdapter.notifyDataSetChanged();
+                            mLrv.refreshComplete(10);
+                        }
+
                     }
 
                     @Override

@@ -46,6 +46,7 @@ public class SupRecordActivity extends BaseActivity {
     public void initData() {
         adapter = new SupRecordAdapter(this);
         RecyclerViewSetUtil.setRecyclerView(this, mLrvSupRecord, adapter);
+        //可以解决冲突？
         mLrvSupRecord.setNestedScrollingEnabled(false);
         mLrvSupRecord.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -86,9 +87,15 @@ public class SupRecordActivity extends BaseActivity {
                         if (mPageNum == 1) {
                             adapter.mBeanList.clear();
                         }
-                        adapter.mBeanList.addAll(supRecordBean.groups);
-                        adapter.notifyDataSetChanged();
-                        mLrvSupRecord.refreshComplete(10);
+                        if (supRecordBean.groups.size()==0){
+                            mLrvSupRecord.setNoMore(true);
+                        }else {
+                            adapter.mBeanList.addAll(supRecordBean.groups);
+                            adapter.notifyDataSetChanged();
+                            mLrvSupRecord.refreshComplete(10);
+                        }
+
+
                     }
 
                     @Override

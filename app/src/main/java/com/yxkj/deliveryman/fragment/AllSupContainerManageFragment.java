@@ -70,11 +70,16 @@ public class AllSupContainerManageFragment extends Fragment {
                 .subscribe(new BaseObserver<AllSupContainerGoodsBean>() {
                     @Override
                     protected void onHandleSuccess(AllSupContainerGoodsBean allSupContainerGoodsBean) {
-                        if (mPageNum==1){
+                        if (mPageNum == 1) {
                             mAllSupGoodsAdapter.mGroupsBeanList.clear();
                         }
-                        mAllSupGoodsAdapter.setGroupsBeanList(allSupContainerGoodsBean.groups);
-                        mLrv.refreshComplete(10);
+                        if (allSupContainerGoodsBean.groups.size() == 0) {
+                            mLrv.setNoMore(true);
+                        } else {
+                            mAllSupGoodsAdapter.setGroupsBeanList(allSupContainerGoodsBean.groups);
+                            mLrv.refreshComplete(10);
+                        }
+
                     }
 
                     @Override
