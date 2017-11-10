@@ -95,7 +95,7 @@ public class SetPwdActivity extends BaseActivity {
                 .subscribe(new BaseObserver<LoginBean>() {
                     @Override
                     protected void onHandleSuccess(LoginBean bean) {
-                        UserInfo.USER_ID = bean.id+"";
+                        UserInfo.USER_ID = bean.id + "";
                         showSuccessDialog();
                         SharePrefreceHelper.getInstance().setString(SharedKey.PHONE, phone);
                         SharePrefreceHelper.getInstance().setString(SharedKey.USER_ID, bean.id);
@@ -150,11 +150,11 @@ public class SetPwdActivity extends BaseActivity {
 
     private void setTipError(@StringRes int errorText) {
         mTvTipNewPwd.setVisibility(View.VISIBLE);
+        mTvTipNewPwd.setText(errorText);
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mTvTipNewPwd.setVisibility(View.GONE);
-                mTvTipNewPwd.setText(errorText);
                 //mEtPwd1.setText("");
                 //  mEtPwd2.setText("");
             }

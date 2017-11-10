@@ -170,11 +170,11 @@ public class UpdatePasswordActivity extends BaseActivity {
 
     private void setNewPwdTipError(@StringRes int errorText) {
         mTvTipNewPwd.setVisibility(View.VISIBLE);
+        mTvTipNewPwd.setText(errorText);
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mTvTipNewPwd.setVisibility(View.GONE);
-                mTvTipNewPwd.setText(errorText);
                 // mEtNewPwd.setText("");
                 // mEtSurePwd.setText("");
             }
